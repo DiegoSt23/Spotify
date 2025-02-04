@@ -1,3 +1,5 @@
 {
-  "title": "Login"
+  "welcome": "Welcome",
+  "description": "To continue, you’ll be securely redirected to the official Spotify website to grant access. Once authorized, you’ll return here to enjoy all the features tailored just for you. Let the music play!",
+  "loginButton": "Login with Spotify"
 }

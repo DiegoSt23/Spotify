@@ -1,0 +1,31 @@
+{
+  "navItems": {
+    "main": {
+      "sectionLabel": "MAIN",
+      "items": {
+        "home": "Home",
+        "search": "Search",
+        "stats": "Stats"
+      }
+    },
+    "myMusic": {
+      "sectionLabel": "MY MUSIC",
+      "items": {
+        "songs": "Songs",
+        "artists": "Artists",
+        "albums": "Albums",
+        "playlists": "Playlists",
+        "podcasts": "Podcasts"
+      }
+    },
+    "general": {
+      "sectionLabel": "GENERAL",
+      "items": {
+        "profile": "Profile",
+        "about": "About",
+        "settings": "Settings"
+      }
+    }
+  },
+  "logout": "Logout"
+}

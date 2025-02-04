@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { I18nextProvider } from 'react-i18next';
 import { ThemeProvider } from '@emotion/react';
 import { i18n } from '@language/index.ts';
-import { light } from '@theme/index.ts';
+import { light, dark } from '@theme/index.ts';
 import { App } from './App.tsx';
 import './index.css';
 

@@ -14,6 +14,13 @@ export const light = createTheme({
       primary: '#000000',
       secondary: '#767676',
     },
+    common: {
+      black: '#000',
+      white: '#fff',
+    },
+    accent: {
+      main: '#1cd763',
+    },
   },
   shape: {
     borderRadius: 10,
@@ -87,6 +94,13 @@ export const light = createTheme({
           '& .MuiLinearProgress-bar': {
             borderRadius: 10,
           },
+        },
+      },
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          padding: 12,
         },
       },
     },

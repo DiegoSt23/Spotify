@@ -1,0 +1,31 @@
+{
+  "navItems": {
+    "main": {
+      "sectionLabel": "PRINCIPAL",
+      "items": {
+        "home": "Inicio",
+        "search": "Buscar",
+        "stats": "Estadísticas"
+      }
+    },
+    "myMusic": {
+      "sectionLabel": "MI MÚSICA",
+      "items": {
+        "songs": "Canciones",
+        "artists": "Artistas",
+        "albums": "Álbumes",
+        "playlists": "Listas de reproducción",
+        "podcasts": "Podcasts"
+      }
+    },
+    "general": {
+      "sectionLabel": "GENERAL",
+      "items": {
+        "profile": "Perfil",
+        "about": "Acerca de",
+        "settings": "Configuración"
+      }
+    }
+  },
+  "logout": "Cerrar sesión"
+}

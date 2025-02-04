@@ -1,3 +1,5 @@
 {
-  "title": "Login prro"
+  "welcome": "Bienvenido",
+  "description": "Para continuar, serás redirigido de forma segura al sitio web oficial de Spotify para otorgar acceso. Una vez autorizado, volverás aquí para disfrutar de todas las funciones diseñadas especialmente para ti. ¡Que la música suene!",
+  "loginButton": "Iniciar sesión con Spotify"
 }

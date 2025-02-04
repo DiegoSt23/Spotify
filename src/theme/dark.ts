@@ -1,5 +1,15 @@
 import { createTheme } from '@mui/material';
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    accent: Palette['primary'];
+  }
+
+  interface PaletteOptions {
+    accent?: PaletteOptions['primary'];
+  }
+}
+
 export const dark = createTheme({
   palette: {
     mode: 'dark',
@@ -8,7 +18,14 @@ export const dark = createTheme({
     },
     background: {
       default: '#000',
-      paper: '#000',
+      paper: '#080809',
+    },
+    common: {
+      black: '#000',
+      white: '#fff',
+    },
+    accent: {
+      main: '#1cd763',
     },
   },
   shape: {
@@ -37,12 +54,12 @@ export const dark = createTheme({
     body1: {
       fontSize: 14,
       fontWeight: 400,
-      color: '#999999',
+      color: '#a0a0a0',
     },
     body2: {
       fontSize: 12,
       fontWeight: 400,
-      color: '#999999',
+      color: '#a0a0a0',
     },
   },
   components: {
@@ -83,6 +100,14 @@ export const dark = createTheme({
           '& .MuiLinearProgress-bar': {
             borderRadius: 10,
           },
+        },
+      },
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          borderRadius: 8,
+          padding: 12,
         },
       },
     },
