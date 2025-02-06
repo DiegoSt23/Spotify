@@ -14,47 +14,51 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'home',
-        element: <Typography variant='h3'>Home</Typography>,
+        element: (
+          <Typography variant='h4'>
+            Home
+          </Typography>
+        ),
       },
       {
         path: 'search',
-        element: <Typography variant='h3'>Search</Typography>,
+        element: <Typography variant='h4'>Search</Typography>,
       },
       {
         path: 'stats',
-        element: <Typography variant='h3'>Stats</Typography>,
+        element: <Typography variant='h4'>Stats</Typography>,
       },
       {
         path: 'songs',
-        element: <Typography variant='h3'>Songs</Typography>,
+        element: <Typography variant='h4'>Songs</Typography>,
       },
       {
         path: 'artists',
-        element: <Typography variant='h3'>Artists</Typography>,
+        element: <Typography variant='h4'>Artists</Typography>,
       },
       {
         path: 'albums',
-        element: <Typography variant='h3'>Albums</Typography>,
+        element: <Typography variant='h4'>Albums</Typography>,
       },
       {
         path: 'playlists',
-        element: <Typography variant='h3'>Playlists</Typography>,
+        element: <Typography variant='h4'>Playlists</Typography>,
       },
       {
         path: 'podcasts',
-        element: <Typography variant='h3'>Podcasts</Typography>,
+        element: <Typography variant='h4'>Podcasts</Typography>,
       },
       {
         path: 'profile',
-        element: <Typography variant='h3'>Profile</Typography>,
+        element: <Typography variant='h4'>Profile</Typography>,
       },
       {
         path: 'about',
-        element: <Typography variant='h3'>About</Typography>,
+        element: <Typography variant='h4'>About</Typography>,
       },
       {
         path: 'settings',
-        element: <Typography variant='h3'>Settings</Typography>,
+        element: <Typography variant='h4'>Settings</Typography>,
       },
     ],
   },

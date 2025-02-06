@@ -3,11 +3,17 @@ import { Stack, Typography } from '@mui/material';
 import { SideNavBar } from '@components/atomic/organisms';
 
 export const Dashboard = () => (
-  <Stack sx={{ flexDirection: 'row', height: '100dvh', overflow: 'hidden' }}>
+  <Stack
+    sx={{
+      flexDirection: 'row',
+      height: '100dvh',
+      overflow: 'hidden',
+      padding: 1.5,
+    }}
+  >
     <Stack
       sx={{
         width: 'fit-content',
-        borderRight: (theme) => `1px solid ${theme.palette.divider}`,
         display: { xs: 'none', md: 'flex' },
       }}
     >
@@ -16,29 +22,48 @@ export const Dashboard = () => (
     <Stack
       sx={{
         flex: 1,
-        height: '100dvh',
         overflow: 'hidden',
       }}
     >
       <Stack
         sx={{
           flex: 1,
-          padding: { xs: '1rem', md: '1rem 3rem' },
-          maxHeight: 'calc(100dvh - 80px)',
-          overflow: 'auto',
+          maxHeight: 'calc(100dvh - 60px)',
+          overflow: 'hidden',
+          paddingLeft: { xs: 0, md: 1.5 },
+          paddingBottom: 1.5,
         }}
       >
-        <Outlet />
+        <Stack
+          sx={{
+            padding: '1rem',
+            backgroundColor: (theme) => theme.palette.background.paper,
+            borderRadius: 1,
+            height: '100%',
+            maxHeight: '100%',
+            overflow: 'auto',
+          }}
+        >
+          <Outlet />
+        </Stack>
       </Stack>
       <Stack
         sx={{
-          height: 80,
-          borderTop: (theme) => `1px solid ${theme.palette.divider}`,
-          alignItems: 'center',
-          justifyContent: 'center',
+          height: 60,
+          paddingLeft: { xs: 0, md: 1.5 },
         }}
       >
-        <Typography>PLAYER</Typography>
+        <Stack
+          sx={{
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: (theme) => theme.palette.background.paper,
+            borderRadius: 1,
+          }}
+        >
+          <Typography>PLAYER</Typography>
+        </Stack>
       </Stack>
     </Stack>
   </Stack>

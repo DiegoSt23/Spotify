@@ -57,6 +57,13 @@ export const light = createTheme({
     },
   },
   components: {
+    MuiStack: {
+      styleOverrides: {
+        root: {
+          boxSizing: 'border-box',
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {

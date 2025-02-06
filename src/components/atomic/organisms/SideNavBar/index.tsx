@@ -17,110 +17,116 @@ export const SideNavBar = () => {
   return (
     <Stack
       sx={{
-        width: expanded ? 250 : 55,
+        width: expanded ? 200 : 60,
         height: '100%',
-        padding: expanded ? '1.5rem 1rem 0rem 0rem' : '1.5rem 0rem 0rem 0rem',
+        padding: expanded ? '1rem' : '1rem 0.4rem 1rem 0.4rem',
         position: 'relative',
         transition: 'all 0.3s',
+        backgroundColor: (theme) => theme.palette.background.paper,
+        borderRadius: 1,
+        willChange: 'width',
       }}
     >
-      <Stack sx={{ flex: 1, gap: 2 }}>
+      <Stack sx={{ flex: 1, gap: 3 }}>
         <Stack
           sx={{
-            pl: expanded ? 2.5 : 0.6,
-            pb: 5.5,
+            maxWidth: expanded ? 200 : 55,
+            transform: expanded ? 'translateX(-2px)' : 'translateX(1px)',
             transition: 'all 0.3s',
             overflow: 'hidden',
-            position: 'relative',
           }}
         >
-          <Stack sx={{ position: 'absolute' }}>
-            <img src={fullLogo} alt='logo' width={155} />
-          </Stack>
+          <img src={fullLogo} alt='logo' width={155} />
         </Stack>
-        {navItems.map(({ sectionLabel, items }) => (
-          <Stack key={sectionLabel}>
-            <Stack sx={{ overflow: 'hidden', position: 'relative', pb: 1 }}>
-              <Typography
-                variant='caption'
-                sx={{
-                  pl: 9,
-                  color: (theme) => theme.palette.accent.main,
-                  fontWeight: 700,
-                  whiteSpace: 'nowrap',
-                  transition: 'color 0.3s',
-                }}
-              >
-                {sectionLabel}
-              </Typography>
-              <Stack
-                sx={{
-                  width: 60,
-                  borderTop: (theme) => `solid 1px ${theme.palette.divider}`,
-                  position: 'absolute',
-                  top: 9,
-                }}
-              />
-            </Stack>
-            <List>
-              {items.map(({ label, icon, isActive, onClick }) => (
-                <ListItem key={label} disablePadding>
-                  <Tooltip
-                    title={label}
-                    placement='right'
-                    disableHoverListener={expanded}
-                    arrow
-                  >
-                    <ListItemButton
-                      disableGutters
-                      selected={isActive}
-                      onClick={onClick}
-                      sx={{
-                        borderRadius: expanded ? '0rem 1rem 1rem 0rem' : 0,
-                        pl: expanded ? 8.5 : 1.6,
-                        borderLeft: (theme) =>
-                          isActive
-                            ? `3px solid ${theme.palette.accent.main}`
-                            : '3px solid transparent',
-                        transition: 'all 0.3s',
-                      }}
+        <Stack sx={{ flex: 1, gap: 1 }}>
+          {navItems.map(({ sectionLabel, items }) => (
+            <Stack key={sectionLabel}>
+              <Stack sx={{ overflow: 'hidden', position: 'relative', pb: 1 }}>
+                <Typography
+                  variant='caption'
+                  sx={{
+                    color: (theme) => theme.palette.accent.main,
+                    transform: expanded
+                      ? 'translateX(3px)'
+                      : 'translateX(100px)',
+                    fontWeight: 700,
+                    whiteSpace: 'nowrap',
+                    transition: 'transform 0.3s',
+                  }}
+                >
+                  {sectionLabel}
+                </Typography>
+                <Stack
+                  sx={{
+                    width: 60,
+                    top: 9,
+                    borderTop: (theme) => `solid 1px ${theme.palette.divider}`,
+                    transform: expanded
+                      ? 'translateX(-100px)'
+                      : 'translateX(0)',
+                    position: 'absolute',
+                    transition: 'transform 0.3s',
+                  }}
+                />
+              </Stack>
+              <List>
+                {items.map(({ label, icon, isActive, onClick }) => (
+                  <ListItem key={label} disablePadding>
+                    <Tooltip
+                      title={label}
+                      placement='right'
+                      disableHoverListener={expanded}
+                      arrow
                     >
-                      <Stack
+                      <ListItemButton
+                        disableGutters
+                        selected={isActive}
+                        onClick={onClick}
                         sx={{
-                          flexDirection: 'row',
-                          gap: 2.2,
-                          alignItems: 'center',
+                          borderRadius: 1,
+                          pl: expanded ? 1.2 : 1.4,
+                          transition: 'all 0.3s',
+                          overflow: 'hidden',
+                          willChange: 'width',
                         }}
                       >
-                        {icon}
-                        {expanded && (
-                          <Typography
-                            sx={{
-                              color: (theme) =>
-                                isActive
-                                  ? theme.palette.text.primary
-                                  : theme.palette.text.disabled,
-                            }}
-                          >
-                            {label}
-                          </Typography>
-                        )}
-                      </Stack>
-                    </ListItemButton>
-                  </Tooltip>
-                </ListItem>
-              ))}
-            </List>
-          </Stack>
-        ))}
+                        <Stack
+                          sx={{
+                            flexDirection: 'row',
+                            gap: 2.2,
+                            alignItems: 'center',
+                          }}
+                        >
+                          {icon}
+                          {expanded && (
+                            <Typography
+                              sx={{
+                                color: (theme) =>
+                                  isActive
+                                    ? theme.palette.text.primary
+                                    : theme.palette.text.disabled,
+                              }}
+                            >
+                              {label}
+                            </Typography>
+                          )}
+                        </Stack>
+                      </ListItemButton>
+                    </Tooltip>
+                  </ListItem>
+                ))}
+              </List>
+            </Stack>
+          ))}
+        </Stack>
       </Stack>
       <IconButton
         size='small'
         sx={{
           position: 'absolute',
           backgroundColor: (theme) => theme.palette.background.paper,
-          right: -18,
-          bottom: 20,
+          right: 12,
+          bottom: 12,
           border: (theme) => `1px solid ${theme.palette.divider}`,
           transform: expanded ? 'rotateY(180deg)' : 'rotateY(0deg)',
           transition: 'transform 0.3s',

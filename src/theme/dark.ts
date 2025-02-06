@@ -18,7 +18,7 @@ export const dark = createTheme({
     },
     background: {
       default: '#000',
-      paper: '#080809',
+      paper: '#111112',
     },
     common: {
       black: '#000',
@@ -63,6 +63,13 @@ export const dark = createTheme({
     },
   },
   components: {
+    MuiStack: {
+      styleOverrides: {
+        root: {
+          boxSizing: 'border-box',
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -73,7 +80,7 @@ export const dark = createTheme({
         {
           props: { variant: 'outlined' },
           style: {
-            borderColor: '#292929',
+            borderColor: '#3d3d3d',
           },
         },
       ],
@@ -88,7 +95,7 @@ export const dark = createTheme({
     MuiCardHeader: {
       styleOverrides: {
         root: {
-          borderBottom: '1px solid #292929',
+          borderBottom: '1px solid #3d3d3d',
         },
       },
     },

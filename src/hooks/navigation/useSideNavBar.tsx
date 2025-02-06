@@ -27,7 +27,9 @@ export const useSideNavBar = () => {
       items: [
         {
           label: t('navItems.main.items.home'),
-          icon: <Window />,
+          icon: (
+            <Window />
+          ),
           isActive: pathname === '/home',
           onClick: () => navigate('/home'),
         },
