@@ -1,0 +1,28 @@
+{
+  "pageTitle": "Settings",
+  "soundQuality": {
+    "title": "Sound Quality",
+    "description": "Select the sound quality for your music",
+    "longDescription": "This section lets you adjust the audio playback quality, directly affecting clarity and data usage. Higher quality delivers richer, more detailed sound but consumes more bandwidth, while lower quality reduces data usage at the cost of some audio detail. Choose the option that best suits your listening preferences and network conditions."
+  },
+  "theme": {
+    "title": "Theme",
+    "description": "Select your theme",
+    "longDescription": "This section allows you to customize the app’s appearance. The Light theme provides a bright interface, while the Dark theme offers a dimmer look that’s easier on the eyes in low-light environments. Selecting System will match the app’s theme to your device’s system settings, automatically switching between light and dark modes as configured on your device.",
+    "options": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    }
+  },
+  "language": {
+    "title": "Language",
+    "description": "Select your language",
+    "longDescription": "This section allows you to set the app's display language. Choosing English or Spanish will keep the app in that language regardless of your device settings. Selecting System will match the app’s language to your device’s preferred language for a seamless experience.",
+    "options": {
+      "system": "System",
+      "english": "English",
+      "spanish": "Spanish"
+    }
+  }
+}

@@ -12,26 +12,28 @@ import fullLogo from '@assets/svg/Full_Logo_Green_RGB.svg';
 import { useSideNavBar } from '@hooks/navigation';
 
 export const SideNavBar = () => {
-  const { expanded, handleExpand, navItems } = useSideNavBar();
+  const { isSideNavBarOpen, handleExpand, navItems } = useSideNavBar();
 
   return (
     <Stack
       sx={{
-        width: expanded ? 200 : 60,
+        width: isSideNavBarOpen ? 200 : 60,
         height: '100%',
-        padding: expanded ? '1rem' : '1rem 0.4rem 1rem 0.4rem',
+        padding: isSideNavBarOpen ? '1rem' : '1rem 0.4rem 1rem 0.4rem',
         position: 'relative',
-        transition: 'all 0.3s',
+        transition: 'padding 0.3s, width 0.3s',
         backgroundColor: (theme) => theme.palette.background.paper,
-        borderRadius: 1,
-        willChange: 'width',
+        borderRadius: 2,
+        // willChange: 'width',
       }}
     >
-      <Stack sx={{ flex: 1, gap: 3 }}>
+      <Stack sx={{ flex: 1, gap: 2.6 }}>
         <Stack
           sx={{
-            maxWidth: expanded ? 200 : 55,
-            transform: expanded ? 'translateX(-2px)' : 'translateX(1px)',
+            maxWidth: isSideNavBarOpen ? 200 : 55,
+            transform: isSideNavBarOpen
+              ? 'translateX(-2px)'
+              : 'translateX(1px)',
             transition: 'all 0.3s',
             overflow: 'hidden',
           }}
@@ -39,14 +41,15 @@ export const SideNavBar = () => {
           <img src={fullLogo} alt='logo' width={155} />
         </Stack>
         <Stack sx={{ flex: 1, gap: 1 }}>
-          {navItems.map(({ sectionLabel, items }) => (
+          {navItems.map(({ sectionLabel, items }, index) => (
             <Stack key={sectionLabel}>
               <Stack sx={{ overflow: 'hidden', position: 'relative', pb: 1 }}>
                 <Typography
                   variant='caption'
                   sx={{
+                    display: index === 0 ? 'none' : 'block',
                     color: (theme) => theme.palette.accent.main,
-                    transform: expanded
+                    transform: isSideNavBarOpen
                       ? 'translateX(3px)'
                       : 'translateX(100px)',
                     fontWeight: 700,
@@ -60,8 +63,9 @@ export const SideNavBar = () => {
                   sx={{
                     width: 60,
                     top: 9,
+                    display: index === 0 ? 'none' : 'block',
                     borderTop: (theme) => `solid 1px ${theme.palette.divider}`,
-                    transform: expanded
+                    transform: isSideNavBarOpen
                       ? 'translateX(-100px)'
                       : 'translateX(0)',
                     position: 'absolute',
@@ -75,7 +79,7 @@ export const SideNavBar = () => {
                     <Tooltip
                       title={label}
                       placement='right'
-                      disableHoverListener={expanded}
+                      disableHoverListener={isSideNavBarOpen}
                       arrow
                     >
                       <ListItemButton
@@ -83,11 +87,10 @@ export const SideNavBar = () => {
                         selected={isActive}
                         onClick={onClick}
                         sx={{
-                          borderRadius: 1,
-                          pl: expanded ? 1.2 : 1.4,
+                          borderRadius: 1.5,
+                          pl: isSideNavBarOpen ? 1.2 : 1.4,
                           transition: 'all 0.3s',
                           overflow: 'hidden',
-                          willChange: 'width',
                         }}
                       >
                         <Stack
@@ -98,7 +101,7 @@ export const SideNavBar = () => {
                           }}
                         >
                           {icon}
-                          {expanded && (
+                          {isSideNavBarOpen && (
                             <Typography
                               sx={{
                                 color: (theme) =>
@@ -122,17 +125,18 @@ export const SideNavBar = () => {
       </Stack>
       <IconButton
         size='small'
+        onClick={handleExpand}
         sx={{
           position: 'absolute',
           backgroundColor: (theme) => theme.palette.background.paper,
           right: 12,
           bottom: 12,
           border: (theme) => `1px solid ${theme.palette.divider}`,
-          transform: expanded ? 'rotateY(180deg)' : 'rotateY(0deg)',
+          transform: isSideNavBarOpen ? 'rotateY(180deg)' : 'rotateY(0deg)',
           transition: 'transform 0.3s',
         }}
       >
-        <ChevronRight onClick={handleExpand} />
+        <ChevronRight />
       </IconButton>
     </Stack>
   );

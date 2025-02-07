@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 import {
   Stack,
   Button,
@@ -8,17 +11,25 @@ import {
 } from '@mui/material';
 import { GitHub, LinkedIn, Launch } from '@mui/icons-material';
 import { useLanguage } from '@hooks/language';
-// import { useGetAccessToken } from '@hooks/auth';
+import { useGetAccessToken } from '@hooks/auth';
 import fullLogo from '@assets/svg/Full_Logo_Green_RGB.svg';
 import headphones from '@assets/img/headphones-2.jpg';
 
 export const Login = () => {
+  useGetAccessToken();
+  const navigate = useNavigate();
   const { t } = useLanguage('login');
-  // useGetAccessToken();
+  const accessToken = Cookies.get('token') || '';
 
   const handleNavigateLogin = () => {
     window.location.href = 'http://localhost:8888';
   };
+
+  useEffect(() => {
+    if (accessToken) {
+     navigate('/home', { replace: true });
+    }
+  }, [accessToken, navigate]);
 
   return (
     <Stack sx={{ flexDirection: 'row' }}>
@@ -52,7 +63,7 @@ export const Login = () => {
             gap: 3,
           }}
         >
-          <Card variant='outlined'>
+          <Card sx={{ boxShadow: 0 }}>
             <CardContent>
               <Stack gap={3} pt={2}>
                 <Stack alignItems='center'>

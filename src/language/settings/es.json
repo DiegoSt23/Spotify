@@ -1,0 +1,28 @@
+{
+  "pageTitle": "Configuración",
+  "soundQuality": {
+    "title": "Calidad de sonido",
+    "description": "Selecciona la calidad de sonido para tu música",
+    "longDescription": "Esta sección te permite ajustar la calidad de reproducción de audio, afectando directamente la claridad y el uso de datos. Una mayor calidad ofrece un sonido más rico y detallado, pero consume más ancho de banda, mientras que una calidad más baja reduce el uso de datos a costa de algunos detalles de audio. Elige la opción que mejor se adapte a tus preferencias de escucha y condiciones de red."
+  },
+  "theme": {
+    "title": "Tema",
+    "description": "Selecciona tu tema",
+    "longDescription": "Esta sección te permite personalizar la apariencia de la aplicación. El tema Claro proporciona una interfaz brillante, mientras que el tema Oscuro ofrece un aspecto más tenue que es más cómodo para la vista en entornos con poca luz. Al seleccionar Sistema, el tema de la aplicación coincidirá con la configuración del sistema de tu dispositivo, cambiando automáticamente entre los modos claro y oscuro según lo configurado en tu dispositivo.",
+    "options": {
+      "system": "Sistema",
+      "light": "Claro",
+      "dark": "Oscuro"
+    }
+  },
+  "language": {
+    "title": "Idioma",
+    "description": "Selecciona tu idioma",
+    "longDescription": "Esta sección te permite establecer el idioma de visualización de la aplicación. Elegir Inglés o Español mantendrá la aplicación en ese idioma sin importar la configuración de tu dispositivo. Al seleccionar Sistema, el idioma de la aplicación coincidirá con el idioma preferido de tu dispositivo para una experiencia más fluida.",
+    "options": {
+      "system": "Sistema",
+      "english": "Inglés",
+      "spanish": "Español"
+    }
+  }
+}

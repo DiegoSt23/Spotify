@@ -1,23 +1,13 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 export const useGetAccessToken = () => {
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const accessToken = searchParams.get('access_token') || '';
+  // const refreshToken = searchParams.get('refresh_token') || '';
 
   useEffect(() => {
-    const getTokenFromUrl = () => {
-      return location.hash
-        .substring(1)
-        .split('&')
-        .reduce((initial: Record<string, string>, item) => {
-          const parts: string[] = item.split('=');
-          initial[parts[0]] = decodeURIComponent(parts[1]);
-  
-          return initial;
-        }, {});
-    };
-    const tokens = getTokenFromUrl();
-    Cookies.set('token', tokens?.access_token || '');
-  }, [location]);
+    Cookies.set('token', accessToken);
+  }, [accessToken]);
 };

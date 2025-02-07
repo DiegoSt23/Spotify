@@ -1,11 +1,18 @@
 import { create } from 'zustand';
-import { AuthStore, CurrentUserStore } from '@common/interfaces';
+import { devtools } from 'zustand/middleware';
+import {
+  AuthStore,
+  CurrentUserStore,
+  NavigationStore,
+} from '@common/interfaces';
 import { authSlice } from './auth';
 import { currentUserSlice } from './currentUser';
+import { navigationSlice } from './navigation';
 
-type Store = AuthStore & CurrentUserStore;
+interface Store extends AuthStore, CurrentUserStore, NavigationStore {};
 
-export const useStore = create<Store>((...args) => ({
+export const useStore = create<Store>()(devtools((...args) => ({
+  ...navigationSlice(...args),
   ...authSlice(...args),
   ...currentUserSlice(...args),
-}));
+})));

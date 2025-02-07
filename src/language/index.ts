@@ -8,6 +8,8 @@ import loginEn from './login/en.json';
 import loginEs from './login/es.json';
 import sideNavBarEn from './sideNavBar/en.json';
 import sideNavBarEs from './sideNavBar/es.json';
+import settingsEn from './settings/en.json';
+import settingsEs from './settings/es.json';
 
 const languageDetector = new LanguageDetector();
 languageDetector.addDetector({
@@ -33,5 +35,7 @@ i18n.addResourceBundle('en', 'login', loginEn);
 i18n.addResourceBundle('es', 'login', loginEs);
 i18n.addResourceBundle('en', 'sideNavBar', sideNavBarEn);
 i18n.addResourceBundle('es', 'sideNavBar', sideNavBarEs);
+i18n.addResourceBundle('en', 'settings', settingsEn);
+i18n.addResourceBundle('es', 'settings', settingsEs);
 
 export { i18n };

@@ -1,3 +1,27 @@
+interface Image {
+  url: string;
+  height: number;
+  width: number;
+}
+
+interface Artist {
+  external_urls: {
+    spotify: string;
+  };
+  followers: {
+    href: string;
+    total: number;
+  };
+  genres: string[];
+  href: string;
+  id: string;
+  images: Image[];
+  name: string;
+  popularity: number;
+  type: 'artist';
+  uri: string;
+}
+
 export interface CurrentUser {
   country: string;
   display_name: string;
@@ -15,17 +39,27 @@ export interface CurrentUser {
   };
   href: string;
   id: string;
-  images: {
-    height: number;
-    url: string;
-    width: number;
-  }[];
+  images: Image[];
   product: string;
   type: string;
   uri: string;
-};
+}
 
 export interface CurrentUserStore {
   currentUser: CurrentUser | null;
   setCurrentUser: (currentUser: CurrentUser | null) => void;
+}
+
+export interface ArtistResponse {
+  artists: {
+    href: string;
+    limit: number;
+    next: string;
+    cursors: {
+      after: string;
+      before: string;
+    };
+    total: number;
+    items: Artist[];
+  };
 }

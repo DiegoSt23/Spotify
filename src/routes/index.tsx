@@ -1,7 +1,21 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Typography } from '@mui/material';
-import { Dashboard } from '@components/atomic';
-import { StyleGuide, Login, NotFound } from '@pages/index';
+import { Dashboard } from '@components/layout';
+import {
+  Login,
+  Home,
+  Search,
+  Stats,
+  Songs,
+  Artists,
+  Albums,
+  Playlists,
+  Podcasts,
+  Profile,
+  About,
+  Settings,
+  NotFound,
+  StyleGuide,
+} from '@pages/index';
 
 export const router = createBrowserRouter([
   {
@@ -14,51 +28,47 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'home',
-        element: (
-          <Typography variant='h4'>
-            Home
-          </Typography>
-        ),
+        element: <Home />,
       },
       {
         path: 'search',
-        element: <Typography variant='h4'>Search</Typography>,
+        element: <Search />,
       },
       {
         path: 'stats',
-        element: <Typography variant='h4'>Stats</Typography>,
+        element: <Stats />,
       },
       {
         path: 'songs',
-        element: <Typography variant='h4'>Songs</Typography>,
+        element: <Songs />,
       },
       {
         path: 'artists',
-        element: <Typography variant='h4'>Artists</Typography>,
+        element: <Artists />,
       },
       {
         path: 'albums',
-        element: <Typography variant='h4'>Albums</Typography>,
+        element: <Albums />,
       },
       {
         path: 'playlists',
-        element: <Typography variant='h4'>Playlists</Typography>,
+        element: <Playlists />,
       },
       {
         path: 'podcasts',
-        element: <Typography variant='h4'>Podcasts</Typography>,
+        element: <Podcasts />,
       },
       {
         path: 'profile',
-        element: <Typography variant='h4'>Profile</Typography>,
+        element: <Profile />,
       },
       {
         path: 'about',
-        element: <Typography variant='h4'>About</Typography>,
+        element: <About />,
       },
       {
         path: 'settings',
-        element: <Typography variant='h4'>Settings</Typography>,
+        element: <Settings />,
       },
     ],
   },

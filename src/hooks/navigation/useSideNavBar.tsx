@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Window,
@@ -14,12 +13,13 @@ import {
   BarChart,
 } from '@mui/icons-material';
 import { useLanguage } from '@hooks/language';
+import { useStore } from '@store/index';
 
 export const useSideNavBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { t } = useLanguage('sideNavBar');
-  const [expanded, setExpanded] = useState<boolean>(false);
+  const { isSideNavBarOpen, toggleSideNavBar } = useStore();
 
   const navItems = [
     {
@@ -108,11 +108,11 @@ export const useSideNavBar = () => {
   ];
 
   const handleExpand = () => {
-    setExpanded((prev) => !prev);
+    toggleSideNavBar(!isSideNavBarOpen);
   };
 
   return {
-    expanded,
+    isSideNavBarOpen,
     handleExpand,
     navItems,
   };

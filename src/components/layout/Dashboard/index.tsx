@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { Stack, Typography } from '@mui/material';
-import { SideNavBar } from '@components/atomic/organisms';
+import { SideNavBar } from '@components/navigation';
 
 export const Dashboard = () => (
   <Stack
@@ -38,10 +38,9 @@ export const Dashboard = () => (
           sx={{
             padding: '1rem',
             backgroundColor: (theme) => theme.palette.background.paper,
-            borderRadius: 1,
+            borderRadius: 2,
             height: '100%',
-            maxHeight: '100%',
-            overflow: 'auto',
+            overflow: 'hidden',
           }}
         >
           <Outlet />
@@ -59,7 +58,7 @@ export const Dashboard = () => (
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: (theme) => theme.palette.background.paper,
-            borderRadius: 1,
+            borderRadius: 2,
           }}
         >
           <Typography>PLAYER</Typography>
