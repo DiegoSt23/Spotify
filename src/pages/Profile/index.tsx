@@ -36,12 +36,6 @@ export const Profile = () => {
               width={150}
               height={50}
             />
-            <Skeleton
-              animation='wave'
-              variant='rounded'
-              width={150}
-              height={30}
-            />
           </>
         ) : (
           <>

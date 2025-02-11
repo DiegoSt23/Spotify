@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
-  Window,
+  SpaceDashboard,
   Search,
   Settings,
   Info,
@@ -27,9 +27,7 @@ export const useSideNavBar = () => {
       items: [
         {
           label: t('navItems.main.items.home'),
-          icon: (
-            <Window />
-          ),
+          icon: <SpaceDashboard />,
           isActive: pathname === '/home',
           onClick: () => navigate('/home'),
         },

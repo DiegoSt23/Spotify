@@ -3,10 +3,12 @@ import { createTheme } from '@mui/material/styles';
 declare module '@mui/material/styles' {
   interface Palette {
     accent: Palette['primary'];
+    transparentText: Palette['primary'];
   }
 
   interface PaletteOptions {
     accent?: PaletteOptions['primary'];
+    transparentText: PaletteOptions['primary'];
   }
 }
 
@@ -28,6 +30,9 @@ export const theme = createTheme({
         accent: {
           main: '#1cd763',
         },
+        transparentText: {
+          main: '#ffffff7d',
+        },
       },
     },
     light: {
@@ -45,6 +50,9 @@ export const theme = createTheme({
         },
         accent: {
           main: '#1cd763',
+        },
+        transparentText: {
+          main: '#ffffff7d',
         },
       },
     },
@@ -105,14 +113,6 @@ export const theme = createTheme({
           textTransform: 'none',
         },
       },
-      // variants: [
-      //   {
-      //     props: { variant: 'outlined' },
-      //     style: {
-      //       borderColor: '#3d3d3d',
-      //     },
-      //   },
-      // ],
     },
     MuiLinearProgress: {
       styleOverrides: {

@@ -30,7 +30,8 @@
       "@theme/*": ["./theme/*"],
       "@routes/*": ["./routes/*"],
       "@store/*": ["./store/*"],
-      "@hooks/*": ["./hooks/*"]
+      "@hooks/*": ["./hooks/*"],
+      "@context/*": ["./context/*"]
     }
   },
   "include": ["src"]

@@ -11,7 +11,7 @@ const handleGetCurrentUserData = async (): Promise<CurrentUser> => {
 
 const handleGetCurrentUserFollowedArtists =
   async (): Promise<ArtistResponse> => {
-    const response = await Api.get<ArtistResponse>('/me/following?type=artist&limit=50');
+    const response = await Api.get<ArtistResponse>('/me/following?type=artist&limit=1');
 
     return response;
   };
@@ -24,12 +24,10 @@ export const useGetCurrentUserData = (userId?: string) => {
       {
         queryKey: ['getCurrentUserData', userId],
         queryFn: handleGetCurrentUserData,
-        staleTime: Infinity,
       },
       {
         queryKey: ['getCurrentUserFollowedArtists', userId],
         queryFn: handleGetCurrentUserFollowedArtists,
-        staleTime: Infinity,
       },
     ],
     combine: (results) => {
@@ -37,6 +35,8 @@ export const useGetCurrentUserData = (userId?: string) => {
         data: { ...results?.[0]?.data, ...results?.[1]?.data },
         pending: results.some((result) => result.isPending),
         isFetching: results.some((result) => result.isFetching),
+        isError: results.some((result) => result.isError),
+        isSuccess: results.every((result) => result.isSuccess),
       };
     },
   });

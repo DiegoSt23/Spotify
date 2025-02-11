@@ -1,44 +1,47 @@
 import { Outlet } from 'react-router-dom';
-import { Stack, Typography } from '@mui/material';
-import { SideNavBar } from '@components/navigation';
+import { Stack, Divider } from '@mui/material';
+import { SideNavBar, MobileNavBar } from '@components/navigation';
+import { Player } from '@components/player';
+import { QueueListDrawer } from '@components/queue';
 
 export const Dashboard = () => (
   <Stack
     sx={{
-      flexDirection: 'row',
       height: '100dvh',
       overflow: 'hidden',
-      padding: 1.5,
+      padding: { xs: 0, sm: 1.5 },
     }}
   >
     <Stack
       sx={{
-        width: 'fit-content',
-        display: { xs: 'none', md: 'flex' },
-      }}
-    >
-      <SideNavBar />
-    </Stack>
-    <Stack
-      sx={{
         flex: 1,
+        flexDirection: 'row',
         overflow: 'hidden',
+        paddingBottom: { xs: 0, sm: 1.5 },
       }}
     >
+      {/* Side Nav Bar */}
+      <Stack
+        sx={{
+          width: 'fit-content',
+          display: { xs: 'none', md: 'flex' },
+        }}
+      >
+        <SideNavBar />
+      </Stack>
+      {/* Main Content */}
       <Stack
         sx={{
           flex: 1,
-          maxHeight: 'calc(100dvh - 60px)',
           overflow: 'hidden',
           paddingLeft: { xs: 0, md: 1.5 },
-          paddingBottom: 1.5,
         }}
       >
         <Stack
           sx={{
             padding: '1rem',
             backgroundColor: (theme) => theme.palette.background.paper,
-            borderRadius: 2,
+            borderRadius: { xs: 0, sm: 1.5 },
             height: '100%',
             overflow: 'hidden',
           }}
@@ -46,24 +49,47 @@ export const Dashboard = () => (
           <Outlet />
         </Stack>
       </Stack>
+    </Stack>
+    <Stack>
+      {/* Player */}
+      <Divider sx={{ display: { xs: 'block', sm: 'none' } }} />
       <Stack
         sx={{
-          height: 60,
-          paddingLeft: { xs: 0, md: 1.5 },
+          height: 'fit-content',
+          marginBottom: { xs: 0, sm: 1.5, md: 0 },
         }}
       >
         <Stack
           sx={{
             height: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: (theme) => theme.palette.background.paper,
-            borderRadius: 2,
+            borderRadius: { xs: 0, sm: 1.5 },
+            padding: { xs: '0.5rem 1rem', sm: '1rem' },
           }}
         >
-          <Typography>PLAYER</Typography>
+          <Player />
+        </Stack>
+      </Stack>
+      {/* Mobile Nav */}
+      <Divider sx={{ display: { xs: 'block', sm: 'none' } }} />
+      <Stack
+        sx={{
+          display: { xs: 'flex', md: 'none' },
+          height: 'fit-content',
+        }}
+      >
+        <Stack
+          sx={{
+            height: '100%',
+            backgroundColor: (theme) => theme.palette.background.paper,
+            borderRadius: { xs: 0, sm: 1.5 },
+            padding: 1.5,
+          }}
+        >
+          <MobileNavBar />
         </Stack>
       </Stack>
     </Stack>
+    <QueueListDrawer />
   </Stack>
 );
