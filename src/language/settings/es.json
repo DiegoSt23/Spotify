@@ -24,5 +24,10 @@
       "english": "Inglés",
       "spanish": "Español"
     }
+  },
+  "backgroundAnimation": {
+    "title": "Animación de Fondo",
+    "description": "Habilitar/Deshabilitar animación de fondo",
+    "longDescription": "Esta sección te permite controlar la animación de fondo en el reproductor de música a pantalla completa. Al habilitarla, se añaden efectos visuales dinámicos para una experiencia inmersiva (disponible solo en modo oscuro). Al deshabilitarla, el fondo permanecerá estático, lo que puede ayudar a conservar la batería."
   }
 }

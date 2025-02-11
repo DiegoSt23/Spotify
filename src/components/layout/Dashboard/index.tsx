@@ -83,7 +83,7 @@ export const Dashboard = () => (
             height: '100%',
             backgroundColor: (theme) => theme.palette.background.paper,
             borderRadius: { xs: 0, sm: 1.5 },
-            padding: 1.5,
+            padding: { xs: '0.5rem 0.8rem 1rem 0.8rem', sm: '0.7rem' },
           }}
         >
           <MobileNavBar />

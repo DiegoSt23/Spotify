@@ -6,9 +6,10 @@ import {
   Radio,
   Select,
   MenuItem,
+  Switch,
   useColorScheme,
 } from '@mui/material';
-import { Contrast, Translate, Speaker } from '@mui/icons-material';
+import { Contrast, Translate, Speaker, Animation } from '@mui/icons-material';
 import { Page } from '@components/layout';
 import { SettingsSection } from '@components/settings';
 import { useLanguage } from '@hooks/language';
@@ -73,6 +74,13 @@ export const Settings = () => {
           />
         </RadioGroup>
       ),
+    },
+    {
+      title: t('backgroundAnimation.title'),
+      description: t('backgroundAnimation.description'),
+      longDescription: t('backgroundAnimation.longDescription'),
+      icon: <Animation sx={{ fill: (theme) => theme.palette.accent.main }} />,
+      children: <Switch edge='start' />,
     },
     {
       title: t('language.title'),

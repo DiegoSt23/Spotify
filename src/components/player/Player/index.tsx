@@ -80,13 +80,26 @@ export const Player = () => {
               <KeyboardArrowUp />
             </IconButton>
           </Stack>
-          <Stack>
-            <Typography>Find My Way</Typography>
+          <Stack sx={{ flex: 1, overflow: 'hidden', pr: 2 }}>
             <Typography
-              variant='body2'
-              sx={{ color: (theme) => theme.palette.text.disabled }}
+              sx={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                fontWeight: 500
+              }}
             >
-              Nine Inch Nails
+              Find My Way
+            </Typography>
+            <Typography
+              sx={{
+                color: (theme) => theme.palette.text.disabled,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+             Nine Inch Nails
             </Typography>
           </Stack>
         </Stack>
