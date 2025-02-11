@@ -1,3 +1,4 @@
+import { cloneElement } from 'react';
 import {
   Stack,
   List,
@@ -12,7 +13,7 @@ import fullLogo from '@assets/svg/Full_Logo_Green_RGB.svg';
 import { useSideNavBar } from '@hooks/navigation';
 
 export const SideNavBar = () => {
-  const { isSideNavBarOpen, handleExpand, navItems } = useSideNavBar();
+  const { isSideNavBarOpen, handleExpand, navItems, theme } = useSideNavBar();
 
   return (
     <Stack
@@ -74,7 +75,14 @@ export const SideNavBar = () => {
                             alignItems: 'center',
                           }}
                         >
-                          {icon}
+                          {cloneElement(icon, {
+                            sx: {
+                              ...icon.props.sx,
+                              fill: isActive
+                                ? theme.palette.accent.main
+                                : undefined,
+                            },
+                          })}
                           {isSideNavBarOpen && (
                             <Typography
                               sx={{

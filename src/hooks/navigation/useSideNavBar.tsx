@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTheme } from '@mui/material';
 import {
   SpaceDashboard,
   Search,
@@ -20,6 +21,7 @@ export const useSideNavBar = () => {
   const { pathname } = useLocation();
   const { t } = useLanguage('sideNavBar');
   const { isSideNavBarOpen, toggleSideNavBar } = useStore();
+  const theme = useTheme();
 
   const navItems = [
     {
@@ -113,5 +115,6 @@ export const useSideNavBar = () => {
     isSideNavBarOpen,
     handleExpand,
     navItems,
+    theme,
   };
 };
