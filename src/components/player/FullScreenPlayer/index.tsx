@@ -61,24 +61,41 @@ export const FullScreenPlayer = ({
           overflow: 'hidden',
         }}
       >
-        {isDarkTheme && (
+        {isDarkTheme ? (
           <img
-            src='https://i.scdn.co/image/ab67616d0000b27326e6b6f666ef40b6b8365e3e'
-            className='background-img'
+            src='https://i.scdn.co/image/ab67616d0000b2739b62c36a1f8ac00d60f460cc'
+            className='player-background-img-dark'
           />
+        ) : (
+          <>
+            <img
+              src='https://i.scdn.co/image/ab67616d0000b2739b62c36a1f8ac00d60f460cc'
+              className='player-background-img-light'
+            />
+            <Stack
+              sx={{
+                position: 'absolute',
+                width: '100%',
+                height: '100dvh',
+                backgroundColor: (theme) => theme.palette.common.white,
+                opacity: 0.85,
+                zIndex: 2,
+              }}
+            />
+          </>
         )}
         <Stack
           sx={{
             padding: '2rem',
             position: 'relative',
-            zIndex: 2,
+            zIndex: 3,
             gap: { xs: 1, sm: 1.5 },
             top: -15,
           }}
         >
           <Card variant='outlined' sx={{ boxShadow: 10 }}>
             <Avatar
-              src='https://i.scdn.co/image/ab67616d0000b27326e6b6f666ef40b6b8365e3e'
+              src='https://i.scdn.co/image/ab67616d0000b2739b62c36a1f8ac00d60f460cc'
               variant='rounded'
               sx={{
                 width: { xs: '100%', sm: 400, md: 500 },
@@ -87,11 +104,9 @@ export const FullScreenPlayer = ({
             />
           </Card>
           <Stack sx={{ textAlign: 'center', mt: 1 }}>
-            <Typography variant='subtitle1'>
-              7empest
-            </Typography>
+            <Typography variant='subtitle1'>Diamond Eyes</Typography>
             <Typography sx={{ color: (theme) => theme.palette.text.disabled }}>
-              Tool
+              Deftones
             </Typography>
           </Stack>
           <Stack
@@ -122,7 +137,7 @@ export const FullScreenPlayer = ({
             justifyContent: 'space-between',
             top: '1rem',
             padding: '0rem 1rem',
-            zIndex: 2,
+            zIndex: 3,
           }}
         >
           <IconButton onClick={onClose}>
@@ -138,7 +153,7 @@ export const FullScreenPlayer = ({
             position: 'absolute',
             bottom: '1rem',
             padding: '0rem 2rem',
-            zIndex: 2,
+            zIndex: 3,
             gap: 0.5,
           }}
         >

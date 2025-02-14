@@ -28,6 +28,6 @@
   "backgroundAnimation": {
     "title": "Background Animation",
     "description": "Enable/Disable background animation",
-    "longDescription": "This section lets you control the background animation in the full-screen music player. Enabling it adds dynamic visuals for an immersive experience (only available in dark mode). Disabling it keeps the background static, which may help conserve battery life."
+    "longDescription": "This section lets you control the background animation in the full-screen music player. Enabling it adds dynamic visuals for an immersive experience. Disabling it keeps the background static, which may help conserve battery life."
   }
 }

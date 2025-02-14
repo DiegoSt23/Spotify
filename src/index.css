@@ -6,7 +6,7 @@ body {
   box-sizing: border-box;
 }
 
-.background-img {
+.player-background-img-dark {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -14,6 +14,18 @@ body {
   right: 0;
   object-fit: cover;
   filter: blur(50px) brightness(0.4);
+  animation: spinScale 300s ease infinite;
+  z-index: 1;
+}
+
+.player-background-img-light {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  object-fit: cover;
+  filter: blur(8px);
   animation: spinScale 300s ease infinite;
   z-index: 1;
 }
