@@ -3,6 +3,7 @@ import {
   Dialog,
   Slide,
   Stack,
+  Card,
   Avatar,
   Typography,
   IconButton,
@@ -57,11 +58,12 @@ export const FullScreenPlayer = ({
           justifyContent: 'center',
           backgroundColor: (theme) => theme.palette.background.paper,
           position: 'relative',
+          overflow: 'hidden',
         }}
       >
         {isDarkTheme && (
           <img
-            src='https://i.scdn.co/image/ab67616d0000b2736c7057ee3dc07fde70d00891'
+            src='https://i.scdn.co/image/ab67616d0000b27326e6b6f666ef40b6b8365e3e'
             className='background-img'
           />
         )}
@@ -74,20 +76,22 @@ export const FullScreenPlayer = ({
             top: -15,
           }}
         >
-          <Avatar
-            src='https://i.scdn.co/image/ab67616d0000b2736c7057ee3dc07fde70d00891'
-            variant='rounded'
-            sx={{
-              width: { xs: '100%', sm: 400, md: 500 },
-              height: { xs: 'auto', sm: 400, md: 500 },
-              border: '1px solid #9c9c9c9a',
-              boxShadow: 10,
-            }}
-          />
+          <Card variant='outlined' sx={{ boxShadow: 10 }}>
+            <Avatar
+              src='https://i.scdn.co/image/ab67616d0000b27326e6b6f666ef40b6b8365e3e'
+              variant='rounded'
+              sx={{
+                width: { xs: '100%', sm: 400, md: 500 },
+                height: { xs: 'auto', sm: 400, md: 500 },
+              }}
+            />
+          </Card>
           <Stack sx={{ textAlign: 'center', mt: 1 }}>
-            <Typography variant='subtitle1'>Find My Way</Typography>
+            <Typography variant='subtitle1'>
+              7empest
+            </Typography>
             <Typography sx={{ color: (theme) => theme.palette.text.disabled }}>
-              Nine Inch Nails
+              Tool
             </Typography>
           </Stack>
           <Stack

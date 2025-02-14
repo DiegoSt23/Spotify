@@ -13,21 +13,21 @@ body {
   left: 0;
   right: 0;
   object-fit: cover;
-  filter: blur(100px) brightness(0.4);
-  animation: spinScale 400s ease infinite;
+  filter: blur(50px) brightness(0.4);
+  animation: spinScale 300s ease infinite;
   z-index: 1;
 }
 
 @keyframes spinScale {
   0% {
-    transform: rotate(0deg) scale(1);
+    transform: rotate(0deg) scale(2);
   }
 
   50% {
-    transform: rotate(180deg) scale(3);
+    transform: rotate(180deg) scale(5);
   }
 
   100% {
-    transform: rotate(360deg) scale(1);
+    transform: rotate(360deg) scale(2);
   }
 }

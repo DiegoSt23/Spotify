@@ -39,7 +39,7 @@ export const Dashboard = () => (
       >
         <Stack
           sx={{
-            padding: '1rem',
+            padding: '0rem 1rem 1rem 1rem',
             backgroundColor: (theme) => theme.palette.background.paper,
             borderRadius: { xs: 0, sm: 1.5 },
             height: '100%',

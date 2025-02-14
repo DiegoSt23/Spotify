@@ -133,5 +133,13 @@ export const theme = createTheme({
         },
       },
     },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          height: 35,
+          minHeight: 35,
+        },
+      },
+    },
   },
 });

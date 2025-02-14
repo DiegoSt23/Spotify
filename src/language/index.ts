@@ -10,6 +10,8 @@ import sideNavBarEn from './sideNavBar/en.json';
 import sideNavBarEs from './sideNavBar/es.json';
 import settingsEn from './settings/en.json';
 import settingsEs from './settings/es.json';
+import tracksEn from './tracks/en.json';
+import tracksEs from './tracks/es.json';
 
 const languageDetector = new LanguageDetector();
 languageDetector.addDetector({
@@ -37,5 +39,7 @@ i18n.addResourceBundle('en', 'sideNavBar', sideNavBarEn);
 i18n.addResourceBundle('es', 'sideNavBar', sideNavBarEs);
 i18n.addResourceBundle('en', 'settings', settingsEn);
 i18n.addResourceBundle('es', 'settings', settingsEs);
+i18n.addResourceBundle('en', 'tracks', tracksEn);
+i18n.addResourceBundle('es', 'tracks', tracksEs);
 
 export { i18n };

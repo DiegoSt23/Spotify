@@ -1,10 +1,6 @@
-export interface Tokens {
-  accessToken: string;
-  refreshToken: string;
-}
+import { Tokens } from '../auth';
 
 export interface AuthStore {
   tokens: Tokens;
   setTokens: (newTokens: Tokens) => void;
 }
-

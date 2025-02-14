@@ -1,0 +1,11 @@
+{
+  "tracksTable": {
+    "headerLabels": {
+      "song": "Song",
+      "artists": "Artists",
+      "album": "Album",
+      "added": "Added",
+      "time": "Time"
+    }
+  }
+}

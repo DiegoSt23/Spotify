@@ -1,13 +1,26 @@
-import { Typography } from '@mui/material';
+import { useGetCurrentUserTracks } from '@hooks/tracks';
+import { useExtendedTracksTable } from '@hooks/tracks';
 import { Page } from '@components/layout';
+import { Table } from '@components/common';
 
-export const Songs = () => (
-  <Page title='Songs'>
-    <Typography>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam, dolor
-      dicta perferendis non exercitationem ipsam ducimus cum nostrum veniam
-      explicabo, debitis ea aliquam? Aperiam sint, voluptatum nesciunt
-      laudantium quibusdam fuga.
-    </Typography>
-  </Page>
-);
+export const Songs = () => {
+  const { data, isFetching } = useGetCurrentUserTracks();
+  const { columns, isSmartphone } = useExtendedTracksTable();
+
+  return (
+    <Page title='Saved Songs'>
+      <Table
+        columns={columns.filter(Boolean)}
+        rows={data?.items}
+        loading={isFetching}
+        getRowId={(row) => row?.track?.id}
+        slots={{
+          columnHeaders: isSmartphone ? () => null : undefined,
+        }}
+        hideFooter
+        disableRowSelectionOnClick
+        disableColumnSelector
+      />
+    </Page>
+  );
+};

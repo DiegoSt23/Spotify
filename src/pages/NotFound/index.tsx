@@ -8,12 +8,23 @@ export const NotFound = () => {
 
   return (
     <Stack
-      sx={{ height: '100dvh', alignItems: 'center', justifyContent: 'center' }}
+      sx={{
+        height: '100dvh',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: (theme) => theme.palette.background.paper,
+      }}
     >
       <Typography variant='h1'>404</Typography>
       <Typography variant='subtitle1'>{t('title')}</Typography>
-      <Typography>{t('description')}</Typography>
-      <Button variant='contained' onClick={() => navigate('/home')} sx={{ mt: 3 }}>
+      <Typography sx={{ color: (theme) => theme.palette.text.disabled }}>
+        {t('description')}
+      </Typography>
+      <Button
+        variant='contained'
+        onClick={() => navigate('/home')}
+        sx={{ mt: 3 }}
+      >
         {t('back')}
       </Button>
     </Stack>

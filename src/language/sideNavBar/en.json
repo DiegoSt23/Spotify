@@ -9,7 +9,7 @@
       }
     },
     "myMusic": {
-      "sectionLabel": "MY MUSIC",
+      "sectionLabel": "LIBRARY",
       "items": {
         "songs": "Songs",
         "artists": "Artists",

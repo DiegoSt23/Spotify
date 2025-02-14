@@ -1,5 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { PrivateRoute, Dashboard } from '@components/index';
+import {
+  PrivateRoute,
+  Dashboard,
+  AlbumsLayout,
+  PlaylistsLayout,
+} from '@components/index';
 import {
   Login,
   Home,
@@ -7,8 +12,10 @@ import {
   Stats,
   Songs,
   Artists,
-  Albums,
-  Playlists,
+  CurrentUserAlbums,
+  AlbumDetails,
+  CurrentUserPlaylists,
+  PlaylistDetails,
   Podcasts,
   Profile,
   About,
@@ -52,11 +59,31 @@ export const router = createBrowserRouter([
       },
       {
         path: 'albums',
-        element: <Albums />,
+        element: <AlbumsLayout />,
+        children: [
+          {
+            path: 'me',
+            element: <CurrentUserAlbums />,
+          },
+          {
+            path: ':id',
+            element: <AlbumDetails />,
+          },
+        ],
       },
       {
         path: 'playlists',
-        element: <Playlists />,
+        element: <PlaylistsLayout />,
+        children: [
+          {
+            path: 'me',
+            element: <CurrentUserPlaylists />,
+          },
+          {
+            path: ':id',
+            element: <PlaylistDetails />,
+          },
+        ],
       },
       {
         path: 'podcasts',

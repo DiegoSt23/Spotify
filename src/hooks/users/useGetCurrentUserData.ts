@@ -1,17 +1,22 @@
 import { useQueries } from '@tanstack/react-query';
 import { Api } from '@common/utils';
-import { CurrentUser, ArtistResponse } from '@common/interfaces';
+import {
+  CurrentUserResponse,
+  CurrentUserFollowedArtistsResponse,
+} from '@common/interfaces';
 // import { useStore } from '@store/index';
 
-const handleGetCurrentUserData = async (): Promise<CurrentUser> => {
-  const response = await Api.get<CurrentUser>(`/me`);
+const handleGetCurrentUserData = async (): Promise<CurrentUserResponse> => {
+  const response = await Api.get<CurrentUserResponse>(`/me`);
 
   return response;
 };
 
 const handleGetCurrentUserFollowedArtists =
-  async (): Promise<ArtistResponse> => {
-    const response = await Api.get<ArtistResponse>('/me/following?type=artist&limit=1');
+  async (): Promise<CurrentUserFollowedArtistsResponse> => {
+    const response = await Api.get<CurrentUserFollowedArtistsResponse>(
+      '/me/following?type=artist&limit=1'
+    );
 
     return response;
   };
@@ -26,7 +31,7 @@ export const useGetCurrentUserData = (userId?: string) => {
         queryFn: handleGetCurrentUserData,
       },
       {
-        queryKey: ['getCurrentUserFollowedArtists', userId],
+        queryKey: ['getCurrentUserArtists', userId],
         queryFn: handleGetCurrentUserFollowedArtists,
       },
     ],

@@ -18,9 +18,9 @@ export const SideNavBar = () => {
   return (
     <Stack
       sx={{
-        width: isSideNavBarOpen ? 200 : 80,
+        width: isSideNavBarOpen ? 200 : 66,
         height: '100%',
-        padding: isSideNavBarOpen ? '1rem' : '1rem',
+        padding: isSideNavBarOpen ? '0.8rem 0.7rem' : '0.8rem 0.7rem',
         position: 'relative',
         transition: 'padding 0.3s, width 0.3s',
         backgroundColor: (theme) => theme.palette.background.paper,
@@ -31,9 +31,10 @@ export const SideNavBar = () => {
         <Stack
           sx={{
             maxWidth: isSideNavBarOpen ? 200 : 55,
+            ml: -0.1,
             transition: 'all 0.3s',
             overflow: 'hidden',
-            mb: 1.5,
+            mb: 1.6,
           }}
         >
           <img src={fullLogo} alt='logo' width={155} />
@@ -42,11 +43,32 @@ export const SideNavBar = () => {
           {navItems.map(({ sectionLabel, items }, index) => (
             <Stack key={sectionLabel}>
               {index !== 0 && (
-                <Stack
-                  sx={{
-                    borderTop: (theme) => `solid 1px ${theme.palette.divider}`,
-                  }}
-                />
+                <Stack sx={{ overflow: 'hidden', position: 'relative' }}>
+                  <Typography
+                    variant='body2'
+                    fontWeight={700}
+                    sx={{
+                      whiteSpace: 'nowrap',
+                      pl: 6.2,
+                      color: (theme) => theme.palette.accent.main,
+                    }}
+                  >
+                    {sectionLabel}
+                  </Typography>
+                  <Stack
+                    sx={{
+                      width: 48,
+                      top: 8,
+                      position: 'absolute',
+                      transition: 'transform 0.3s',
+                      transform: isSideNavBarOpen
+                        ? 'translateX(-48px)'
+                        : 'translateX(0)',
+                      borderTop: (theme) =>
+                        `solid 1px ${theme.palette.divider}`,
+                    }}
+                  />
+                </Stack>
               )}
               <List>
                 {items.map(({ label, icon, isActive, onClick }) => (
@@ -63,7 +85,7 @@ export const SideNavBar = () => {
                         onClick={onClick}
                         sx={{
                           borderRadius: 1.5,
-                          pl: 1.4,
+                          pl: 1.1,
                           transition: 'all 0.3s',
                           overflow: 'hidden',
                         }}
@@ -83,18 +105,16 @@ export const SideNavBar = () => {
                                 : undefined,
                             },
                           })}
-                          {isSideNavBarOpen && (
-                            <Typography
-                              sx={{
-                                color: (theme) =>
-                                  isActive
-                                    ? theme.palette.text.primary
-                                    : theme.palette.text.disabled,
-                              }}
-                            >
-                              {label}
-                            </Typography>
-                          )}
+                          <Typography
+                            sx={{
+                              color: (theme) =>
+                                isActive
+                                  ? theme.palette.text.primary
+                                  : theme.palette.text.disabled,
+                            }}
+                          >
+                            {label}
+                          </Typography>
                         </Stack>
                       </ListItemButton>
                     </Tooltip>
@@ -111,8 +131,8 @@ export const SideNavBar = () => {
         sx={{
           position: 'absolute',
           backgroundColor: (theme) => theme.palette.background.paper,
-          right: !isSideNavBarOpen ? 22 : 16,
-          bottom: 15,
+          right: isSideNavBarOpen ? 14 : 15,
+          bottom: 14,
           border: (theme) => `1px solid ${theme.palette.divider}`,
           transform: isSideNavBarOpen ? 'rotateY(180deg)' : 'rotateY(0deg)',
           transition: 'transform 0.3s',
