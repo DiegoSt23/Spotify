@@ -69,9 +69,6 @@ export const Login = () => {
                 <Stack alignItems='center'>
                   <img src={fullLogo} alt='Spotify' width={200} />
                 </Stack>
-                <Typography variant='h4' textAlign='center'>
-                  {t('welcome')}
-                </Typography>
                 <Typography>{t('description')}</Typography>
                 <Button variant='contained' onClick={handleNavigateLogin}>
                   {t('loginButton')}

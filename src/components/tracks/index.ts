@@ -1,3 +1,3 @@
 export * from './TrackNameCell';
 export * from './TrackTimeAndOptionsCell';
-export * from './TrackAlbumCell';
+export * from './TrackLink';

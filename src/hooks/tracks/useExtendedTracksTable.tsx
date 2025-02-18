@@ -1,11 +1,11 @@
 import { GridColDef } from '@mui/x-data-grid';
-import { useMediaQuery, useTheme } from '@mui/material';
+import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import dayjs from 'dayjs';
 import { ArtistBase } from '@common/interfaces';
 import { useLanguage } from '@hooks/language';
 import {
   TrackNameCell,
-  TrackAlbumCell,
+  TrackLink,
   TrackTimeAndOptionsCell,
 } from '@components/tracks';
 
@@ -46,6 +46,26 @@ export const useExtendedTracksTable = () => {
         row?.track?.artists
           ?.map((artist: ArtistBase) => artist.name)
           .join(', '),
+      renderCell: (params) => {
+        return (
+          <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
+            {params?.row?.track?.artists?.map(
+              (artist: ArtistBase, index: number) => (
+                <>
+                  <TrackLink
+                    name={artist.name}
+                    path='artists'
+                    id={artist?.id}
+                  />
+                  {index !== params?.row?.track?.artists?.length - 1 && (
+                    <Typography sx={{ mr: 0.5 }}>,</Typography>
+                  )}
+                </>
+              )
+            )}
+          </Stack>
+        );
+      },
     },
     !isSmartphone && {
       field: 'album',
@@ -53,7 +73,7 @@ export const useExtendedTracksTable = () => {
       flex: 2,
       valueGetter: (_, row) => row?.track?.album?.name,
       renderCell: ({ value, row }) => {
-        return <TrackAlbumCell name={value} id={row.track.album.id} />;
+        return <TrackLink name={value} path='albums' id={row.track.album.id} />;
       },
     },
     !isTablet && {

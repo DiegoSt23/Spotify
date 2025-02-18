@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import {
   PrivateRoute,
   Dashboard,
+  ArtistsLayout,
   AlbumsLayout,
   PlaylistsLayout,
 } from '@components/index';
@@ -11,10 +12,15 @@ import {
   Search,
   Stats,
   Songs,
-  Artists,
+  CurrentUserArtists,
   CurrentUserAlbums,
-  AlbumDetails,
   CurrentUserPlaylists,
+  AlbumDetails,
+  ArtistProfile,
+  ArtistAlbums,
+  ArtistSingles,
+  ArtistCompilations,
+  ArtistAppearsOn,
   PlaylistDetails,
   Podcasts,
   Profile,
@@ -55,7 +61,33 @@ export const router = createBrowserRouter([
       },
       {
         path: 'artists',
-        element: <Artists />,
+        element: <ArtistsLayout />,
+        children: [
+          {
+            path: 'me',
+            element: <CurrentUserArtists />,
+          },
+          {
+            path: ':id',
+            element: <ArtistProfile />,
+          },
+          {
+            path: ':id/albums',
+            element: <ArtistAlbums />,
+          },
+          {
+            path: ':id/singles',
+            element: <ArtistSingles />,
+          },
+          {
+            path: ':id/compilations',
+            element: <ArtistCompilations />,
+          },
+          {
+            path: ':id/appears-on',
+            element: <ArtistAppearsOn />,
+          },
+        ],
       },
       {
         path: 'albums',

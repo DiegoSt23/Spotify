@@ -1,8 +1,12 @@
 import { GridColDef } from '@mui/x-data-grid';
-import { useMediaQuery, useTheme } from '@mui/material';
+import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { ArtistBase } from '@common/interfaces';
 import { useLanguage } from '@hooks/language';
-import { TrackNameCell, TrackAlbumCell, TrackTimeAndOptionsCell } from '@components/tracks';
+import {
+  TrackNameCell,
+  TrackLink,
+  TrackTimeAndOptionsCell,
+} from '@components/tracks';
 
 export const useTracksTable = () => {
   const { t } = useLanguage('tracks');
@@ -38,6 +42,25 @@ export const useTracksTable = () => {
       flex: 2,
       valueGetter: (_, row) =>
         row?.artists?.map((artist: ArtistBase) => artist.name).join(', '),
+      renderCell: (params) => {
+        return (
+          <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
+            {params?.row?.artists?.map((artist: ArtistBase, index: number) => (
+              <>
+                <TrackLink
+                  key={artist?.id}
+                  name={artist.name}
+                  path='artists'
+                  id={artist?.id}
+                />
+                {index !== params.row.artists.length - 1 && (
+                  <Typography sx={{ mr: 0.5 }}>,</Typography>
+                )}
+              </>
+            ))}
+          </Stack>
+        );
+      },
     },
     !isSmartphone && {
       field: 'album',
@@ -45,7 +68,7 @@ export const useTracksTable = () => {
       flex: 2,
       valueGetter: (_, row) => row?.album?.name,
       renderCell: ({ value, row }) => {
-        return <TrackAlbumCell name={value} id={row.album.id} />;
+        return <TrackLink name={value} path='albums' id={row.album.id} />;
       },
     },
     {

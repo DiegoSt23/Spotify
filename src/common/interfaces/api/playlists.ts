@@ -6,3 +6,5 @@ export interface PlaylistsResponse extends ResponseBase {
 }
 
 export type PlaylistResponse = PlaylistExtended;
+
+export type PlaylistSavedResponse = boolean[];

@@ -28,7 +28,9 @@ export const AlbumsGrid = ({
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const handleRedirect = (id: string) => {
+  const handleRedirect = (id?: string) => {
+    if (!id) return;
+
     navigate(`/albums/${id}`);
   };
 

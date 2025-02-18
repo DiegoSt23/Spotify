@@ -7,7 +7,8 @@ const axiosInstance = axios.create({
 });
 
 const configureApiRequest = <T>(
-  axiosRequestConfig: AxiosRequestConfig<T>
+  axiosRequestConfig: AxiosRequestConfig<T>,
+  isLastFm: boolean = false
 ): AxiosRequestConfig<T> => {
   const accessToken = Cookies.get('token') || '';
 
@@ -16,12 +17,16 @@ const configureApiRequest = <T>(
     Authorization: `Bearer ${accessToken}`,
   };
 
+  if (isLastFm) {
+    axiosRequestConfig.baseURL = 'https://ws.audioscrobbler.com/2.0';
+  }
+
   return axiosRequestConfig;
 };
 
 export const Api = {
-  get: async <T>(url: string): Promise<T> => {
-    const config = configureApiRequest({});
+  get: async <T>(url: string, isLastFm: boolean = false): Promise<T> => {
+    const config = configureApiRequest({}, isLastFm);
     const { data } = await axiosInstance.get<T>(url, config);
     return data;
   },

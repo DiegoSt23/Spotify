@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardActionArea,
@@ -7,9 +8,7 @@ import {
   useTheme,
   useMediaQuery,
 } from '@mui/material';
-import {
-  ArtistExtended,
-} from '@common/interfaces';
+import { ArtistExtended } from '@common/interfaces';
 import { Grid, Loading } from '@components/common';
 
 interface ArtistsGridProps {
@@ -18,8 +17,15 @@ interface ArtistsGridProps {
 }
 
 export const ArtistsGrid = ({ data, loading }: ArtistsGridProps) => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const handleRedirect = (id?: string) => {
+    if (!id) return;
+    
+    navigate(`/artists/${id}`);
+  };
 
   if (loading) {
     return <Loading />;
@@ -41,7 +47,7 @@ export const ArtistsGrid = ({ data, loading }: ArtistsGridProps) => {
               },
             }}
           >
-            <CardActionArea>
+            <CardActionArea onClick={() => handleRedirect(artist?.id)}>
               <Avatar
                 key={artist.id}
                 src={artist.images[1]?.url}

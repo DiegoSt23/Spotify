@@ -1,7 +1,12 @@
-import { Stack, Typography, Chip } from '@mui/material';
+import { Stack, Typography, Chip, Divider } from '@mui/material';
 import { PlaylistExtended } from '@common/interfaces';
+import { formatMs } from '@common/utils';
 import { useExtendedTracksTable } from '@hooks/tracks';
 import { Table, MediaHeader } from '@components/common';
+
+interface PlaylistDetailsProps extends Partial<PlaylistExtended> {
+  isSaved?: boolean;
+}
 
 export const PlaylistDetails = ({
   images,
@@ -9,9 +14,11 @@ export const PlaylistDetails = ({
   description,
   owner,
   tracks,
+  followers,
   public: isPublic,
   collaborative,
-}: Partial<PlaylistExtended>) => {
+  isSaved,
+}: PlaylistDetailsProps) => {
   const { columns, isSmartphone } = useExtendedTracksTable();
 
   return (
@@ -20,6 +27,13 @@ export const PlaylistDetails = ({
         cover={images?.[0]?.url}
         title={name}
         owner={owner?.display_name}
+        description={description}
+        isSaved={isSaved}
+        isSmartphone={isSmartphone}
+        onAdd={() => {}}
+        onRemove={() => {}}
+        onPlay={() => {}}
+        onMore={() => {}}
         details={
           <Stack
             sx={{
@@ -28,12 +42,40 @@ export const PlaylistDetails = ({
               mt: { xs: 0, sm: 0.5 },
             }}
           >
-            <Typography
-              variant='subtitle2'
-              sx={{ color: (theme) => theme.palette.text.disabled }}
+            <Stack
+              sx={{
+                flexDirection: 'row',
+                gap: 1,
+                justifyContent: { xs: 'center', sm: 'flex-start' },
+              }}
             >
-              {tracks?.total && `${tracks?.total} tracks`}
-            </Typography>
+              <Typography
+                variant='subtitle2'
+                sx={{ color: (theme) => theme.palette.text.disabled }}
+              >
+                {`${tracks?.total} tracks`}
+              </Typography>
+              <Divider orientation='vertical' flexItem />
+              <Typography
+                variant='subtitle2'
+                sx={{ color: (theme) => theme.palette.text.disabled }}
+              >
+                {formatMs(
+                  tracks?.items.reduce(
+                    (acc, curr) => curr.track.duration_ms + acc,
+                    0
+                  ),
+                  true
+                )}
+              </Typography>
+              <Divider orientation='vertical' flexItem />
+              <Typography
+                variant='subtitle2'
+                sx={{ color: (theme) => theme.palette.text.disabled }}
+              >
+                {`${followers?.total} followers`}
+              </Typography>
+            </Stack>
             <Stack
               sx={{
                 flexDirection: 'row',
@@ -44,17 +86,8 @@ export const PlaylistDetails = ({
               <Chip label={isPublic ? 'Public' : 'Private'} size='small' />
               {collaborative && <Chip label='Collaborative' size='small' />}
             </Stack>
-            {description && (
-              <Typography
-                variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.disabled }}
-              >
-                {description}
-              </Typography>
-            )}
           </Stack>
         }
-        isSmartphone={isSmartphone}
       />
       <Table
         columns={columns.filter(Boolean)}

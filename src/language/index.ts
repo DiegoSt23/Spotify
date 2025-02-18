@@ -12,6 +12,10 @@ import settingsEn from './settings/en.json';
 import settingsEs from './settings/es.json';
 import tracksEn from './tracks/en.json';
 import tracksEs from './tracks/es.json';
+import mediaHeaderEn from './mediaHeader/en.json';
+import mediaHeaderEs from './mediaHeader/es.json';
+import artistEn from './artist/en.json';
+import artistEs from './artist/es.json';
 
 const languageDetector = new LanguageDetector();
 languageDetector.addDetector({
@@ -41,5 +45,9 @@ i18n.addResourceBundle('en', 'settings', settingsEn);
 i18n.addResourceBundle('es', 'settings', settingsEs);
 i18n.addResourceBundle('en', 'tracks', tracksEn);
 i18n.addResourceBundle('es', 'tracks', tracksEs);
+i18n.addResourceBundle('en', 'mediaHeader', mediaHeaderEn);
+i18n.addResourceBundle('es', 'mediaHeader', mediaHeaderEs);
+i18n.addResourceBundle('en', 'artist', artistEn);
+i18n.addResourceBundle('es', 'artist', artistEs);
 
 export { i18n };

@@ -13,3 +13,20 @@ export interface CurrentUserSavedAlbumsResponse extends ResponseBase {
 }
 
 export type AlbumResponse = AlbumExtended;
+
+export type AlbumSavedResponse = boolean[];
+
+export interface PartialAlbumsResponse {
+  albums: {
+    items: Album[];
+  } & ResponseBase;
+  singles: {
+    items: Album[];
+  } & ResponseBase;
+  compilations: {
+    items: Album[];
+  } & ResponseBase;
+  appearsOn: {
+    items: Album[];
+  } & ResponseBase; 
+}

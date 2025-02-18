@@ -1,5 +1,6 @@
 import { ResponseBase } from './base';
-import { ArtistExtended } from '../artists';
+import { ArtistExtended, ArtistBio } from '../artists';
+import { Track } from '../tracks';
 
 export interface ArtistsResponse extends ResponseBase {
   items: ArtistExtended[];
@@ -18,3 +19,13 @@ export interface CurrentUserFollowedArtistsResponse {
     items: ArtistExtended[];
   };
 }
+
+export type ArtistResponse = ArtistExtended;
+
+export type ArtistBioResponse = ArtistBio;
+
+export type ArtistTopTracksResponse = {
+  tracks: Track[];
+};
+
+export type ArtistFollowedResponse = boolean[];

@@ -7,6 +7,10 @@ export interface Playlist {
   external_urls: {
     spotify: string;
   };
+  followers: {
+    href: string | null;
+    total: number;
+  },
   href: string;
   id: string;
   images: Image[];
