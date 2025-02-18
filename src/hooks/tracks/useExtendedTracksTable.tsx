@@ -27,12 +27,14 @@ export const useExtendedTracksTable = () => {
         const artistName = params.row.track.artists
           .map((artist: ArtistBase) => artist.name)
           .join(', ');
+        const explicit = params.row.track.explicit;
 
         return (
           <TrackNameCell
             trackNumber={trackNumber}
             trackName={trackName}
             artistName={artistName}
+            explicit={explicit}
             isSmartphone={isSmartphone}
           />
         );

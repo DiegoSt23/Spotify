@@ -1,9 +1,11 @@
 import { Stack, Typography } from '@mui/material';
+import { Explicit } from '@mui/icons-material';
 
 interface TrackNameCellProps {
   trackNumber: number;
   trackName: string;
   artistName?: string;
+  explicit?: boolean;
   isSmartphone?: boolean;
 }
 
@@ -11,6 +13,7 @@ export const TrackNameCell = ({
   trackNumber,
   trackName,
   artistName,
+  explicit,
   isSmartphone,
 }: TrackNameCellProps) => (
   <Stack
@@ -54,5 +57,15 @@ export const TrackNameCell = ({
         </Typography>
       )}
     </Stack>
+    {explicit && (
+      <Explicit
+        sx={{
+          width: 18,
+          height: 18,
+          ml: 1,
+          color: (theme) => theme.palette.text.disabled,
+        }}
+      />
+    )}
   </Stack>
 );
