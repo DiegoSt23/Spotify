@@ -30,18 +30,8 @@ export const ShowsGrid = ({
     >
       {data?.map((show) => (
         <Stack sx={{ alignItems: 'center' }}>
-          <Stack sx={{ width: isSmallScreen ? 150 : 200, gap: 1 }}>
-            <Card
-              variant='outlined'
-              sx={{
-                boxShadow: 5,
-                transition: 'transform 0.2s',
-                '&:hover': {
-                  transform: 'scale(1.1)',
-                  transition: 'transform 0.2s',
-                },
-              }}
-            >
+          <Stack sx={{ width: '100%', gap: 1 }}>
+            <Card variant='outlined'>
               <CardActionArea>
                 <Avatar
                   key={show.id}
@@ -49,15 +39,15 @@ export const ShowsGrid = ({
                   alt={show.name}
                   variant='rounded'
                   sx={{
-                    width: isSmallScreen ? 150 : 200,
-                    height: isSmallScreen ? 150 : 200,
+                    width: '100%',
+                    height: 'auto',
                   }}
                 />
               </CardActionArea>
             </Card>
-            <Stack sx={{ textAlign: 'center' }}>
+            <Stack>
               <Typography
-                variant='subtitle1'
+                variant='subtitle2'
                 sx={{
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
@@ -68,6 +58,7 @@ export const ShowsGrid = ({
               </Typography>
               {displayPublisher && (
                 <Typography
+                  variant='caption'
                   sx={{
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',

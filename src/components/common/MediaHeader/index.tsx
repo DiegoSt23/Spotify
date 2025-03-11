@@ -1,4 +1,5 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Card,
   Stack,
@@ -6,33 +7,29 @@ import {
   IconButton,
   Avatar,
   Tooltip,
-  Dialog,
-  DialogContent,
+  Link,
   type Theme,
 } from '@mui/material';
-import {
-  PlayArrow,
-  MoreVert,
-  Favorite,
-  FavoriteBorder,
-  // QuestionMark,
-} from '@mui/icons-material';
-import { useLanguage } from '@hooks/language';
+import { MoreVert } from '@mui/icons-material';
+
+type Owner = {
+  name?: string;
+  id?: string;
+  path?: string;
+};
 
 interface MediaHeaderProps {
   cover?: string;
   title?: string;
-  owner?: string | string[];
-  followers?: number;
+  owner?: Owner[];
   details?: string | ReactNode;
-  description?: string;
   isSmartphone?: boolean;
   isArtist?: boolean;
-  isSaved?: boolean;
-  onAdd?: () => void;
-  onRemove?: () => void;
-  onPlay?: () => void;
-  onMore?: () => void;
+  actions?: {
+    icon: ReactNode;
+    onClick: () => void;
+    description?: string;
+  }[];
 }
 
 const actionButtonStyle = {
@@ -45,170 +42,116 @@ export const MediaHeader = ({
   cover,
   title,
   owner,
-  followers,
   details,
-  description,
   isSmartphone,
   isArtist,
-  isSaved,
-  onAdd,
-  onRemove,
-  onPlay,
-  onMore,
-}: MediaHeaderProps) => {
-  const [open, setOpen] = useState(false);
-  const { t } = useLanguage('mediaHeader');
-
-  const handleDisplayDialog = () => setOpen((prev) => !prev);
-
-  return (
-    <>
-      <Stack
+  actions,
+}: MediaHeaderProps) => (
+  <Stack
+    sx={{
+      flexDirection: { sm: 'row' },
+      alignItems: { xs: 'center', sm: 'inherit' },
+      gap: 3,
+    }}
+  >
+    <Card
+      variant='outlined'
+      sx={{
+        borderRadius: isArtist && !isSmartphone ? '100%' : undefined,
+        width: isArtist && isSmartphone ? '100%' : 300,
+        height: isArtist && isSmartphone ? 'auto' : 300,
+      }}
+    >
+      <Avatar
+        src={cover}
+        alt={title}
+        variant={isArtist ? (isSmartphone ? 'square' : 'circular') : 'rounded'}
         sx={{
-          flexDirection: { sm: 'row' },
-          alignItems: { xs: 'center', sm: 'inherit' },
-          gap: 3,
+          width: isArtist && isSmartphone ? '100%' : 300,
+          height: isArtist && isSmartphone ? 'auto' : 300,
         }}
-      >
-        <Card
-          variant='outlined'
-          sx={{ borderRadius: isArtist && !isSmartphone ? '100%' : undefined }}
+      />
+    </Card>
+    <Stack
+      sx={{
+        flex: 1,
+        justifyContent: 'space-between',
+        gap: 2,
+      }}
+    >
+      <Stack sx={{ textAlign: { xs: 'center', sm: 'start' } }}>
+        <Typography
+          variant={
+            isSmartphone ? (isArtist ? 'h4' : 'h5') : isArtist ? 'h3' : 'h4'
+          }
         >
-          <Avatar
-            src={cover}
-            alt={title}
-            variant={
-              isArtist ? (isSmartphone ? 'square' : 'circular') : 'rounded'
-            }
+          {title}
+        </Typography>
+        {owner && owner.length && (
+          <Stack
             sx={{
-              width: isArtist && isSmartphone ? '100%' : 300,
-              height: isArtist && isSmartphone ? 'auto' : 300,
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              justifyContent: { xs: 'center', sm: 'flex-start' },
             }}
-          />
-        </Card>
-        <Stack
-          sx={{
-            flex: 1,
-            justifyContent: 'space-between',
-            gap: 2,
-          }}
-        >
-          <Stack sx={{ textAlign: { xs: 'center', sm: 'start' } }}>
-            <Typography
-              variant={
-                isSmartphone ? (isArtist ? 'h4' : 'h5') : isArtist ? 'h3' : 'h4'
-              }
-            >
-              {title}
-            </Typography>
-            {owner && (
-              <Typography
-                variant={isSmartphone ? 'h6' : 'h5'}
-                sx={{ color: (theme) => theme.palette.accent.main }}
-              >
-                {typeof owner === 'string' ? owner : owner?.join(', ')}
-              </Typography>
-            )}
-            {followers && (
-              <Stack
+          >
+            {owner.map(({ name, id, path }, index) => (
+              <Link
+                key={id}
+                to={name === 'Various Artists' ? '' : path || ''}
+                component={RouterLink}
+                underline={name === 'Various Artists' ? 'none' : 'hover'}
                 sx={{
-                  justifyContent: { xs: 'center', sm: 'start' },
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: 1,
+                  pointerEvents: name === 'Various Artists' ? 'none' : 'auto',
                 }}
               >
                 <Typography
-                  variant='subtitle2'
+                  variant={isSmartphone ? 'h6' : 'h5'}
                   sx={{ color: (theme) => theme.palette.accent.main }}
                 >
-                  {new Intl.NumberFormat().format(followers)}
+                  {name}
+                  {index !== owner.length - 1 && (
+                    <Typography sx={{ mr: 0.5 }} component='span'>
+                      ,
+                    </Typography>
+                  )}
                 </Typography>
-                <Typography
-                  variant='subtitle2'
-                  sx={{ color: (theme) => theme.palette.text.disabled }}
-                >
-                  {t('followers')}
-                </Typography>
-              </Stack>
-            )}
-            {details &&
-              (typeof details === 'string' ? (
-                <Typography
-                  variant='subtitle2'
-                  sx={{ color: (theme) => theme.palette.text.disabled }}
-                >
-                  {details}
-                </Typography>
-              ) : (
-                details
-              ))}
+              </Link>
+            ))}
           </Stack>
-          {(onAdd || onPlay || onMore) && (
-            <Stack
-              sx={{
-                flexDirection: 'row',
-                gap: { xs: 2, sm: 1 },
-                justifyContent: { xs: 'center', sm: 'flex-start' },
-              }}
+        )}
+        {details &&
+          (typeof details === 'string' ? (
+            <Typography
+              variant='subtitle2'
+              sx={{ color: (theme) => theme.palette.text.disabled }}
             >
-              {onAdd && onRemove && (
-                <Tooltip title={isSaved ? t('remove') : t('add')} arrow>
-                  <IconButton
-                    sx={actionButtonStyle}
-                    onClick={isSaved ? onRemove : onAdd}
-                  >
-                    {isSaved ? (
-                      <Favorite
-                        sx={{
-                          fill: (theme) => theme.palette.accent.main,
-                          width: 20,
-                          height: 20,
-                        }}
-                      />
-                    ) : (
-                      <FavoriteBorder
-                        sx={{
-                          width: 20,
-                          height: 20,
-                        }}
-                      />
-                    )}
-                  </IconButton>
-                </Tooltip>
-              )}
-              {onPlay && (
-                <IconButton sx={actionButtonStyle} onClick={onPlay}>
-                  <PlayArrow />
-                </IconButton>
-              )}
-              {/* {description && (
-                <IconButton
-                  sx={actionButtonStyle}
-                  onClick={handleDisplayDialog}
-                >
-                  <QuestionMark />
-                </IconButton>
-              )} */}
-              {onMore && (
-                <IconButton sx={actionButtonStyle} onClick={onMore}>
-                  <MoreVert />
-                </IconButton>
-              )}
-            </Stack>
-          )}
-        </Stack>
-      </Stack>
-      <Dialog open={open} onClose={handleDisplayDialog}>
-        <DialogContent>
-          <Stack gap={2}>
-            <Typography variant='h5'>{title}</Typography>
-            <Typography sx={{ color: (theme) => theme.palette.text.disabled }}>
-              {description}
+              {details}
             </Typography>
-          </Stack>
-        </DialogContent>
-      </Dialog>
-    </>
-  );
-};
+          ) : (
+            details
+          ))}
+      </Stack>
+      <Stack
+        sx={{
+          flexDirection: 'row',
+          gap: { xs: 2, sm: 1 },
+          justifyContent: { xs: 'center', sm: 'flex-start' },
+        }}
+      >
+        {actions?.length &&
+          actions?.map(({ icon, onClick, description }) => (
+            <Tooltip title={description} arrow>
+              <IconButton sx={actionButtonStyle} onClick={onClick}>
+                {icon}
+              </IconButton>
+            </Tooltip>
+          ))}
+        <IconButton sx={actionButtonStyle} onClick={() => {}}>
+          <MoreVert />
+        </IconButton>
+      </Stack>
+    </Stack>
+  </Stack>
+);

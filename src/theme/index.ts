@@ -141,5 +141,12 @@ export const theme = createTheme({
         },
       },
     },
+    MuiCircularProgress: {
+      styleOverrides: {
+        root: {
+          color: '#1cd763',
+        },
+      },
+    },
   },
 });

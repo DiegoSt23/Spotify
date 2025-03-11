@@ -6,6 +6,7 @@ interface GridProps {
   rowGap?: number;
   columnGap?: number;
   minColumnWidth?: number;
+  carousell?: boolean;
 }
 
 export const Grid = ({
@@ -13,12 +14,14 @@ export const Grid = ({
   rowGap = 2,
   columnGap = 2,
   minColumnWidth = 150,
+  carousell,
 }: GridProps) => {
   return (
     <Box
       sx={{
         width: '100%',
-        display: 'grid',
+        display: { xs: carousell ? 'flex' : 'grid', sm: 'grid' },
+        overflow: 'auto',
         gridTemplateRows: 'auto',
         gridTemplateColumns: `repeat(auto-fill, minmax(${minColumnWidth}px, 1fr))`,
         rowGap: rowGap,

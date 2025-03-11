@@ -1,0 +1,21 @@
+{
+  "albumDetails": {
+    "header": {
+      "metadata": {
+        "tracks": {
+          "singular": "canción",
+          "plural": "canciones"
+        }
+      },
+      "actions": {
+        "add": "Guardar en tu biblioteca",
+        "remove": "Eliminar de tu biblioteca",
+        "play": "Reproducir",
+        "shuffle": "Aleatorio"
+      }
+    },
+    "sections": {
+      "featuredArtists": "Artistas Destacados"
+    }
+  }
+}

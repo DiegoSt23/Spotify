@@ -131,8 +131,8 @@ export const SideNavBar = () => {
         sx={{
           position: 'absolute',
           backgroundColor: (theme) => theme.palette.background.paper,
-          right: isSideNavBarOpen ? 14 : 15,
-          bottom: 14,
+          right: isSideNavBarOpen ? 10 : 15,
+          bottom: 10,
           border: (theme) => `1px solid ${theme.palette.divider}`,
           transform: isSideNavBarOpen ? 'rotateY(180deg)' : 'rotateY(0deg)',
           transition: 'transform 0.3s',

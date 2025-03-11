@@ -26,18 +26,8 @@ export const EpisodesGrid = ({ data }: EpisodesGridProps) => {
     >
       {data?.map((episode) => (
         <Stack sx={{ alignItems: 'center' }}>
-          <Stack sx={{ width: isSmallScreen ? 150 : 200, gap: 1 }}>
-            <Card
-              variant='outlined'
-              sx={{
-                boxShadow: 5,
-                transition: 'transform 0.2s',
-                '&:hover': {
-                  transform: 'scale(1.1)',
-                  transition: 'transform 0.2s',
-                },
-              }}
-            >
+          <Stack sx={{ width: '100%', gap: 1 }}>
+            <Card variant='outlined'>
               <CardActionArea>
                 <Avatar
                   key={episode.id}
@@ -45,15 +35,15 @@ export const EpisodesGrid = ({ data }: EpisodesGridProps) => {
                   alt={episode.name}
                   variant='rounded'
                   sx={{
-                    width: isSmallScreen ? 150 : 200,
-                    height: isSmallScreen ? 150 : 200,
+                    width: '100%',
+                    height: 'auto',
                   }}
                 />
               </CardActionArea>
             </Card>
-            <Stack sx={{ textAlign: 'center' }}>
+            <Stack>
               <Typography
-                variant='subtitle1'
+                variant='subtitle2'
                 sx={{
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',

@@ -11,5 +11,5 @@ export const ArtistCompilations = () => {
     return <Loading />;
   }
 
-  return <AlbumsGrid data={data?.items} />;
+  return <AlbumsGrid data={data?.items} displayReleaseDate />;
 };

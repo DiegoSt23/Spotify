@@ -47,11 +47,9 @@ export const PlaylistsGrid = ({
       {data
         ?.filter((item) => item)
         ?.map((playlist) => (
-          <Stack sx={{ alignItems: 'center' }}>
+          <Stack key={playlist.id} sx={{ alignItems: 'center' }}>
             <Stack sx={{ width: '100%', gap: 1 }}>
-              <Card
-                variant='outlined'
-              >
+              <Card variant='outlined'>
                 <CardActionArea onClick={() => handleRedirect(playlist?.id)}>
                   <Avatar
                     key={playlist.id}
@@ -65,9 +63,9 @@ export const PlaylistsGrid = ({
                   />
                 </CardActionArea>
               </Card>
-              <Stack sx={{ textAlign: 'center' }}>
+              <Stack>
                 <Typography
-                  variant='subtitle1'
+                  variant='subtitle2'
                   sx={{
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
@@ -78,6 +76,7 @@ export const PlaylistsGrid = ({
                 </Typography>
                 {displayOwner && (
                   <Typography
+                    variant='caption'
                     sx={{
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',

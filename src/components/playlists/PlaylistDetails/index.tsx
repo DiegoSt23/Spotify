@@ -1,6 +1,13 @@
 import { Stack, Typography, Chip, Divider } from '@mui/material';
+import {
+  PlayArrow,
+  Favorite,
+  FavoriteBorder,
+  Shuffle,
+} from '@mui/icons-material';
 import { PlaylistExtended } from '@common/interfaces';
 import { formatMs } from '@common/utils';
+import { useLanguage } from '@hooks/language';
 import { useExtendedTracksTable } from '@hooks/tracks';
 import { Table, MediaHeader } from '@components/common';
 
@@ -11,7 +18,7 @@ interface PlaylistDetailsProps extends Partial<PlaylistExtended> {
 export const PlaylistDetails = ({
   images,
   name,
-  description,
+  // description,
   owner,
   tracks,
   followers,
@@ -19,21 +26,52 @@ export const PlaylistDetails = ({
   collaborative,
   isSaved,
 }: PlaylistDetailsProps) => {
+  const { t } = useLanguage('playlists');
   const { columns, isSmartphone } = useExtendedTracksTable();
+  const actions = [
+    {
+      icon: isSaved ? (
+        <Favorite
+          sx={{
+            width: 20,
+            height: 20,
+            fill: (theme) => theme.palette.accent.main,
+          }}
+        />
+      ) : (
+        <FavoriteBorder sx={{ width: 20, height: 20 }} />
+      ),
+      onClick: () => {},
+      description: isSaved
+        ? t('playlistDetails.header.actions.remove')
+        : t('playlistDetails.header.actions.add'),
+    },
+    {
+      icon: <PlayArrow />,
+      onClick: () => {},
+      description: t('playlistDetails.header.actions.play'),
+    },
+    {
+      icon: <Shuffle />,
+      onClick: () => {},
+      description: t('playlistDetails.header.actions.shuffle'),
+    },
+  ];
 
   return (
     <Stack gap={3}>
       <MediaHeader
         cover={images?.[0]?.url}
         title={name}
-        owner={owner?.display_name}
-        description={description}
-        isSaved={isSaved}
+        owner={[
+          {
+            name: owner?.display_name,
+            id: owner?.id,
+            path: `/profile/${owner?.id}`,
+          },
+        ]}
         isSmartphone={isSmartphone}
-        onAdd={() => {}}
-        onRemove={() => {}}
-        onPlay={() => {}}
-        onMore={() => {}}
+        actions={actions}
         details={
           <Stack
             sx={{
@@ -53,7 +91,11 @@ export const PlaylistDetails = ({
                 variant='subtitle2'
                 sx={{ color: (theme) => theme.palette.text.disabled }}
               >
-                {`${tracks?.total} tracks`}
+                {`${tracks?.total} ${t(
+                  tracks?.total === 1
+                    ? 'playlistDetails.header.metadata.tracks.singular'
+                    : 'playlistDetails.header.metadata.tracks.plural'
+                )}`}
               </Typography>
               <Divider orientation='vertical' flexItem />
               <Typography
@@ -73,7 +115,11 @@ export const PlaylistDetails = ({
                 variant='subtitle2'
                 sx={{ color: (theme) => theme.palette.text.disabled }}
               >
-                {`${followers?.total} followers`}
+                {`${followers?.total} ${t(
+                  followers?.total === 1
+                    ? 'playlistDetails.header.metadata.followers.singular'
+                    : 'playlistDetails.header.metadata.followers.plural'
+                )}`}
               </Typography>
             </Stack>
             <Stack

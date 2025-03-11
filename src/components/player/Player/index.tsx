@@ -56,9 +56,9 @@ export const Player = () => {
             }}
           >
             <Avatar
-              src='https://i.scdn.co/image/ab67616d0000b2736c7057ee3dc07fde70d00891'
-              variant='rounded'
-              sx={{ width: { xs: 45, sm: 50 }, height: { xs: 45, sm: 50 } }}
+              src='https://i.scdn.co/image/ab67616d0000b2735c53799f473fa3e1a48c00ed'
+              variant='square'
+              sx={{ width: 45, height: 45 }}
             />
             <IconButton
               onClick={handleOpenFullScreenPlayer}
@@ -86,10 +86,10 @@ export const Player = () => {
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                fontWeight: 500
+                fontWeight: 500,
               }}
             >
-              Find My Way
+              Changes
             </Typography>
             <Typography
               sx={{
@@ -99,7 +99,7 @@ export const Player = () => {
                 textOverflow: 'ellipsis',
               }}
             >
-             Nine Inch Nails
+              Deftones
             </Typography>
           </Stack>
         </Stack>

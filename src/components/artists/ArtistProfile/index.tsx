@@ -1,6 +1,20 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Stack, Typography, Chip, Button, Divider } from '@mui/material';
-import ChevronRight from '@mui/icons-material/ChevronRight';
+import {
+  Stack,
+  Typography,
+  Chip,
+  Divider,
+  Dialog,
+  DialogContent,
+  Button,
+} from '@mui/material';
+import {
+  PlayArrow,
+  Favorite,
+  FavoriteBorder,
+  ChevronRight,
+} from '@mui/icons-material';
 import {
   ArtistExtended,
   ArtistBioResponse,
@@ -37,74 +51,128 @@ export const ArtistProfile = ({
   isFollowed,
 }: ArtistProfileProps) => {
   const navigate = useNavigate();
-  const { t } = useLanguage('artist');
+  const [open, setOpen] = useState(false);
+  const { t } = useLanguage('artists');
   const { isSmartphone, columns } = useTracksTable();
   const discographyData = [
     {
-      title: t('sections.albums'),
+      title: t('artistProfile.sections.albums'),
       data: albums?.items || [],
       total: albums?.total ?? 0,
       redirect: 'albums',
     },
     {
-      title: t('sections.singles'),
+      title: t('artistProfile.sections.singles'),
       data: singles?.items || [],
       total: singles?.total ?? 0,
       redirect: 'singles',
     },
     {
-      title: t('sections.compilations'),
+      title: t('artistProfile.sections.compilations'),
       data: compilations?.items || [],
       total: compilations?.total ?? 0,
       redirect: 'compilations',
     },
     {
-      title: t('sections.appearsOn'),
+      title: t('artistProfile.sections.appearsOn'),
       data: appearsOn?.items || [],
       total: appearsOn?.total ?? 0,
       redirect: 'appears-on',
     },
   ];
+  const actions = [
+    {
+      icon: isFollowed ? (
+        <Favorite
+          sx={{
+            width: 20,
+            height: 20,
+            fill: (theme) => theme.palette.accent.main,
+          }}
+        />
+      ) : (
+        <FavoriteBorder sx={{ width: 20, height: 20 }} />
+      ),
+      onClick: () => {},
+      description: isFollowed
+        ? t('artistProfile.header.actions.remove')
+        : t('artistProfile.header.actions.add'),
+    },
+    {
+      icon: <PlayArrow />,
+      onClick: () => {},
+      description: t('artistProfile.header.actions.play'),
+    },
+  ];
+
+  const handleDisplayDialog = () => setOpen((prev) => !prev);
 
   return (
     <Stack gap={4}>
       <MediaHeader
         title={name}
         cover={images?.[0]?.url}
-        followers={followers?.total}
-        description={artist?.bio?.content?.split('<a')?.[0]}
-        isSaved={isFollowed}
         isSmartphone={isSmartphone}
-        onAdd={() => {}}
-        onRemove={() => {}}
-        onPlay={() => {}}
-        onMore={() => {}}
+        actions={actions}
         isArtist
         details={
-          Boolean(genres?.length) && (
+          <Stack>
+            {/* TODO: Define how to display artist description */}
+            {/* <Button
+              size='small'
+              variant='outlined'
+              onClick={handleDisplayDialog}
+              sx={{ alignSelf: 'flex-start' }}
+            >
+              About
+            </Button> */}
             <Stack
               sx={{
+                justifyContent: { xs: 'center', sm: 'start' },
                 flexDirection: 'row',
-                flexWrap: 'wrap',
+                alignItems: 'center',
                 gap: 1,
-                mt: 1,
-                justifyContent: { xs: 'center', sm: 'flex-start' },
               }}
             >
-              {genres?.map((genre) => (
-                <Chip label={genre} size='small' />
-              ))}
+              <Typography
+                variant='subtitle2'
+                sx={{ color: (theme) => theme.palette.accent.main }}
+              >
+                {new Intl.NumberFormat().format(followers?.total ?? 0)}
+              </Typography>
+              <Typography
+                variant='subtitle2'
+                sx={{ color: (theme) => theme.palette.text.disabled }}
+              >
+                {t(
+                  followers?.total === 1
+                    ? 'artistProfile.header.metadata.followers.singular'
+                    : 'artistProfile.header.metadata.followers.plural'
+                )}
+              </Typography>
             </Stack>
-          )
+            {Boolean(genres?.length) && (
+              <Stack
+                sx={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  gap: 1,
+                  mt: 1,
+                  justifyContent: { xs: 'center', sm: 'flex-start' },
+                }}
+              >
+                {genres?.map((genre) => (
+                  <Chip key={genre} label={genre} size='small' />
+                ))}
+              </Stack>
+            )}
+          </Stack>
         }
       />
       {Boolean(topTracks?.length) && (
         <Stack gap={2}>
-          <Typography
-            variant='h6'
-            sx={{ color: (theme) => theme.palette.accent.main }}
-          >
-            {t('sections.topTracks')}
+          <Typography variant='h6'>
+            {t('artistProfile.sections.topTracks')}
           </Typography>
           <Table
             rows={topTracks}
@@ -118,40 +186,57 @@ export const ArtistProfile = ({
           />
         </Stack>
       )}
-      {discographyData.map(
-        ({ title, data, total, redirect }) =>
-          Boolean(total) && (
-            <Stack gap={2}>
-              <Divider />
+      {discographyData.map(({ title, data, total, redirect }) =>
+        total ? (
+          <Stack key={title} gap={2}>
+            <Divider />
+            <Stack
+              sx={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
               <Stack
-                sx={{ flexDirection: 'row', justifyContent: 'space-between' }}
+                sx={{ flexDirection: 'row', alignItems: 'center', gap: 1 }}
               >
-                <Stack
-                  sx={{ flexDirection: 'row', alignItems: 'center', gap: 1 }}
-                >
-                  <Typography
-                    variant='h6'
-                    sx={{ color: (theme) => theme.palette.accent.main }}
-                  >
-                    {title}
-                  </Typography>
-                  <Typography variant='h6'>{total}</Typography>
-                </Stack>
-                {total > 10 && (
-                  <Button
-                    size='small'
-                    variant='contained'
-                    endIcon={<ChevronRight />}
-                    onClick={() => navigate(redirect)}
-                  >
-                    More
-                  </Button>
-                )}
+                <Typography variant='h6'>{title}</Typography>
+                <Chip
+                  label={total}
+                  size='small'
+                  sx={{ color: (theme) => theme.palette.accent.main }}
+                />
               </Stack>
-              <AlbumsGrid data={data} displayReleaseDate />
+              {total > 10 && (
+                <Button
+                  size='small'
+                  variant='text'
+                  endIcon={<ChevronRight />}
+                  onClick={() => navigate(redirect)}
+                  sx={{
+                    display: { xs: 'none', sm: 'flex' },
+                  }}
+                >
+                  {t('artistProfile.sections.more')}
+                </Button>
+              )}
             </Stack>
-          )
+            <AlbumsGrid
+              data={data}
+              onMoreClick={() => navigate(redirect)}
+              displayMore={total > 10}
+              displayReleaseDate
+              carousell
+            />
+          </Stack>
+        ) : null
       )}
+      <Dialog open={open} onClose={handleDisplayDialog}>
+        <DialogContent>
+          <Stack gap={2}>
+            <Typography variant='h5'>{name}</Typography>
+            <Typography sx={{ color: (theme) => theme.palette.text.disabled }}>
+              {artist?.bio?.content?.split('<a')?.[0]}
+            </Typography>
+          </Stack>
+        </DialogContent>
+      </Dialog>
     </Stack>
   );
 };

@@ -5,9 +5,11 @@ import {
   Typography,
   Card,
   CardActionArea,
+  IconButton,
   useTheme,
   useMediaQuery,
 } from '@mui/material';
+import { ChevronRight } from '@mui/icons-material';
 import { Album } from '@common/interfaces';
 import { Grid, Loading } from '@components/common';
 
@@ -16,6 +18,9 @@ interface AlbumsGridProps {
   displayArtist?: boolean;
   displayReleaseDate?: boolean;
   loading?: boolean;
+  carousell?: boolean;
+  displayMore?: boolean;
+  onMoreClick?: () => void;
 }
 
 export const AlbumsGrid = ({
@@ -23,6 +28,9 @@ export const AlbumsGrid = ({
   displayArtist,
   displayReleaseDate,
   loading,
+  carousell,
+  displayMore,
+  onMoreClick,
 }: AlbumsGridProps) => {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -43,10 +51,13 @@ export const AlbumsGrid = ({
       columnGap={isSmallScreen ? 2 : 4}
       rowGap={isSmallScreen ? 2 : 4}
       minColumnWidth={isSmallScreen ? 150 : 200}
+      carousell={carousell}
     >
       {data?.map((album) => (
-        <Stack sx={{ alignItems: 'center' }}>
-          <Stack sx={{ width: '100%', gap: 1 }}>
+        <Stack key={album?.id} sx={{ alignItems: 'center' }}>
+          <Stack
+            sx={{ width: { xs: carousell ? 150 : '100%', sm: '100%' }, gap: 1 }}
+          >
             <Card variant='outlined'>
               <CardActionArea onClick={() => handleRedirect(album?.id)}>
                 <Avatar
@@ -61,9 +72,9 @@ export const AlbumsGrid = ({
                 />
               </CardActionArea>
             </Card>
-            <Stack sx={{ textAlign: 'center' }}>
+            <Stack>
               <Typography
-                variant='subtitle1'
+                variant='subtitle2'
                 sx={{
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
@@ -74,6 +85,7 @@ export const AlbumsGrid = ({
               </Typography>
               {displayArtist && (
                 <Typography
+                  variant='caption'
                   sx={{
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
@@ -86,6 +98,7 @@ export const AlbumsGrid = ({
               )}
               {displayReleaseDate && (
                 <Typography
+                  variant='caption'
                   sx={{
                     color: (theme) => theme.palette.text.disabled,
                   }}
@@ -97,6 +110,24 @@ export const AlbumsGrid = ({
           </Stack>
         </Stack>
       ))}
+      {displayMore && onMoreClick && (
+        <Stack
+          sx={{
+            display: { xs: 'flex', sm: 'none' },
+            pt: 7,
+            pr: 3,
+            pl: 2,
+          }}
+        >
+          <IconButton
+            onClick={onMoreClick}
+            size='large'
+            sx={{ border: (theme) => `1px solid ${theme.palette.divider}` }}
+          >
+            <ChevronRight />
+          </IconButton>
+        </Stack>
+      )}
     </Grid>
   );
 };

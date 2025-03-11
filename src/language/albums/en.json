@@ -1,0 +1,21 @@
+{
+  "albumDetails": {
+    "header": {
+      "metadata": {
+        "tracks": {
+          "singular": "track",
+          "plural": "tracks"
+        }
+      },
+      "actions": {
+        "add": "Save to your library",
+        "remove": "Remove from your library",
+        "play": "Play",
+        "shuffle": "Shuffle"
+      }
+    },
+    "sections": {
+      "featuredArtists": "Featured Artists"
+    }
+  }
+}

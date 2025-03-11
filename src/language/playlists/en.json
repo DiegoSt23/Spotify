@@ -1,0 +1,22 @@
+{
+  "playlistDetails": {
+    "header": {
+      "metadata": {
+        "tracks": {
+          "singular": "track",
+          "plural": "tracks"
+        },
+        "followers": {
+          "singular": "follower",
+          "plural": "followers"
+        }
+      },
+      "actions": {
+        "add": "Save to your library",
+        "remove": "Remove from your library",
+        "play": "Play",
+        "shuffle": "Shuffle"
+      }
+    }
+  }
+}

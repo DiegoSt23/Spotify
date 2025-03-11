@@ -14,7 +14,7 @@ body {
   right: 0;
   object-fit: cover;
   filter: blur(50px) brightness(0.4);
-  animation: spinScale 300s ease infinite;
+  animation: spinScale 150s ease infinite;
   z-index: 1;
 }
 
@@ -26,7 +26,7 @@ body {
   right: 0;
   object-fit: cover;
   filter: blur(8px);
-  animation: spinScale 300s ease infinite;
+  animation: spinScale 150s ease infinite;
   z-index: 1;
 }
 
@@ -36,7 +36,7 @@ body {
   }
 
   50% {
-    transform: rotate(180deg) scale(5);
+    transform: rotate(180deg) scale(8);
   }
 
   100% {

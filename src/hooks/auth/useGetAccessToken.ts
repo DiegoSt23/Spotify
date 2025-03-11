@@ -8,6 +8,6 @@ export const useGetAccessToken = () => {
   // const refreshToken = searchParams.get('refresh_token') || '';
 
   useEffect(() => {
-    Cookies.set('token', accessToken);
+    Cookies.set('token', accessToken, { expires: 1 / 24 });
   }, [accessToken]);
 };

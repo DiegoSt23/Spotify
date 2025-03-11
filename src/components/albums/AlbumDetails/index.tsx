@@ -1,11 +1,14 @@
+import { Link as Routerlink } from 'react-router-dom';
+import { Stack, Typography, Divider, Chip, Button } from '@mui/material';
 import {
-  Stack,
-  Typography,
-  Divider,
-  Chip,
-} from '@mui/material';
+  PlayArrow,
+  Favorite,
+  FavoriteBorder,
+  Shuffle,
+} from '@mui/icons-material';
 import { AlbumExtended } from '@common/interfaces';
-import { formatMs } from '@common/utils';
+import { formatMs, getFeaturedArtists } from '@common/utils';
+import { useLanguage } from '@hooks/language';
 import { useMinimalTracksTable } from '@hooks/tracks';
 import { Table, MediaHeader } from '@components/common';
 
@@ -25,20 +28,51 @@ export const AlbumDetails = ({
   album_type: albumType,
   isSaved,
 }: AlbumDetailsProps) => {
+  const { t } = useLanguage('albums');
   const { columns, isSmartphone } = useMinimalTracksTable();
+  const featuredArtists = getFeaturedArtists(tracks?.items);
+  const actions = [
+    {
+      icon: isSaved ? (
+        <Favorite
+          sx={{
+            width: 20,
+            height: 20,
+            fill: (theme) => theme.palette.accent.main,
+          }}
+        />
+      ) : (
+        <FavoriteBorder sx={{ width: 20, height: 20 }} />
+      ),
+      onClick: () => {},
+      description: isSaved
+        ? t('albumDetails.header.actions.remove')
+        : t('albumDetails.header.actions.add'),
+    },
+    {
+      icon: <PlayArrow />,
+      onClick: () => {},
+      description: t('albumDetails.header.actions.play'),
+    },
+    {
+      icon: <Shuffle />,
+      onClick: () => {},
+      description: t('albumDetails.header.actions.shuffle'),
+    },
+  ];
 
   return (
     <Stack gap={3}>
       <MediaHeader
         cover={images?.[0]?.url}
         title={name}
-        owner={artists?.map((artist) => artist.name)}
-        isSaved={isSaved}
+        owner={artists?.map(({ name, id }) => ({
+          name,
+          id,
+          path: `/artists/${id}`,
+        }))}
         isSmartphone={isSmartphone}
-        onAdd={() => {}}
-        onRemove={() => {}}
-        onPlay={() => {}}
-        onMore={() => {}}
+        actions={actions}
         details={
           <Stack
             gap={1}
@@ -63,7 +97,12 @@ export const AlbumDetails = ({
                 variant='subtitle2'
                 sx={{ color: (theme) => theme.palette.text.disabled }}
               >
-                {total_tracks && `${total_tracks} tracks`}
+                {total_tracks &&
+                  `${total_tracks} ${t(
+                    total_tracks === 1
+                      ? 'albumDetails.header.metadata.tracks.singular'
+                      : 'albumDetails.header.metadata.tracks.plural'
+                  )}`}
               </Typography>
               <Divider orientation='vertical' flexItem />
               <Typography
@@ -112,6 +151,40 @@ export const AlbumDetails = ({
           {label}
         </Typography>
       </Stack>
+      {featuredArtists.length > 1 && (
+        <Stack gap={1}>
+          <Stack sx={{ flexDirection: 'row', alignItems: 'center', gap: 1 }}>
+            <Typography variant='h6'>
+              {t('albumDetails.sections.featuredArtists')}
+            </Typography>
+            <Chip
+              label={featuredArtists.length}
+              size='small'
+              sx={{ color: (theme) => theme.palette.accent.main }}
+            />
+          </Stack>
+          <Stack
+            sx={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 2,
+              overflow: 'auto',
+            }}
+          >
+            {featuredArtists.map(({ name, id }) => (
+              <Button
+                key={id}
+                variant='outlined'
+                component={Routerlink}
+                to={`/artists/${id}`}
+                sx={{ whiteSpace: 'nowrap', minWidth: 'max-content' }}
+              >
+                {name}
+              </Button>
+            ))}
+          </Stack>
+        </Stack>
+      )}
     </Stack>
   );
 };

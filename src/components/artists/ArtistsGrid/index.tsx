@@ -34,17 +34,11 @@ export const ArtistsGrid = ({ data, loading }: ArtistsGridProps) => {
   return (
     <Grid columnGap={isSmallScreen ? 2 : 4} rowGap={isSmallScreen ? 2 : 4}>
       {data?.map((artist) => (
-        <Stack sx={{ alignItems: 'center', gap: 1 }}>
+        <Stack key={artist.id} sx={{ alignItems: 'center', gap: 1 }}>
           <Card
             variant='outlined'
             sx={{
               borderRadius: '100%',
-              boxShadow: 5,
-              transition: 'transform 0.2s',
-              '&:hover': {
-                transform: 'scale(1.1)',
-                transition: 'transform 0.2s',
-              },
             }}
           >
             <CardActionArea onClick={() => handleRedirect(artist?.id)}>

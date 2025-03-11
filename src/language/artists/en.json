@@ -1,0 +1,25 @@
+{
+  "artistProfile": {
+    "header": {
+      "metadata": {
+        "followers": {
+          "singular": "follower",
+          "plural": "followers"
+        }
+      },
+      "actions": {
+        "add": "Follow",
+        "remove": "Stop following",
+        "play": "Play"
+      }
+    },
+    "sections": {
+      "topTracks": "Top 10 Tracks",
+      "albums": "Albums",
+      "compilations": "Compilations",
+      "singles": "Singles",
+      "appearsOn": "Appears on",
+      "more": "More"
+    }
+  }
+}

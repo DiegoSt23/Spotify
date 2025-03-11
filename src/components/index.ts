@@ -4,6 +4,7 @@ export * from './layout';
 export * from './navigation';
 export * from './settings';
 export * from './queue';
+export * from './search';
 export * from './tracks';
 export * from './artists';
 export * from './albums';

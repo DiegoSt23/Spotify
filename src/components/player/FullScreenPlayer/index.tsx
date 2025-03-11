@@ -63,13 +63,13 @@ export const FullScreenPlayer = ({
       >
         {isDarkTheme ? (
           <img
-            src='https://i.scdn.co/image/ab67616d0000b2739b62c36a1f8ac00d60f460cc'
+            src='https://i.scdn.co/image/ab67616d0000b2735c53799f473fa3e1a48c00ed'
             className='player-background-img-dark'
           />
         ) : (
           <>
             <img
-              src='https://i.scdn.co/image/ab67616d0000b2739b62c36a1f8ac00d60f460cc'
+              src='https://i.scdn.co/image/ab67616d0000b2735c53799f473fa3e1a48c00ed'
               className='player-background-img-light'
             />
             <Stack
@@ -95,7 +95,7 @@ export const FullScreenPlayer = ({
         >
           <Card variant='outlined' sx={{ boxShadow: 10 }}>
             <Avatar
-              src='https://i.scdn.co/image/ab67616d0000b2739b62c36a1f8ac00d60f460cc'
+              src='https://i.scdn.co/image/ab67616d0000b2735c53799f473fa3e1a48c00ed'
               variant='rounded'
               sx={{
                 width: { xs: '100%', sm: 400, md: 500 },
@@ -104,7 +104,7 @@ export const FullScreenPlayer = ({
             />
           </Card>
           <Stack sx={{ textAlign: 'center', mt: 1 }}>
-            <Typography variant='subtitle1'>Diamond Eyes</Typography>
+            <Typography variant='subtitle1'>Changes</Typography>
             <Typography sx={{ color: (theme) => theme.palette.text.disabled }}>
               Deftones
             </Typography>

@@ -8,7 +8,6 @@ export const AlbumDetails = () => {
   const { data, isFetching } = useGetAlbumDetails(id);
   const { data: isAlbumSaved, isFetching: isFetchingIsAlbumSaved } =
     useCheckIsAlbumSaved(id);
-  console.log(isAlbumSaved);
 
   if (isFetching || isFetchingIsAlbumSaved) {
     return <Loading />;
