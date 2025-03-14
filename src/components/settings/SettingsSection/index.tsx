@@ -24,7 +24,7 @@ export const SettingsSection = ({
       </Stack>
       <Typography
         sx={{
-          color: (theme) => theme.palette.text.disabled,
+          color: (theme) => theme.palette.text.secondary,
           display: { xs: 'none', md: 'block' },
         }}
       >
@@ -39,7 +39,7 @@ export const SettingsSection = ({
           justifyContent: 'space-between',
         }}
       >
-        <Typography sx={{ color: (theme) => theme.palette.text.disabled }}>
+        <Typography sx={{ color: (theme) => theme.palette.text.secondary }}>
           {longDescription}
         </Typography>
         {children}

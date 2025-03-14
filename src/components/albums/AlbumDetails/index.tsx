@@ -88,14 +88,14 @@ export const AlbumDetails = ({
             >
               <Typography
                 variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.disabled }}
+                sx={{ color: (theme) => theme.palette.text.secondary }}
               >
                 {release_date?.split('-')[0]}
               </Typography>
               <Divider orientation='vertical' flexItem />
               <Typography
                 variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.disabled }}
+                sx={{ color: (theme) => theme.palette.text.secondary }}
               >
                 {total_tracks &&
                   `${total_tracks} ${t(
@@ -107,7 +107,7 @@ export const AlbumDetails = ({
               <Divider orientation='vertical' flexItem />
               <Typography
                 variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.disabled }}
+                sx={{ color: (theme) => theme.palette.text.secondary }}
               >
                 {formatMs(
                   tracks?.items.reduce(
@@ -136,7 +136,7 @@ export const AlbumDetails = ({
         <Typography
           variant='caption'
           sx={{
-            color: (theme) => theme.palette.text.disabled,
+            color: (theme) => theme.palette.text.secondary,
           }}
         >
           {copyrights?.[0]?.text}
@@ -145,7 +145,7 @@ export const AlbumDetails = ({
         <Typography
           variant='caption'
           sx={{
-            color: (theme) => theme.palette.text.disabled,
+            color: (theme) => theme.palette.text.secondary,
           }}
         >
           {label}

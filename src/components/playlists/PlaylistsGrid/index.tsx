@@ -81,7 +81,7 @@ export const PlaylistsGrid = ({
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
-                      color: (theme) => theme.palette.text.disabled,
+                      color: (theme) => theme.palette.text.secondary,
                     }}
                   >
                     {playlist?.owner?.display_name}
@@ -93,7 +93,7 @@ export const PlaylistsGrid = ({
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
-                      color: (theme) => theme.palette.text.disabled,
+                      color: (theme) => theme.palette.text.secondary,
                     }}
                   >
                     {playlist?.tracks?.total} tracks

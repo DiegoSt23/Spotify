@@ -49,7 +49,7 @@ export const Profile = () => {
               {details?.map((detail) => (
                 <Stack key={detail.label} sx={{ alignItems: 'center' }}>
                   <Typography
-                    sx={{ color: (theme) => theme.palette.text.disabled }}
+                    sx={{ color: (theme) => theme.palette.text.secondary }}
                   >
                     {detail.label}
                   </Typography>

@@ -90,7 +90,7 @@ export const AlbumsGrid = ({
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
-                    color: (theme) => theme.palette.text.disabled,
+                    color: (theme) => theme.palette.text.secondary,
                   }}
                 >
                   {album?.artists.map((artist) => artist.name).join(', ')}
@@ -100,7 +100,7 @@ export const AlbumsGrid = ({
                 <Typography
                   variant='caption'
                   sx={{
-                    color: (theme) => theme.palette.text.disabled,
+                    color: (theme) => theme.palette.text.secondary,
                   }}
                 >
                   {album?.release_date?.split('-')[0]}

@@ -58,8 +58,8 @@ export const MediaHeader = ({
       variant='outlined'
       sx={{
         borderRadius: isArtist && !isSmartphone ? '100%' : undefined,
-        width: isArtist && isSmartphone ? '100%' : 300,
-        height: isArtist && isSmartphone ? 'auto' : 300,
+        width: isSmartphone ? '100%' : 300,
+        height: isSmartphone ? 'auto' : 300,
       }}
     >
       <Avatar
@@ -67,8 +67,8 @@ export const MediaHeader = ({
         alt={title}
         variant={isArtist ? (isSmartphone ? 'square' : 'circular') : 'rounded'}
         sx={{
-          width: isArtist && isSmartphone ? '100%' : 300,
-          height: isArtist && isSmartphone ? 'auto' : 300,
+          width: isSmartphone ? '100%' : 300,
+          height: isSmartphone ? 'auto' : 300,
         }}
       />
     </Card>
@@ -125,7 +125,7 @@ export const MediaHeader = ({
           (typeof details === 'string' ? (
             <Typography
               variant='subtitle2'
-              sx={{ color: (theme) => theme.palette.text.disabled }}
+              sx={{ color: (theme) => theme.palette.text.secondary }}
             >
               {details}
             </Typography>

@@ -17,7 +17,7 @@ export const NotFound = () => {
     >
       <Typography variant='h1'>404</Typography>
       <Typography variant='subtitle1'>{t('title')}</Typography>
-      <Typography sx={{ color: (theme) => theme.palette.text.disabled }}>
+      <Typography sx={{ color: (theme) => theme.palette.text.secondary }}>
         {t('description')}
       </Typography>
       <Button

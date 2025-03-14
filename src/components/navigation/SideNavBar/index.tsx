@@ -110,7 +110,7 @@ export const SideNavBar = () => {
                               color: (theme) =>
                                 isActive
                                   ? theme.palette.text.primary
-                                  : theme.palette.text.disabled,
+                                  : theme.palette.text.secondary,
                             }}
                           >
                             {label}

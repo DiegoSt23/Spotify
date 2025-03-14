@@ -93,7 +93,7 @@ export const Player = () => {
             </Typography>
             <Typography
               sx={{
-                color: (theme) => theme.palette.text.disabled,
+                color: (theme) => theme.palette.text.secondary,
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',

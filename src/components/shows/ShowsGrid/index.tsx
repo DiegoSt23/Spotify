@@ -63,7 +63,7 @@ export const ShowsGrid = ({
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
-                    color: (theme) => theme.palette.text.disabled,
+                    color: (theme) => theme.palette.text.secondary,
                   }}
                 >
                   {show?.publisher}

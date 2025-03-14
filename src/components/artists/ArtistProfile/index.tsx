@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Markdown from 'react-markdown';
 import {
   Stack,
   Typography,
@@ -21,6 +22,7 @@ import {
   ArtistTopTracksResponse,
   PartialAlbumsResponse,
 } from '@common/interfaces';
+import { About } from '@assets/customIcons';
 import { useLanguage } from '@hooks/language';
 import { useTracksTable } from '@hooks/tracks';
 import { MediaHeader, Table } from '@components/common';
@@ -80,6 +82,23 @@ export const ArtistProfile = ({
       redirect: 'appears-on',
     },
   ];
+  const aboutButtonData = artist?.bio?.content
+    ? [
+        {
+          icon: (
+            <About
+              sx={{
+                width: 34,
+                height: 34,
+                fill: (theme) => theme.palette.primary.main,
+              }}
+            />
+          ),
+          onClick: () => setOpen(true),
+          description: t('artistProfile.header.actions.about'),
+        },
+      ]
+    : [];
   const actions = [
     {
       icon: isFollowed ? (
@@ -98,14 +117,13 @@ export const ArtistProfile = ({
         ? t('artistProfile.header.actions.remove')
         : t('artistProfile.header.actions.add'),
     },
+    ...aboutButtonData,
     {
       icon: <PlayArrow />,
       onClick: () => {},
       description: t('artistProfile.header.actions.play'),
     },
   ];
-
-  const handleDisplayDialog = () => setOpen((prev) => !prev);
 
   return (
     <Stack gap={4}>
@@ -117,15 +135,6 @@ export const ArtistProfile = ({
         isArtist
         details={
           <Stack>
-            {/* TODO: Define how to display artist description */}
-            {/* <Button
-              size='small'
-              variant='outlined'
-              onClick={handleDisplayDialog}
-              sx={{ alignSelf: 'flex-start' }}
-            >
-              About
-            </Button> */}
             <Stack
               sx={{
                 justifyContent: { xs: 'center', sm: 'start' },
@@ -142,7 +151,7 @@ export const ArtistProfile = ({
               </Typography>
               <Typography
                 variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.disabled }}
+                sx={{ color: (theme) => theme.palette.text.secondary }}
               >
                 {t(
                   followers?.total === 1
@@ -227,13 +236,11 @@ export const ArtistProfile = ({
           </Stack>
         ) : null
       )}
-      <Dialog open={open} onClose={handleDisplayDialog}>
+      <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogContent>
-          <Stack gap={2}>
+          <Stack>
             <Typography variant='h5'>{name}</Typography>
-            <Typography sx={{ color: (theme) => theme.palette.text.disabled }}>
-              {artist?.bio?.content?.split('<a')?.[0]}
-            </Typography>
+            <Markdown>{artist?.bio?.content?.split('<a')?.[0]}</Markdown>
           </Stack>
         </DialogContent>
       </Dialog>

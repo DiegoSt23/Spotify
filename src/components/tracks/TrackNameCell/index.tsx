@@ -28,7 +28,7 @@ export const TrackNameCell = ({
     >
       <Typography
         variant='caption'
-        sx={{ color: (theme) => theme.palette.text.disabled }}
+        sx={{ color: (theme) => theme.palette.text.secondary }}
       >
         {trackNumber}
       </Typography>
@@ -50,7 +50,7 @@ export const TrackNameCell = ({
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            color: (theme) => theme.palette.text.disabled,
+            color: (theme) => theme.palette.text.secondary,
           }}
         >
           {artistName}
@@ -63,7 +63,7 @@ export const TrackNameCell = ({
           width: 18,
           height: 18,
           ml: 1,
-          color: (theme) => theme.palette.text.disabled,
+          color: (theme) => theme.palette.text.secondary,
         }}
       />
     )}

@@ -22,7 +22,7 @@ export const TrackTimeAndOptionsCell = ({
   >
     <Typography
       sx={{
-        color: (theme) => theme.palette.text.disabled,
+        color: (theme) => theme.palette.text.secondary,
         display: { xs: 'none', sm: 'flex' },
       }}
     >

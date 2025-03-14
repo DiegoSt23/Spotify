@@ -10,6 +10,7 @@
       "actions": {
         "add": "Seguir",
         "remove": "Dejar de seguir",
+        "about": "Acerca de",
         "play": "Reproducir"
       }
     },

@@ -22,10 +22,10 @@ export const InitialMessage = ({ isLoading }: InitialMessageProps) => (
           alignItems: 'center',
         }}
       >
-        <Search sx={{ color: (theme) => theme.palette.text.disabled }} />
+        <Search sx={{ color: (theme) => theme.palette.text.secondary }} />
         <Typography
           variant='subtitle1'
-          sx={{ color: (theme) => theme.palette.text.disabled }}
+          sx={{ color: (theme) => theme.palette.text.secondary }}
         >
           Use the input above to search your favorite songs, artists, albums or
           podcasts.

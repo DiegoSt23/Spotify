@@ -30,7 +30,7 @@ export const ProgressBar = ({ containerProps, ...props }: ProgressBarProps) => (
       <Typography
         variant='caption'
         sx={{
-          color: (theme) => theme.palette.text.disabled,
+          color: (theme) => theme.palette.text.secondary,
           lineHeight: 1,
         }}
       >
@@ -39,7 +39,7 @@ export const ProgressBar = ({ containerProps, ...props }: ProgressBarProps) => (
       <Typography
         variant='caption'
         sx={{
-          color: (theme) => theme.palette.text.disabled,
+          color: (theme) => theme.palette.text.secondary,
           lineHeight: 1,
         }}
       >

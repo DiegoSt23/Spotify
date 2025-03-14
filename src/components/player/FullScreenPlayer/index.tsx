@@ -105,7 +105,7 @@ export const FullScreenPlayer = ({
           </Card>
           <Stack sx={{ textAlign: 'center', mt: 1 }}>
             <Typography variant='subtitle1'>Changes</Typography>
-            <Typography sx={{ color: (theme) => theme.palette.text.disabled }}>
+            <Typography sx={{ color: (theme) => theme.palette.text.secondary }}>
               Deftones
             </Typography>
           </Stack>

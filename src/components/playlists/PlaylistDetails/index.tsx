@@ -89,7 +89,7 @@ export const PlaylistDetails = ({
             >
               <Typography
                 variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.disabled }}
+                sx={{ color: (theme) => theme.palette.text.secondary }}
               >
                 {`${tracks?.total} ${t(
                   tracks?.total === 1
@@ -100,7 +100,7 @@ export const PlaylistDetails = ({
               <Divider orientation='vertical' flexItem />
               <Typography
                 variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.disabled }}
+                sx={{ color: (theme) => theme.palette.text.secondary }}
               >
                 {formatMs(
                   tracks?.items.reduce(
@@ -113,7 +113,7 @@ export const PlaylistDetails = ({
               <Divider orientation='vertical' flexItem />
               <Typography
                 variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.disabled }}
+                sx={{ color: (theme) => theme.palette.text.secondary }}
               >
                 {`${followers?.total} ${t(
                   followers?.total === 1
