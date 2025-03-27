@@ -9,6 +9,7 @@ import {
   Dialog,
   DialogContent,
   Button,
+  Alert,
 } from '@mui/material';
 import {
   PlayArrow,
@@ -56,6 +57,7 @@ export const ArtistProfile = ({
   const [open, setOpen] = useState(false);
   const { t } = useLanguage('artists');
   const { isSmartphone, columns } = useTracksTable();
+  
   const discographyData = [
     {
       title: t('artistProfile.sections.albums'),
@@ -82,6 +84,10 @@ export const ArtistProfile = ({
       redirect: 'appears-on',
     },
   ];
+
+  const noAvailableData =
+    !topTracks?.length && discographyData.every((item) => item.total === 0);
+
   const aboutButtonData = artist?.bio?.content
     ? [
         {
@@ -99,6 +105,17 @@ export const ArtistProfile = ({
         },
       ]
     : [];
+
+  const playButtonData = noAvailableData
+    ? []
+    : [
+        {
+          icon: <PlayArrow />,
+          onClick: () => {},
+          description: t('artistProfile.header.actions.play'),
+        },
+      ];
+
   const actions = [
     {
       icon: isFollowed ? (
@@ -118,11 +135,7 @@ export const ArtistProfile = ({
         : t('artistProfile.header.actions.add'),
     },
     ...aboutButtonData,
-    {
-      icon: <PlayArrow />,
-      onClick: () => {},
-      description: t('artistProfile.header.actions.play'),
-    },
+    ...playButtonData,
   ];
 
   return (
@@ -235,6 +248,9 @@ export const ArtistProfile = ({
             />
           </Stack>
         ) : null
+      )}
+      {noAvailableData && (
+        <Alert severity='info'>{t('artistProfile.noContent')}</Alert>
       )}
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogContent>
