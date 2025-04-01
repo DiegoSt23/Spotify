@@ -31,7 +31,7 @@ export const PlaylistsGrid = ({
   const handleRedirect = (id?: string) => {
     if (!id) return;
     
-    navigate(`/playlists/${id}`);
+    navigate(`/playlist/${id}`);
   };
 
   if (loading) {

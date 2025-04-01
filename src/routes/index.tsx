@@ -3,7 +3,6 @@ import {
   PrivateRoute,
   Dashboard,
   ArtistLayout,
-  PlaylistsLayout,
 } from '@components/index';
 import {
   Login,
@@ -97,17 +96,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'playlists',
-        element: <PlaylistsLayout />,
-        children: [
-          {
-            path: 'me',
-            element: <CurrentUserPlaylists />,
-          },
-          {
-            path: ':id',
-            element: <PlaylistDetails />,
-          },
-        ],
+        element: <CurrentUserPlaylists />,
+      },
+      {
+        path: 'playlist/:id',
+        element: <PlaylistDetails />,
       },
       {
         path: 'profile',

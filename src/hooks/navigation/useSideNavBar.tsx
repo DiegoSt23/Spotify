@@ -65,14 +65,14 @@ export const useSideNavBar = () => {
           label: t('navItems.myMusic.items.albums'),
           icon: <LibraryMusic />,
           isActive:
-            pathname.includes('albums') && !pathname.includes('artists'),
+            pathname.includes('albums') && !pathname.includes('artist'),
           onClick: () => navigate('/saved-albums'),
         },
         {
           label: t('navItems.myMusic.items.playlists'),
           icon: <QueueMusic />,
           isActive: pathname.includes('playlists'),
-          onClick: () => navigate('/playlists/me'),
+          onClick: () => navigate('/playlists'),
         },
       ],
     },
