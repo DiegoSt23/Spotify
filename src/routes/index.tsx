@@ -10,7 +10,7 @@ import {
   Home,
   Search,
   Stats,
-  Songs,
+  SavedSongs,
   FollowedArtists,
   SavedAlbums,
   CurrentUserPlaylists,
@@ -55,8 +55,8 @@ export const router = createBrowserRouter([
         element: <Stats />,
       },
       {
-        path: 'songs',
-        element: <Songs />,
+        path: 'saved-songs',
+        element: <SavedSongs />,
       },
       {
         path: 'followed-artists',

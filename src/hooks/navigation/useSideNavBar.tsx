@@ -53,8 +53,8 @@ export const useSideNavBar = () => {
         {
           label: t('navItems.myMusic.items.songs'),
           icon: <MusicNote />,
-          isActive: pathname === '/songs',
-          onClick: () => navigate('/songs'),
+          isActive: pathname === '/saved-songs',
+          onClick: () => navigate('/saved-songs'),
         },
         {
           label: t('navItems.myMusic.items.artists'),

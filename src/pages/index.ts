@@ -2,7 +2,7 @@ export * from './Login';
 export * from './Home';
 export * from './Search';
 export * from './Stats';
-export * from './Songs';
+export * from './SavedSongs';
 export * from './FollowedArtists';
 export * from './SavedAlbums';
 export * from './CurrentUserPlaylists';

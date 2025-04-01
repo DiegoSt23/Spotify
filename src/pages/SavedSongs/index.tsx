@@ -3,7 +3,7 @@ import { useExtendedTracksTable } from '@hooks/tracks';
 import { Page } from '@components/layout';
 import { Table } from '@components/common';
 
-export const Songs = () => {
+export const SavedSongs = () => {
   const { data, isFetching } = useGetCurrentUserTracks();
   const { columns, isSmartphone } = useExtendedTracksTable();
 
