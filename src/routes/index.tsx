@@ -21,7 +21,6 @@ import {
   ArtistCompilations,
   ArtistAppearsOn,
   PlaylistDetails,
-  Podcasts,
   Profile,
   About,
   Settings,
@@ -109,10 +108,6 @@ export const router = createBrowserRouter([
             element: <PlaylistDetails />,
           },
         ],
-      },
-      {
-        path: 'podcasts',
-        element: <Podcasts />,
       },
       {
         path: 'profile',

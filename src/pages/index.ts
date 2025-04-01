@@ -13,7 +13,6 @@ export * from './ArtistCompilations';
 export * from './ArtistAppearsOn';
 export * from './AlbumDetails';
 export * from './PlaylistDetails';
-export * from './Podcasts';
 export * from './Profile';
 export * from './About';
 export * from './Settings';

@@ -9,7 +9,6 @@ import {
   MusicNote,
   LibraryMusic,
   QueueMusic,
-  Mic,
   PeopleAlt,
   BarChart,
 } from '@mui/icons-material';
@@ -74,12 +73,6 @@ export const useSideNavBar = () => {
           icon: <QueueMusic />,
           isActive: pathname.includes('playlists'),
           onClick: () => navigate('/playlists/me'),
-        },
-        {
-          label: t('navItems.myMusic.items.podcasts'),
-          icon: <Mic />,
-          isActive: pathname === '/podcasts',
-          onClick: () => navigate('/podcasts'),
         },
       ],
     },

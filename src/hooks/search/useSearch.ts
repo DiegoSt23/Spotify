@@ -4,7 +4,7 @@ import { SearchResponse } from '@common/interfaces';
 
 const handleSearch = async (searchQuery?: string): Promise<SearchResponse> => {
   const response = await Api.get<SearchResponse>(
-    `/search?q=${searchQuery}&type=album,artist,track,playlist,show,episode`
+    `/search?q=${searchQuery}&type=album,artist,track,playlist`
   );
 
   return response;

@@ -5,8 +5,6 @@ import {
   ArtistsResponse,
   AlbumsResponse,
   PlaylistsResponse,
-  ShowsResponse,
-  EpisodesResponse,
 } from '@common/interfaces';
 import { useSearch } from '@hooks/search';
 import { useTracksTable } from '@hooks/tracks';
@@ -16,8 +14,6 @@ import { SearchBar, InitialMessage, ResultsTabs } from '@components/search';
 import { ArtistsGrid } from '@components/artists';
 import { AlbumsGrid } from '@components/albums';
 import { PlaylistsGrid } from '@components/playlists';
-import { ShowsGrid } from '@components/shows';
-import { EpisodesGrid } from '@components/episodes';
 
 export const Search = () => {
   const [currentTab, setCurrentTab] = useState<number>(0);
@@ -29,8 +25,6 @@ export const Search = () => {
   const artists: ArtistsResponse | undefined = data?.['artists'];
   const albums: AlbumsResponse | undefined = data?.['albums'];
   const playlists: PlaylistsResponse | undefined = data?.['playlists'];
-  const shows: ShowsResponse | undefined = data?.['shows'];
-  const episodes: EpisodesResponse | undefined = data?.['episodes'];
 
   const handleSelectTab = (newValue: number) => {
     setCurrentTab(newValue);
@@ -76,12 +70,6 @@ export const Search = () => {
           </Stack>
           <Stack sx={{ display: currentTab === 3 ? 'flex' : 'none' }}>
             <PlaylistsGrid data={playlists?.items} displayOwner />
-          </Stack>
-          <Stack sx={{ display: currentTab === 4 ? 'flex' : 'none' }}>
-            <ShowsGrid data={shows?.items} displayPublisher />
-          </Stack>
-          <Stack sx={{ display: currentTab === 5 ? 'flex' : 'none' }}>
-            <EpisodesGrid data={episodes?.items} />
           </Stack>
         </Stack>
       )}
