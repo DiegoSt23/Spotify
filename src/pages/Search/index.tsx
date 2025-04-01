@@ -42,7 +42,6 @@ export const Search = () => {
       headerElement={
         <SearchBar
           onChange={setDebouncedInputValue}
-          isLoading={isFetching}
           isFetched={isFetched}
         />
       }

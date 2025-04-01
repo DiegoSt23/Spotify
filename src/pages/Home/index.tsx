@@ -7,7 +7,7 @@ export const Home = () => {
   const { data } = useGetCurrentUserTopItems();
 
   return (
-    <Page title='Home' >
+    <Page>
       <Stack
         sx={{
           height: 200,

@@ -17,8 +17,8 @@
     "sections": {
       "topTracks": "Top 10 Tracks",
       "albums": "Albums",
-      "compilations": "Compilations",
       "singles": "Singles",
+      "compilations": "Compilations",
       "appearsOn": "Appears on",
       "more": "More"
     },

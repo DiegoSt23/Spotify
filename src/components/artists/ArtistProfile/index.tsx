@@ -222,7 +222,10 @@ export const ArtistProfile = ({
                 <Chip
                   label={total}
                   size='small'
-                  sx={{ color: (theme) => theme.palette.accent.main }}
+                  sx={{
+                    color: (theme) => theme.palette.accent.main,
+                    fontWeight: 'fontWeightBold',
+                  }}
                 />
               </Stack>
               {total > 10 && (
@@ -232,7 +235,10 @@ export const ArtistProfile = ({
                   endIcon={<ChevronRight />}
                   onClick={() => navigate(redirect)}
                   sx={{
-                    display: { xs: 'none', sm: 'flex' },
+                    display: {
+                      xs: 'none',
+                      sm: 'flex',
+                    },
                   }}
                 >
                   {t('artistProfile.sections.more')}

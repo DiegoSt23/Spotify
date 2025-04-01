@@ -1,26 +1,29 @@
-import { useParams } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import {
-  useGetArtistDetails,
   useGetArtistBio,
   useGetArtistTopTracks,
   useGetArtistPartialAlbums,
   useCheckIsArtistFollowed,
 } from '@hooks/artists';
-import { ArtistProfile as ArtistProfileTemplate } from '@components/artists';
+import { type ArtistContext } from '@components/layout';
 import { Loading } from '@components/common';
+import { ArtistProfile as ArtistProfileTemplate } from '@components/artists';
 
 export const ArtistProfile = () => {
-  const { id } = useParams<{ id: string }>();
-  const { data, isFetching } = useGetArtistDetails(id);
-  const { data: topTracks, isFetching: isFetchingTopTracks } = useGetArtistTopTracks(id);
+  const { id, artistData, isFetchingArtistData } =
+    useOutletContext<ArtistContext>();
+  const { data: topTracks, isFetching: isFetchingTopTracks } =
+    useGetArtistTopTracks(id);
   const { data: partialAlbums, isFetching: isFetchingPartialAlbums } =
     useGetArtistPartialAlbums(id);
   const { data: isArtistFollowed, isFetching: isFetchingIsArtistFollowed } =
     useCheckIsArtistFollowed(id);
-  const { data: bioData, isFetching: isFetchingBio } = useGetArtistBio(data?.name);
+  const { data: bioData, isFetching: isFetchingBio } = useGetArtistBio(
+    artistData?.name
+  );
 
   if (
-    isFetching ||
+    isFetchingArtistData ||
     isFetchingBio ||
     isFetchingTopTracks ||
     isFetchingPartialAlbums ||
@@ -31,7 +34,7 @@ export const ArtistProfile = () => {
 
   return (
     <ArtistProfileTemplate
-      {...data}
+      {...artistData}
       {...bioData}
       {...topTracks}
       {...partialAlbums}

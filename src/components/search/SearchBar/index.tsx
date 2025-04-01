@@ -2,7 +2,6 @@ import { useState, useEffect, type ChangeEvent } from 'react';
 import {
   Stack,
   TextField,
-  CircularProgress,
   IconButton,
   Tooltip,
 } from '@mui/material';
@@ -10,11 +9,10 @@ import { Search as SearchIcon, Clear, FilterList } from '@mui/icons-material';
 
 interface SearchBarProps {
   onChange: (val: string) => void;
-  isLoading: boolean;
   isFetched: boolean;
 }
 
-export const SearchBar = ({ onChange, isLoading, isFetched }: SearchBarProps) => {
+export const SearchBar = ({ onChange, isFetched }: SearchBarProps) => {
   const [localInputValue, setLocalInputValue] = useState<string>('');
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -53,18 +51,13 @@ export const SearchBar = ({ onChange, isLoading, isFetched }: SearchBarProps) =>
             startAdornment: (
               <SearchIcon sx={{ width: 20, height: 20, mr: 1 }} />
             ),
-            endAdornment: isLoading ? (
-              <CircularProgress size={20} />
-            ) : (
-              localInputValue &&
-              isFetched && (
-                <IconButton size='small' edge='end'>
-                  <Clear
-                    sx={{ width: 16, height: 16 }}
-                    onClick={handleInputClear}
-                  />
-                </IconButton>
-              )
+            endAdornment: localInputValue && isFetched && (
+              <IconButton size='small' edge='end'>
+                <Clear
+                  sx={{ width: 16, height: 16 }}
+                  onClick={handleInputClear}
+                />
+              </IconButton>
             ),
           },
         }}

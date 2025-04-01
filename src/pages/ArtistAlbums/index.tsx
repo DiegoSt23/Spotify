@@ -1,13 +1,15 @@
-import { useParams } from 'react-router-dom';
-import { useGetArtistAlbums } from '@hooks/artists';
-import { AlbumsGrid } from '@components/albums';
+import { useOutletContext } from 'react-router-dom';
+import { type ArtistContext } from '@components/layout';
+import { useGetArtistCatalog } from '@hooks/artists';
 import { Loading } from '@components/common';
+import { AlbumsGrid } from '@components/albums';
 
 export const ArtistAlbums = () => {
-  const { id } = useParams<{ id: string }>();
-  const { data, isFetching } = useGetArtistAlbums(id, 50);
+  const { id, isFetchingArtistData } =
+    useOutletContext<ArtistContext>();
+  const { data, isFetching } = useGetArtistCatalog(id, 50, 'album');
 
-  if (isFetching) {
+  if (isFetchingArtistData || isFetching) {
     return <Loading />;
   }
 

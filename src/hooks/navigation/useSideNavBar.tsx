@@ -59,8 +59,8 @@ export const useSideNavBar = () => {
         {
           label: t('navItems.myMusic.items.artists'),
           icon: <PeopleAlt />,
-          isActive: pathname.includes('artists'),
-          onClick: () => navigate('/artists/me'),
+          isActive: pathname.includes('artist') || pathname.includes('artists'),
+          onClick: () => navigate('/followed-artists'),
         },
         {
           label: t('navItems.myMusic.items.albums'),

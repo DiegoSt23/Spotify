@@ -1,27 +1,24 @@
 import { useQueries } from '@tanstack/react-query';
-import { handleGetArtistAlbums } from './useGetArtistAlbums';
-import { handleGetArtistSingles } from './useGetArtistSingles';
-import { handleGetArtistCompilations } from './useGetArtistCompilations';
-import { handleGetArtistAppearsOn } from './useGetArtistAppearsOn';
+import { handleGetArtistCatalog } from './useGetArtistCatalog';
 
 export const useGetArtistPartialAlbums = (id?: string) =>
   useQueries({
     queries: [
       {
         queryKey: ['getPartialArtistAlbums', id],
-        queryFn: () => handleGetArtistAlbums(id),
+        queryFn: () => handleGetArtistCatalog(id, 10, 'album'),
       },
       {
         queryKey: ['getPartialArtistSingles', id],
-        queryFn: () => handleGetArtistSingles(id),
+        queryFn: () => handleGetArtistCatalog(id, 10, 'single'),
       },
       {
         queryKey: ['getPartialArtistCompilations', id],
-        queryFn: () => handleGetArtistCompilations(id),
+        queryFn: () => handleGetArtistCatalog(id, 10, 'compilation'),
       },
       {
         queryKey: ['getPartialArtistAppearsOn', id],
-        queryFn: () => handleGetArtistAppearsOn(id),
+        queryFn: () => handleGetArtistCatalog(id, 10, 'appears_on'),
       },
     ],
     combine: (results) => {

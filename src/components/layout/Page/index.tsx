@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, type ReactNode } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Stack, Typography } from '@mui/material';
 
 interface PageProps {
   children: ReactNode;
-  title?: string;
+  title?: string | ReactNode;
   headerElement?: ReactNode;
   hideHeaderBorder?: boolean;
 }
@@ -14,6 +15,7 @@ export const Page = ({
   headerElement,
   hideHeaderBorder,
 }: PageProps) => {
+  const { pathname } = useLocation();
   const [showHeader, setShowHeader] = useState(true);
   const lastScrollTop = useRef(0);
   const stackRef = useRef<HTMLDivElement>(null);
@@ -44,6 +46,10 @@ export const Page = ({
     };
   }, []);
 
+  useEffect(() => {
+    setShowHeader(true);
+  }, [pathname]);
+
   return (
     <Stack
       ref={stackRef}
@@ -63,29 +69,39 @@ export const Page = ({
         // },
       }}
     >
-      <Stack
-        sx={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 99,
-          transform: showHeader ? 'translateY(-1px)' : 'translateY(-100%)',
-          transition: 'transform 0.3s',
-          backgroundColor: (theme) => theme.palette.background.paper,
-          borderBottom: (theme) =>
-            hideHeaderBorder ? 'none' : `1px solid ${theme.palette.divider}`,
-          flexDirection: 'row',
-          justifyContent: title ? 'space-between' : 'flex-end',
-          alignItems: 'center',
-          minHeight: 60,
-        }}
-      >
-        {title && <Typography variant='h5'>{title}</Typography>}
-        {headerElement ?? null}
-      </Stack>
+      {(title || headerElement) && (
+        <Stack
+          sx={{
+            width: '100%',
+            position: 'sticky',
+            top: 0,
+            zIndex: 99,
+            transform: showHeader ? 'translateY(-1px)' : 'translateY(-100%)',
+            transition: 'transform 0.3s',
+            backgroundColor: (theme) => theme.palette.background.paper,
+            borderBottom: (theme) =>
+              hideHeaderBorder ? 'none' : `1px solid ${theme.palette.divider}`,
+            flexDirection: 'row',
+            justifyContent: title ? 'space-between' : 'flex-end',
+            alignItems: 'center',
+            minHeight: 60,
+          }}
+        >
+          {title &&
+            (typeof title === 'string' ? (
+              <Typography variant='h6' noWrap>
+                {title}
+              </Typography>
+            ) : (
+              title
+            ))}
+          {headerElement ?? null}
+        </Stack>
+      )}
       <Stack
         sx={{
           flex: 1,
-          pt: 3,
+          pt: !title && !headerElement ? 2 : 3,
           pb: 2,
         }}
       >

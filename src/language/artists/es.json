@@ -17,8 +17,8 @@
     "sections": {
       "topTracks": "10 canciones más escuchadas",
       "albums": "Álbumes",
-      "compilations": "Compilaciones",
       "singles": "Sencillos",
+      "compilations": "Compilaciones",
       "appearsOn": "Aparece en",
       "more": "Más"
     },

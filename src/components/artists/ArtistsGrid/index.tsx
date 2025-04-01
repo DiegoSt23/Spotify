@@ -24,7 +24,7 @@ export const ArtistsGrid = ({ data, loading }: ArtistsGridProps) => {
   const handleRedirect = (id?: string) => {
     if (!id) return;
     
-    navigate(`/artists/${id}`);
+    navigate(`/artist/${id}`);
   };
 
   if (loading) {

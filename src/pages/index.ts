@@ -3,7 +3,7 @@ export * from './Home';
 export * from './Search';
 export * from './Stats';
 export * from './Songs';
-export * from './CurrentUserArtists';
+export * from './FollowedArtists';
 export * from './CurrentUserAlbums';
 export * from './CurrentUserPlaylists';
 export * from './ArtistProfile';
