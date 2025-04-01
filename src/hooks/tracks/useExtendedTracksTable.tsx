@@ -56,7 +56,7 @@ export const useExtendedTracksTable = () => {
                 <>
                   <TrackLink
                     name={artist.name}
-                    path='artists'
+                    path='artist'
                     id={artist?.id}
                   />
                   {index !== params?.row?.track?.artists?.length - 1 && (

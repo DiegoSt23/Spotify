@@ -3,7 +3,6 @@ import {
   PrivateRoute,
   Dashboard,
   ArtistLayout,
-  AlbumsLayout,
   PlaylistsLayout,
 } from '@components/index';
 import {
@@ -13,7 +12,7 @@ import {
   Stats,
   Songs,
   FollowedArtists,
-  CurrentUserAlbums,
+  SavedAlbums,
   CurrentUserPlaylists,
   AlbumDetails,
   ArtistProfile,
@@ -90,18 +89,12 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: 'albums',
-        element: <AlbumsLayout />,
-        children: [
-          {
-            path: 'me',
-            element: <CurrentUserAlbums />,
-          },
-          {
-            path: ':id',
-            element: <AlbumDetails />,
-          },
-        ],
+        path: 'saved-albums',
+        element: <SavedAlbums />,
+      },
+      {
+        path: 'albums/:id',
+        element: <AlbumDetails />,
       },
       {
         path: 'playlists',

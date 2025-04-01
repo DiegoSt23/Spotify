@@ -50,7 +50,7 @@ export const useMinimalTracksTable = () => {
                 <>
                   <TrackLink
                     name={artist.name}
-                    path='artists'
+                    path='artist'
                     id={artist?.id}
                   />
                   {index !== params?.row?.artists?.length - 1 && (

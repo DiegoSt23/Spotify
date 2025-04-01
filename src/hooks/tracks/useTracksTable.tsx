@@ -52,7 +52,7 @@ export const useTracksTable = () => {
                 <TrackLink
                   key={artist?.id}
                   name={artist.name}
-                  path='artists'
+                  path='artist'
                   id={artist?.id}
                 />
                 {index !== params.row.artists.length - 1 && (

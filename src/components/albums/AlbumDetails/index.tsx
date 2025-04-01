@@ -69,7 +69,7 @@ export const AlbumDetails = ({
         owner={artists?.map(({ name, id }) => ({
           name,
           id,
-          path: `/artists/${id}`,
+          path: `/artist/${id}`,
         }))}
         isSmartphone={isSmartphone}
         actions={actions}
@@ -176,7 +176,7 @@ export const AlbumDetails = ({
                 key={id}
                 variant='outlined'
                 component={Routerlink}
-                to={`/artists/${id}`}
+                to={`/artist/${id}`}
                 sx={{ whiteSpace: 'nowrap', minWidth: 'max-content' }}
               >
                 {name}
