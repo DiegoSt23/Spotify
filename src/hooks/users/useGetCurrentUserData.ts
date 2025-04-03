@@ -22,8 +22,6 @@ const handleGetCurrentUserFollowedArtists =
   };
 
 export const useGetCurrentUserData = (userId?: string) => {
-  // const setCurrentUser = useStore((state) => state.setCurrentUser);
-
   return useQueries({
     queries: [
       {
@@ -45,10 +43,4 @@ export const useGetCurrentUserData = (userId?: string) => {
       };
     },
   });
-
-  // return useQuery(['getUserData', userId], handleGetCurrentUserData, {
-  //   onSuccess: (data) => {
-  //     setCurrentUser(data);
-  //   },
-  // });
 };

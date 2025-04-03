@@ -20,6 +20,8 @@ import albumsEn from './albums/en.json';
 import albumsEs from './albums/es.json';
 import playlistsEn from './playlists/en.json';
 import playlistsEs from './playlists/es.json';
+import usersEn from './users/en.json';
+import usersEs from './users/es.json';
 
 const languageDetector = new LanguageDetector();
 languageDetector.addDetector({
@@ -57,5 +59,7 @@ i18n.addResourceBundle('en', 'albums', albumsEn);
 i18n.addResourceBundle('es', 'albums', albumsEs);
 i18n.addResourceBundle('en', 'playlists', playlistsEn);
 i18n.addResourceBundle('es', 'playlists', playlistsEs);
+i18n.addResourceBundle('en', 'users', usersEn);
+i18n.addResourceBundle('es', 'users', usersEs);
 
 export { i18n };

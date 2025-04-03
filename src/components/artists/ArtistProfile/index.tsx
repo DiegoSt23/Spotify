@@ -256,7 +256,7 @@ export const ArtistProfile = ({
         ) : null
       )}
       {noAvailableData && (
-        <Alert severity='info'>{t('artistProfile.noContent')}</Alert>
+        <Alert severity='info' variant="filled">{t('artistProfile.noContent')}</Alert>
       )}
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogContent>

@@ -3,6 +3,7 @@ import {
   PrivateRoute,
   Dashboard,
   ArtistLayout,
+  UserLayout,
 } from '@components/index';
 import {
   Login,
@@ -20,6 +21,8 @@ import {
   ArtistCompilations,
   ArtistAppearsOn,
   PlaylistDetails,
+  UserProfile,
+  UserPlaylists,
   Profile,
   About,
   Settings,
@@ -101,6 +104,20 @@ export const router = createBrowserRouter([
       {
         path: 'playlist/:id',
         element: <PlaylistDetails />,
+      },
+      {
+        path: 'user-profile',
+        element: <UserLayout />,
+        children: [
+          {
+            path: ':id',
+            element: <UserProfile />,
+          },
+          {
+            path: ':id/playlists',
+            element: <UserPlaylists />,
+          },
+        ],
       },
       {
         path: 'profile',

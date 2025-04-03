@@ -5,9 +5,11 @@ import {
   Typography,
   Card,
   CardActionArea,
+  IconButton,
   useTheme,
   useMediaQuery,
 } from '@mui/material';
+import { ChevronRight } from '@mui/icons-material';
 import { Playlist } from '@common/interfaces';
 import { Grid, Loading } from '@components/common';
 
@@ -16,6 +18,9 @@ interface PlaylistsGridProps {
   displayOwner?: boolean;
   displayTotalTracks?: boolean;
   loading?: boolean;
+  carousell?: boolean;
+  displayMore?: boolean;
+  onMoreClick?: () => void;
 }
 
 export const PlaylistsGrid = ({
@@ -23,6 +28,9 @@ export const PlaylistsGrid = ({
   displayOwner,
   displayTotalTracks,
   loading,
+  carousell,
+  displayMore,
+  onMoreClick,
 }: PlaylistsGridProps) => {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -30,7 +38,7 @@ export const PlaylistsGrid = ({
 
   const handleRedirect = (id?: string) => {
     if (!id) return;
-    
+
     navigate(`/playlist/${id}`);
   };
 
@@ -43,17 +51,23 @@ export const PlaylistsGrid = ({
       columnGap={isSmallScreen ? 2 : 4}
       rowGap={isSmallScreen ? 2 : 4}
       minColumnWidth={isSmallScreen ? 150 : 200}
+      carousell={carousell}
     >
       {data
         ?.filter((item) => item)
         ?.map((playlist) => (
           <Stack key={playlist.id} sx={{ alignItems: 'center' }}>
-            <Stack sx={{ width: '100%', gap: 1 }}>
+            <Stack
+              sx={{
+                width: { xs: carousell ? 150 : '100%', sm: '100%' },
+                gap: 1,
+              }}
+            >
               <Card variant='outlined'>
                 <CardActionArea onClick={() => handleRedirect(playlist?.id)}>
                   <Avatar
                     key={playlist.id}
-                    src={playlist.images[0]?.url}
+                    src={playlist.images?.[0]?.url}
                     alt={playlist.name}
                     variant='rounded'
                     sx={{
@@ -103,6 +117,24 @@ export const PlaylistsGrid = ({
             </Stack>
           </Stack>
         ))}
+      {displayMore && onMoreClick && (
+        <Stack
+          sx={{
+            display: { xs: 'flex', sm: 'none' },
+            pt: 7,
+            pr: 3,
+            pl: 2,
+          }}
+        >
+          <IconButton
+            onClick={onMoreClick}
+            size='large'
+            sx={{ border: (theme) => `1px solid ${theme.palette.divider}` }}
+          >
+            <ChevronRight />
+          </IconButton>
+        </Stack>
+      )}
     </Grid>
   );
 };

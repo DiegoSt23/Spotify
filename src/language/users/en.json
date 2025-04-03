@@ -1,0 +1,18 @@
+{
+  "header": {
+    "metadata": {
+      "followers": {
+        "singular": "follower",
+        "plural": "followers"
+      }
+    },
+    "actions": {
+      "follow": "Follow user",
+      "unfollow": "Unfollow user"
+    }
+  },
+  "sections": {
+    "playlists": "Playlists",
+    "more": "More"
+  }
+}

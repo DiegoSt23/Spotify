@@ -18,7 +18,7 @@ interface PlaylistDetailsProps extends Partial<PlaylistExtended> {
 export const PlaylistDetails = ({
   images,
   name,
-  // description,
+  description,
   owner,
   tracks,
   followers,
@@ -67,7 +67,7 @@ export const PlaylistDetails = ({
           {
             name: owner?.display_name,
             id: owner?.id,
-            path: `/profile/${owner?.id}`,
+            path: `/user-profile/${owner?.id}`,
           },
         ]}
         isSmartphone={isSmartphone}
@@ -80,6 +80,9 @@ export const PlaylistDetails = ({
               mt: { xs: 0, sm: 0.5 },
             }}
           >
+            {description && (
+              <Typography color="textSecondary">{description}</Typography>
+            )}
             <Stack
               sx={{
                 flexDirection: 'row',

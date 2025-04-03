@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
-import { type ArtistContext } from '@components/layout';
+import { type ArtistContext } from '@components/artists';
 import { useGetArtistCatalog } from '@hooks/artists';
 import { Loading } from '@components/common';
 import { AlbumsGrid } from '@components/albums';
