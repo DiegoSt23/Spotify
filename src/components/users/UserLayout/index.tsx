@@ -2,7 +2,7 @@ import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { UserResponse } from '@common/interfaces';
 import { useLanguage } from '@hooks/language';
-import { useGetUserData } from '@hooks/users';
+import { useGetUserData } from '@services/users';
 import { Page } from '@components/layout';
 
 export interface UserContext {

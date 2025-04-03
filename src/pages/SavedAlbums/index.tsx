@@ -1,5 +1,5 @@
 import { AlbumsGrid } from '@components/albums';
-import { useGetCurrentUserSavedAlbums } from '@hooks/albums';
+import { useGetCurrentUserSavedAlbums } from '@services/albums';
 import { Page } from '@components/layout';
 
 export const SavedAlbums = () => {

@@ -2,7 +2,7 @@ import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { ArtistResponse } from '@common/interfaces';
 import { useLanguage } from '@hooks/language';
-import { useGetArtistDetails } from '@hooks/artists';
+import { useGetArtistDetails } from '@services/artists';
 import { Page } from '@components/layout';
 
 export interface ArtistContext {

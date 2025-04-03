@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 import { type UserContext } from '@components/users';
-import { useGetUserPlaylists } from '@hooks/playlists';
+import { useGetUserPlaylists } from '@services/playlists';
 import { Loading } from '@components/common';
 import { PlaylistsGrid } from '@components/playlists';
 

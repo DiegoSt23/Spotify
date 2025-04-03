@@ -4,7 +4,7 @@ import {
   useGetArtistTopTracks,
   useGetArtistPartialAlbums,
   useCheckIsArtistFollowed,
-} from '@hooks/artists';
+} from '@services/artists';
 import { type ArtistContext } from '@components/artists';
 import { Loading } from '@components/common';
 import { ArtistProfile as ArtistProfileTemplate } from '@components/artists';

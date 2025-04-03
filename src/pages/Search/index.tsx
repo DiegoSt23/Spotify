@@ -6,7 +6,7 @@ import {
   AlbumsResponse,
   PlaylistsResponse,
 } from '@common/interfaces';
-import { useSearch } from '@hooks/search';
+import { useSearch } from '@services/search';
 import { useTracksTable } from '@hooks/tracks';
 import { Page } from '@components/layout';
 import { Table } from '@components/common';

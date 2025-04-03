@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 import logo from '@assets/svg/Full_Logo_White_RGB.svg';
-import { useGetCurrentUserTopItems } from '@hooks/users';
+import { useGetCurrentUserTopItems } from '@services/users';
 import { Page } from '@components/layout';
 
 export const Home = () => {

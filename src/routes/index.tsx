@@ -13,7 +13,7 @@ import {
   SavedSongs,
   FollowedArtists,
   SavedAlbums,
-  CurrentUserPlaylists,
+  Playlists,
   AlbumDetails,
   ArtistProfile,
   ArtistAlbums,
@@ -99,7 +99,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'playlists',
-        element: <CurrentUserPlaylists />,
+        element: <Playlists />,
       },
       {
         path: 'playlist/:id',

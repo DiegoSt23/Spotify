@@ -1,4 +1,4 @@
-import { useGetCurrentUserFollowedArtists } from '@hooks/artists';
+import { useGetCurrentUserFollowedArtists } from '@services/artists';
 import { Page } from '@components/layout';
 import { ArtistsGrid } from '@components/artists';
 

@@ -1,6 +1,6 @@
 import { Stack, Avatar, Typography, Skeleton, Button } from '@mui/material';
 // import { useStore } from '@store/index';
-import { useGetCurrentUserData } from '@hooks/users';
+import { useGetCurrentUserData } from '@services/users';
 import { Page } from '@components/layout';
 
 export const Profile = () => {

@@ -5,7 +5,7 @@ export * from './Stats';
 export * from './SavedSongs';
 export * from './FollowedArtists';
 export * from './SavedAlbums';
-export * from './CurrentUserPlaylists';
+export * from './Playlists';
 export * from './ArtistProfile';
 export * from './ArtistAlbums';
 export * from './ArtistSingles';

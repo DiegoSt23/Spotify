@@ -1,4 +1,4 @@
-import { useGetCurrentUserTracks } from '@hooks/tracks';
+import { useGetCurrentUserTracks } from '@services/tracks';
 import { useExtendedTracksTable } from '@hooks/tracks';
 import { Page } from '@components/layout';
 import { Table } from '@components/common';

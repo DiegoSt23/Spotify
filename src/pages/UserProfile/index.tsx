@@ -1,6 +1,6 @@
 import { useParams, useOutletContext } from 'react-router-dom';
-import { useCheckIsUserFollowed } from '@hooks/users';
-import { useGetUserPlaylists } from '@hooks/playlists';
+import { useCheckIsUserFollowed } from '@services/users';
+import { useGetUserPlaylists } from '@services/playlists';
 import { Loading } from '@components/common';
 import { type UserContext } from '@components/users';
 import { UserProfile as UserProfileTemplate } from '@components/users';

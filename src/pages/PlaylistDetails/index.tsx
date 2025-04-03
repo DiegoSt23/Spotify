@@ -4,7 +4,7 @@ import { MoreVert } from '@mui/icons-material';
 import {
   useGetPlaylistDetails,
   useCheckIsPlaylistSaved,
-} from '@hooks/playlists';
+} from '@services/playlists';
 import { Page } from '@components/layout';
 import { PlaylistDetails as PlaylistDetailsTemplate } from '@components/playlists';
 import { Loading } from '@components/common';

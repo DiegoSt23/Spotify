@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
-import { useGetAlbumDetails, useCheckIsAlbumSaved } from '@hooks/albums';
+import { useGetAlbumDetails, useCheckIsAlbumSaved } from '@services/albums';
 import { Page } from '@components/layout';
 import { AlbumDetails as AlbumDetailsTemplate } from '@components/albums';
 import { Loading } from '@components/common';

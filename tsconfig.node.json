@@ -29,7 +29,8 @@
       "@routes/*": ["./routes/*"],
       "@store/*": ["./store/*"],
       "@hooks/*": ["./hooks/*"],
-      "@context/*": ["./context/*"]
+      "@context/*": ["./context/*"],
+      "@services/*": ["./services/*"]
     }
   },
   "include": ["vite.config.ts"]
