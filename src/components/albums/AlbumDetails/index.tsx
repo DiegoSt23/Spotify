@@ -98,7 +98,7 @@ export const AlbumDetails = ({
                 sx={{ color: (theme) => theme.palette.text.secondary }}
               >
                 {total_tracks &&
-                  `${total_tracks} ${t(
+                  `${new Intl.NumberFormat().format(total_tracks ?? 0)} ${t(
                     total_tracks === 1
                       ? 'albumDetails.header.metadata.tracks.singular'
                       : 'albumDetails.header.metadata.tracks.plural'

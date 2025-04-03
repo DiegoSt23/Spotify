@@ -81,7 +81,7 @@ export const PlaylistDetails = ({
             }}
           >
             {description && (
-              <Typography color="textSecondary">{description}</Typography>
+              <Typography color='textSecondary'>{description}</Typography>
             )}
             <Stack
               sx={{
@@ -94,7 +94,7 @@ export const PlaylistDetails = ({
                 variant='subtitle2'
                 sx={{ color: (theme) => theme.palette.text.secondary }}
               >
-                {`${tracks?.total} ${t(
+                {`${new Intl.NumberFormat().format(tracks?.total ?? 0)} ${t(
                   tracks?.total === 1
                     ? 'playlistDetails.header.metadata.tracks.singular'
                     : 'playlistDetails.header.metadata.tracks.plural'
@@ -118,7 +118,7 @@ export const PlaylistDetails = ({
                 variant='subtitle2'
                 sx={{ color: (theme) => theme.palette.text.secondary }}
               >
-                {`${followers?.total} ${t(
+                {`${new Intl.NumberFormat().format(followers?.total ?? 0)} ${t(
                   followers?.total === 1
                     ? 'playlistDetails.header.metadata.followers.singular'
                     : 'playlistDetails.header.metadata.followers.plural'
