@@ -3,16 +3,20 @@ import {
   Stack,
   TextField,
   IconButton,
-  Tooltip,
 } from '@mui/material';
-import { Search as SearchIcon, Clear, FilterList } from '@mui/icons-material';
+import { Search as SearchIcon, Clear } from '@mui/icons-material';
 
 interface SearchBarProps {
+  placeholder: string;
   onChange: (val: string) => void;
   isFetched: boolean;
 }
 
-export const SearchBar = ({ onChange, isFetched }: SearchBarProps) => {
+export const SearchBar = ({
+  placeholder,
+  onChange,
+  isFetched,
+}: SearchBarProps) => {
   const [localInputValue, setLocalInputValue] = useState<string>('');
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +37,6 @@ export const SearchBar = ({ onChange, isFetched }: SearchBarProps) => {
     <Stack
       sx={{
         flex: 1,
-        // minHeight: 70,
         flexDirection: 'row',
         alignItems: 'center',
         gap: 1,
@@ -42,7 +45,7 @@ export const SearchBar = ({ onChange, isFetched }: SearchBarProps) => {
       <TextField
         value={localInputValue}
         onChange={handleInputChange}
-        placeholder='Search...'
+        placeholder={placeholder}
         size='small'
         fullWidth
         autoFocus
@@ -61,12 +64,8 @@ export const SearchBar = ({ onChange, isFetched }: SearchBarProps) => {
             ),
           },
         }}
+        sx={{ mt: 1.5 }}
       />
-      <Tooltip title='Advanced filtering' placement='bottom-start' arrow>
-        <IconButton>
-          <FilterList />
-        </IconButton>
-      </Tooltip>
     </Stack>
   );
 };

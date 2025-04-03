@@ -2,10 +2,11 @@ import { Stack, Typography, CircularProgress } from '@mui/material';
 import { Search } from '@mui/icons-material';
 
 interface InitialMessageProps {
+  message: string;
   isLoading: boolean;
 }
 
-export const InitialMessage = ({ isLoading }: InitialMessageProps) => (
+export const InitialMessage = ({ message, isLoading }: InitialMessageProps) => (
   <Stack
     sx={{
       flex: 1,
@@ -22,13 +23,12 @@ export const InitialMessage = ({ isLoading }: InitialMessageProps) => (
           alignItems: 'center',
         }}
       >
-        <Search sx={{ color: (theme) => theme.palette.text.secondary }} />
+        <Search sx={{ color: (theme) => theme.palette.accent.main }} />
         <Typography
           variant='subtitle1'
           sx={{ color: (theme) => theme.palette.text.secondary }}
         >
-          Use the input above to search your favorite songs, artists, albums or
-          podcasts.
+          {message}
         </Typography>
       </Stack>
     )}

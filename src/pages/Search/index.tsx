@@ -7,6 +7,7 @@ import {
   PlaylistsResponse,
 } from '@common/interfaces';
 import { useSearch } from '@services/search';
+import { useLanguage } from '@hooks/language';
 import { useTracksTable } from '@hooks/tracks';
 import { Page } from '@components/layout';
 import { Table } from '@components/common';
@@ -16,6 +17,7 @@ import { AlbumsGrid } from '@components/albums';
 import { PlaylistsGrid } from '@components/playlists';
 
 export const Search = () => {
+  const { t } = useLanguage('search');
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [debouncedInputValue, setDebouncedInputValue] = useState<string>('');
   const { data, isFetching, isFetched } = useSearch(debouncedInputValue);
@@ -35,13 +37,14 @@ export const Search = () => {
       hideHeaderBorder
       headerElement={
         <SearchBar
+          placeholder={t('searchBar.placeholder')}
           onChange={setDebouncedInputValue}
           isFetched={isFetched}
         />
       }
     >
       {!isFetched ? (
-        <InitialMessage isLoading={isFetching} />
+        <InitialMessage message={t('searchMessage')} isLoading={isFetching} />
       ) : (
         <Stack sx={{ flex: 1, gap: 3 }}>
           <ResultsTabs
