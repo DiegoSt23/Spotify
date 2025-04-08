@@ -12,8 +12,8 @@ export interface CurrentUserFollowedArtistsResponse {
     limit: number;
     next: string;
     cursors: {
-      after: string;
-      before: string;
+      after?: string;
+      before?: string;
     };
     total: number;
     items: ArtistExtended[];

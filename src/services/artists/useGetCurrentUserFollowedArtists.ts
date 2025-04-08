@@ -2,17 +2,18 @@ import { useQuery } from '@tanstack/react-query';
 import { Api } from '@common/utils';
 import { CurrentUserFollowedArtistsResponse } from '@common/interfaces';
 
-const handleGetCurrentUserFollowedArtists =
-  async (): Promise<CurrentUserFollowedArtistsResponse> => {
-    const response = await Api.get<CurrentUserFollowedArtistsResponse>(
-      '/me/following?type=artist&limit=50'
-    );
+const handleGetCurrentUserFollowedArtists = async (
+  after?: string
+): Promise<CurrentUserFollowedArtistsResponse> => {
+  const response = await Api.get<CurrentUserFollowedArtistsResponse>(
+    `/me/following?type=artist&limit=50${after ? `&after=${after}` : ''}`
+  );
 
-    return response;
-  };
+  return response;
+};
 
-export const useGetCurrentUserFollowedArtists = () =>
+export const useGetCurrentUserFollowedArtists = (after?: string) =>
   useQuery({
-    queryKey: ['getCurrentUserFollowedArtists'],
-    queryFn: handleGetCurrentUserFollowedArtists,
+    queryKey: ['getCurrentUserFollowedArtists', after],
+    queryFn: () => handleGetCurrentUserFollowedArtists(after),
   });
