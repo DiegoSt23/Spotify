@@ -1,6 +1,6 @@
 import { Stack, Typography, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useLanguage } from '@hooks/language';
+import { useLanguage } from '@hooks/common';
 
 export const NotFound = () => {
   const navigate = useNavigate();

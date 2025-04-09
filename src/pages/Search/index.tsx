@@ -7,7 +7,7 @@ import {
   PlaylistsResponse,
 } from '@common/interfaces';
 import { useSearch } from '@services/search';
-import { useLanguage } from '@hooks/language';
+import { useLanguage } from '@hooks/common';
 import { useTracksTable } from '@hooks/tracks';
 import { Page } from '@components/layout';
 import { Table } from '@components/common';

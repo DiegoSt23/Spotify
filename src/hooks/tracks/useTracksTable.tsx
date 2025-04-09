@@ -1,7 +1,7 @@
 import { GridColDef } from '@mui/x-data-grid';
 import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { ArtistBase } from '@common/interfaces';
-import { useLanguage } from '@hooks/language';
+import { useLanguage } from '@hooks/common';
 import {
   TrackNameCell,
   TrackLink,

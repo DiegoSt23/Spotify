@@ -8,7 +8,7 @@ import {
 } from '@mui/icons-material';
 import { AlbumExtended } from '@common/interfaces';
 import { formatMs, getFeaturedArtists } from '@common/utils';
-import { useLanguage } from '@hooks/language';
+import { useLanguage } from '@hooks/common';
 import { useMinimalTracksTable } from '@hooks/tracks';
 import { Table, MediaHeader } from '@components/common';
 

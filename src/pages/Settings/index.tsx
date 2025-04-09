@@ -12,7 +12,7 @@ import {
 import { Contrast, Translate, Speaker, Animation } from '@mui/icons-material';
 import { Page } from '@components/layout';
 import { SettingsSection } from '@components/settings';
-import { useLanguage } from '@hooks/language';
+import { useLanguage } from '@hooks/common';
 
 export const Settings = () => {
   const { mode, setMode } = useColorScheme();

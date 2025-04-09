@@ -1,7 +1,7 @@
 import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { ArtistResponse } from '@common/interfaces';
-import { useLanguage } from '@hooks/language';
+import { useLanguage } from '@hooks/common';
 import { useGetArtistDetails } from '@services/artists';
 import { Page } from '@components/layout';
 

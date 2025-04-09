@@ -7,7 +7,7 @@ import {
 } from '@mui/icons-material';
 import { PlaylistExtended } from '@common/interfaces';
 import { formatMs } from '@common/utils';
-import { useLanguage } from '@hooks/language';
+import { useLanguage } from '@hooks/common';
 import { useExtendedTracksTable } from '@hooks/tracks';
 import { Table, MediaHeader } from '@components/common';
 

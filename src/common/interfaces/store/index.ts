@@ -3,3 +3,4 @@ export * from './users';
 export * from './navigation';
 export * from './queue';
 export * from './artists';
+export * from './tracks';

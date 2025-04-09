@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Stack, Typography, Chip, Button } from '@mui/material';
 import { Favorite, FavoriteBorder, ChevronRight } from '@mui/icons-material';
 import { PlaylistsResponse, UserResponse } from '@common/interfaces';
-import { useLanguage } from '@hooks/language';
+import { useLanguage } from '@hooks/common';
 import {MediaHeader } from '@components/common';
 import { PlaylistsGrid } from '@components/playlists';
 

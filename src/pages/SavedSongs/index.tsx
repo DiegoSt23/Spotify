@@ -1,26 +1,39 @@
-import { useGetCurrentUserTracks } from '@services/tracks';
+import { Stack } from '@mui/material';
+import { useSavedSongs } from '@hooks/tracks';
 import { useExtendedTracksTable } from '@hooks/tracks';
-import { Page } from '@components/layout';
 import { Table } from '@components/common';
 
 export const SavedSongs = () => {
-  const { data, isFetching } = useGetCurrentUserTracks();
+  const { gridApiRef, savedTracks, totalSavedTracks, isFetching } =
+    useSavedSongs();
   const { columns, isSmartphone } = useExtendedTracksTable();
 
   return (
-    <Page title='Saved Songs'>
+    <Stack
+      sx={{
+        height: {
+          xs: 'calc(100dvh - 130px)',
+          sm: 'calc(100dvh - 185px)',
+          md: 'calc(100dvh - 120px)',
+        },
+        pt: 2,
+      }}
+    >
       <Table
+        apiRef={gridApiRef}
         columns={columns.filter(Boolean)}
-        rows={data?.items}
+        rows={savedTracks}
+        rowCount={totalSavedTracks}
         loading={isFetching}
         getRowId={(row) => row?.track?.id}
         slots={{
           columnHeaders: isSmartphone ? () => null : undefined,
         }}
+        paginationMode='server'
         hideFooter
         disableRowSelectionOnClick
         disableColumnSelector
       />
-    </Page>
+    </Stack>
   );
 };

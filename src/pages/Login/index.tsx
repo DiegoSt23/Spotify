@@ -11,7 +11,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { GitHub, LinkedIn, Launch } from '@mui/icons-material';
-import { useLanguage } from '@hooks/language';
+import { useLanguage } from '@hooks/common';
 import { useGetAccessToken } from '@hooks/auth';
 import fullLogo from '@assets/svg/Full_Logo_Green_RGB.svg';
 import whiteHeadphones from '@assets/img/white-headphones.jpg';

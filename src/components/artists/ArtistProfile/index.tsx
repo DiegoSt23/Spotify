@@ -24,7 +24,7 @@ import {
   PartialAlbumsResponse,
 } from '@common/interfaces';
 import { About } from '@assets/customIcons';
-import { useLanguage } from '@hooks/language';
+import { useLanguage } from '@hooks/common';
 import { useTracksTable } from '@hooks/tracks';
 import { MediaHeader, Table } from '@components/common';
 import { AlbumsGrid } from '@components/albums';

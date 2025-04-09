@@ -12,7 +12,7 @@ import {
   PeopleAlt,
   BarChart,
 } from '@mui/icons-material';
-import { useLanguage } from '@hooks/language';
+import { useLanguage } from '@hooks/common';
 import { useStore } from '@store/index';
 
 export const useSideNavBar = () => {

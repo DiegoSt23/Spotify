@@ -1,7 +1,7 @@
 import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { UserResponse } from '@common/interfaces';
-import { useLanguage } from '@hooks/language';
+import { useLanguage } from '@hooks/common';
 import { useGetUserData } from '@services/users';
 import { Page } from '@components/layout';
 

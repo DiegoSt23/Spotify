@@ -6,19 +6,22 @@ import {
   NavigationStore,
   QueueStore,
   ArtistsStore,
+  TracksStore,
 } from '@common/interfaces';
 import { authSlice } from './auth';
 import { currentUserSlice } from './currentUser';
 import { navigationSlice } from './navigation';
 import { queueSlice } from './queue';
 import { artistSlice } from './artists';
+import { tracksSlice } from './tracks';
 
 interface Store
   extends AuthStore,
     CurrentUserStore,
     NavigationStore,
     QueueStore,
-    ArtistsStore {};
+    ArtistsStore,
+    TracksStore {};
 
 export const useStore = create<Store>()(
   devtools((...args) => ({
@@ -26,6 +29,7 @@ export const useStore = create<Store>()(
     ...authSlice(...args),
     ...currentUserSlice(...args),
     ...queueSlice(...args),
-    ...artistSlice(...args)
+    ...artistSlice(...args),
+    ...tracksSlice(...args),
   }))
 );
