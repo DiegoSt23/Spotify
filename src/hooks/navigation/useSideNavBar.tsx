@@ -19,7 +19,12 @@ export const useSideNavBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { t } = useLanguage('sideNavBar');
-  const { isSideNavBarOpen, toggleSideNavBar } = useStore();
+  const isSideNavBarOpen = useStore(
+    (store) => store.navigation.isSideNavBarOpen
+  );
+  const toggleSideNavBar = useStore(
+    (store) => store.navigation.toggleSideNavBar
+  );
   const theme = useTheme();
 
   const navItems = [

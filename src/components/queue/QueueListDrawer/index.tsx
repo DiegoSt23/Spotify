@@ -2,8 +2,8 @@ import { Drawer, Stack, Typography } from '@mui/material';
 import { useStore } from '@store/index';
 
 export const QueueListDrawer = () => {
-  const open = useStore((state) => state.isQueueDrawerOpen);
-  const toggleDrawer = useStore((state) => state.toggleQueueDrawer);
+  const open = useStore((state) => state.queue.isQueueDrawerOpen);
+  const toggleDrawer = useStore((state) => state.queue.toggleQueueDrawer);
   
   return (
     <Drawer

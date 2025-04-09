@@ -22,7 +22,7 @@ import { ProgressBar } from '../ProgressBar';
 
 export const Player = () => {
   const [open, setOpen] = useState(false);
-  const toggleQueueDrawer = useStore((state) => state.toggleQueueDrawer);
+  const toggleQueueDrawer = useStore((state) => state.queue.toggleQueueDrawer);
 
   const handleOpenFullScreenPlayer = () => setOpen(true);
 

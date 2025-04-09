@@ -1,6 +1,8 @@
 import { Tokens } from '../auth';
 
 export interface AuthStore {
-  tokens: Tokens;
-  setTokens: (newTokens: Tokens) => void;
+  session: {
+    tokens: Tokens;
+    setTokens: (newTokens: Tokens) => void;
+  }
 }

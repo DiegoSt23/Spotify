@@ -1,35 +1,29 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import {
-  AuthStore,
-  CurrentUserStore,
   NavigationStore,
   QueueStore,
-  ArtistsStore,
-  TracksStore,
+  FollowedArtistsStore,
+  SavedTracksStore,
 } from '@common/interfaces';
-import { authSlice } from './auth';
-import { currentUserSlice } from './currentUser';
-import { navigationSlice } from './navigation';
-import { queueSlice } from './queue';
-import { artistSlice } from './artists';
-import { tracksSlice } from './tracks';
+import {
+  navigationSlice,
+  queueSlice,
+  savedTracksSlice,
+  followedArtistSlice,
+} from './slices';
 
 interface Store
-  extends AuthStore,
-    CurrentUserStore,
-    NavigationStore,
+  extends NavigationStore,
     QueueStore,
-    ArtistsStore,
-    TracksStore {};
+    FollowedArtistsStore,
+    SavedTracksStore {}
 
 export const useStore = create<Store>()(
   devtools((...args) => ({
     ...navigationSlice(...args),
-    ...authSlice(...args),
-    ...currentUserSlice(...args),
     ...queueSlice(...args),
-    ...artistSlice(...args),
-    ...tracksSlice(...args),
+    ...followedArtistSlice(...args),
+    ...savedTracksSlice(...args),
   }))
 );

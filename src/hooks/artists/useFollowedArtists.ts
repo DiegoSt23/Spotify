@@ -6,11 +6,13 @@ import { useGetCurrentUserFollowedArtists } from '@services/artists';
 
 export const useFollowedArtists = () => {
   const { ref, inView } = useInView();
-  const artistData = useStore((state) => state.artists);
-  const after = useStore((state) => state.after);
-  const total = useStore((state) => state.total);
-  const setArtistsData = useStore((state) => state.setArtistsData);
-  const setAfter = useStore((state) => state.setAfter);
+  const artistData = useStore((state) => state.followedArtists.artists);
+  const after = useStore((state) => state.followedArtists.after);
+  const total = useStore((state) => state.followedArtists.total);
+  const setArtistsData = useStore(
+    (state) => state.followedArtists.setArtists
+  );
+  const setAfter = useStore((state) => state.followedArtists.setAfter);
   const { data, isFetching } = useGetCurrentUserFollowedArtists(after);
 
   useEffect(() => {
