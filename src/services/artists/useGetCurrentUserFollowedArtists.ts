@@ -3,7 +3,7 @@ import { Api } from '@common/utils';
 import { CurrentUserFollowedArtistsResponse } from '@common/interfaces';
 
 const handleGetCurrentUserFollowedArtists = async (
-  after?: string
+  after?: string | null
 ): Promise<CurrentUserFollowedArtistsResponse> => {
   const response = await Api.get<CurrentUserFollowedArtistsResponse>(
     `/me/following?type=artist&limit=50${after ? `&after=${after}` : ''}`
@@ -12,8 +12,9 @@ const handleGetCurrentUserFollowedArtists = async (
   return response;
 };
 
-export const useGetCurrentUserFollowedArtists = (after?: string) =>
+export const useGetCurrentUserFollowedArtists = (after?: string | null) =>
   useQuery({
     queryKey: ['getCurrentUserFollowedArtists', after],
     queryFn: () => handleGetCurrentUserFollowedArtists(after),
+    enabled: after !== null,
   });

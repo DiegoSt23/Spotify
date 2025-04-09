@@ -16,7 +16,7 @@ export const useFollowedArtists = () => {
   const { data, isFetching } = useGetCurrentUserFollowedArtists(after);
 
   useEffect(() => {
-    if (inView && data?.artists?.cursors?.after) {
+    if (inView && data?.artists?.cursors?.after !== undefined) {
       setAfter(data.artists.cursors.after);
     }
   }, [inView]);
