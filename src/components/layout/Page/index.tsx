@@ -56,17 +56,17 @@ export const Page = ({
       sx={{
         height: '100%',
         overflow: 'auto',
-        '&::-webkit-scrollbar': {
-          width: { xs: 6, md: 8 },
-        },
-        '&::-webkit-scrollbar-track': {
-          background: (theme) => theme.palette.background.paper,
-          borderRadius: 10,
-        },
-        '&::-webkit-scrollbar-thumb': {
-          background: (theme) => theme.palette.divider,
-          borderRadius: 10,
-        },
+        // '&::-webkit-scrollbar': {
+        //   width: { xs: 6, md: 8 },
+        // },
+        // '&::-webkit-scrollbar-track': {
+        //   background: (theme) => theme.palette.background.paper,
+        //   borderRadius: 10,
+        // },
+        // '&::-webkit-scrollbar-thumb': {
+        //   background: (theme) => theme.palette.divider,
+        //   borderRadius: 10,
+        // },
       }}
     >
       {(title || headerElement) && (
