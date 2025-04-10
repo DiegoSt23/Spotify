@@ -14,7 +14,7 @@ const handleGetCurrentUserFollowedArtists = async (
 
 export const useGetCurrentUserFollowedArtists = (after?: string | null) =>
   useQuery({
-    queryKey: ['getCurrentUserFollowedArtists', after],
+    queryKey: ['getCurrentUserFollowedArtists'],
     queryFn: () => handleGetCurrentUserFollowedArtists(after),
     enabled: after !== null,
   });

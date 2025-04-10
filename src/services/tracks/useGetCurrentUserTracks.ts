@@ -14,7 +14,7 @@ const handleGetCurrentUserTracks = async (
 
 export const useGetCurrentUserTracks = (offset: number | null) =>
   useQuery({
-    queryKey: ['getCurrentUserTracks', offset],
+    queryKey: ['getCurrentUserTracks'],
     queryFn: () => handleGetCurrentUserTracks(offset),
-    enabled: offset !== null
+    enabled: offset !== null,
   });

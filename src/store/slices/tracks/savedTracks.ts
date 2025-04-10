@@ -6,19 +6,13 @@ export const savedTracksSlice: StateCreator<SavedTracksStore> = (set) => ({
     tracks: [],
     total: 0,
     offset: 0,
-    setOffset: (value) =>
+    setTracksData: (payload) =>
       set((state) => ({
         savedTracks: {
           ...state.savedTracks,
-          offset: value,
-        },
-      })),
-    setTracks: (data) =>
-      set((state) => ({
-        savedTracks: {
-          ...state.savedTracks,
-          tracks: data.tracks,
-          total: data.total,
+          tracks: payload.tracks,
+          total: payload.total,
+          offset: payload.offset,
         },
       })),
   },

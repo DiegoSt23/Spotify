@@ -4,8 +4,7 @@ import { useExtendedTracksTable } from '@hooks/tracks';
 import { Table } from '@components/common';
 
 export const SavedSongs = () => {
-  const { gridApiRef, savedTracks, totalSavedTracks, isFetching } =
-    useSavedSongs();
+  const { gridApiRef, tracks, total, isFetching } = useSavedSongs();
   const { columns, isSmartphone } = useExtendedTracksTable();
 
   return (
@@ -22,10 +21,10 @@ export const SavedSongs = () => {
       <Table
         apiRef={gridApiRef}
         columns={columns.filter(Boolean)}
-        rows={savedTracks}
-        rowCount={totalSavedTracks}
+        rows={tracks}
+        rowCount={total}
         loading={isFetching}
-        getRowId={(row) => row?.track?.id}
+        getRowId={(row) => `${row?.track?.album?.id}-${row?.track?.id}`}
         slots={{
           columnHeaders: isSmartphone ? () => null : undefined,
         }}

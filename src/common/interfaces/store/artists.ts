@@ -5,7 +5,10 @@ export interface FollowedArtistsStore {
     artists: ArtistExtended[];
     total: number;
     after: string | null;
-    setArtists: (data: { artists: ArtistExtended[]; total: number }) => void;
-    setAfter: (data: string | null) => void;
-  }
+    setArtistsData: (data: {
+      artists: ArtistExtended[];
+      total: number;
+      after: string | null;
+    }) => void;
+  };
 }

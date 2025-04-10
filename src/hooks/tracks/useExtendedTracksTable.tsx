@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { GridColDef } from '@mui/x-data-grid';
 import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import dayjs from 'dayjs';
@@ -53,7 +54,7 @@ export const useExtendedTracksTable = () => {
           <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
             {params?.row?.track?.artists?.map(
               (artist: ArtistBase, index: number) => (
-                <>
+                <Fragment key={artist?.id}>
                   <TrackLink
                     name={artist.name}
                     path='artist'
@@ -62,7 +63,7 @@ export const useExtendedTracksTable = () => {
                   {index !== params?.row?.track?.artists?.length - 1 && (
                     <Typography sx={{ mr: 0.5 }}>,</Typography>
                   )}
-                </>
+                </Fragment>
               )
             )}
           </Stack>

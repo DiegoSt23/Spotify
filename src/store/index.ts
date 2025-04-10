@@ -5,19 +5,22 @@ import {
   QueueStore,
   FollowedArtistsStore,
   SavedTracksStore,
+  SavedAlbumsStore
 } from '@common/interfaces';
 import {
   navigationSlice,
   queueSlice,
   savedTracksSlice,
   followedArtistSlice,
+  savedAlbumsSlice,
 } from './slices';
 
 interface Store
   extends NavigationStore,
     QueueStore,
     FollowedArtistsStore,
-    SavedTracksStore {}
+    SavedTracksStore,
+    SavedAlbumsStore {}
 
 export const useStore = create<Store>()(
   devtools((...args) => ({
@@ -25,5 +28,6 @@ export const useStore = create<Store>()(
     ...queueSlice(...args),
     ...followedArtistSlice(...args),
     ...savedTracksSlice(...args),
+    ...savedAlbumsSlice(...args),
   }))
 );

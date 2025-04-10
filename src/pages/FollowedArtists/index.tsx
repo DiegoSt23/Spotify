@@ -4,7 +4,7 @@ import { ArtistsGrid } from '@components/artists';
 import { useFollowedArtists } from '@hooks/artists';
 
 export const FollowedArtists = () => {
-  const { ref, artistData, isFetching, total, loadingFirstTime } =
+  const { ref, artists, isFetching, total, loadingFirstTime } =
     useFollowedArtists();
 
   return (
@@ -24,9 +24,9 @@ export const FollowedArtists = () => {
         )
       }
     >
-      <ArtistsGrid data={artistData} loading={loadingFirstTime} />
+      <ArtistsGrid data={artists} loading={loadingFirstTime} />
       <div ref={ref} style={{ position: 'relative', top: '-500px' }} />
-      {artistData.length && isFetching && (
+      {artists.length && isFetching && (
         <Stack sx={{ alignItems: 'center', paddingTop: 2 }}>
           <CircularProgress size={30} />
         </Stack>

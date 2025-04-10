@@ -6,35 +6,35 @@ import { useGetCurrentUserFollowedArtists } from '@services/artists';
 
 export const useFollowedArtists = () => {
   const { ref, inView } = useInView();
-  const artistData = useStore((state) => state.followedArtists.artists);
+  const artists = useStore((state) => state.followedArtists.artists);
   const after = useStore((state) => state.followedArtists.after);
   const total = useStore((state) => state.followedArtists.total);
   const setArtistsData = useStore(
-    (state) => state.followedArtists.setArtists
+    (state) => state.followedArtists.setArtistsData
   );
-  const setAfter = useStore((state) => state.followedArtists.setAfter);
-  const { data, isFetching } = useGetCurrentUserFollowedArtists(after);
+  const { data, refetch, isFetching, isFetchedAfterMount } = useGetCurrentUserFollowedArtists(after);
 
   useEffect(() => {
-    if (inView && data?.artists?.cursors?.after !== undefined) {
-      setAfter(data.artists.cursors.after);
+    if (inView && after) {
+      refetch();
     }
   }, [inView]);
 
   useEffect(() => {
-    if (data?.artists?.items) {
+    if (data && isFetchedAfterMount) {
       setArtistsData({
-        artists: [...artistData, ...data.artists.items],
+        artists: [...artists, ...data.artists.items],
         total: data?.artists?.total,
+        after: data?.artists?.cursors?.after ?? null,
       });
     }
-  }, [data?.artists?.items]);
+  }, [data, isFetchedAfterMount]);
 
   return {
     ref,
-    artistData,
+    artists,
     isFetching,
     total,
-    loadingFirstTime: !artistData.length && isFetching,
+    loadingFirstTime: !artists.length && isFetching,
   };
 };

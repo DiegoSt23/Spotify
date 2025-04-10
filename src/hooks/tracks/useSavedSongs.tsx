@@ -4,31 +4,37 @@ import { useTableInfiniteScroll } from '@hooks/common';
 import { useStore } from '@store/index';
 
 export const useSavedSongs = () => {
-  const savedTracks = useStore((state) => state.savedTracks.tracks);
-  const totalSavedTracks = useStore((state) => state.savedTracks.total);
-  const savedTracksOffset = useStore((state) => state.savedTracks.offset);
-  const setOffset = useStore((state) => state.savedTracks.setOffset);
-  const setSavedTracks = useStore((state) => state.savedTracks.setTracks);
-  const { data, isFetching } = useGetCurrentUserTracks(savedTracksOffset);
+  const tracks = useStore((state) => state.savedTracks.tracks);
+  const total = useStore((state) => state.savedTracks.total);
+  const offset = useStore((state) => state.savedTracks.offset);
+  const setTracksData = useStore((state) => state.savedTracks.setTracksData);
+  const { data, refetch, isFetching, isFetchedAfterMount } = useGetCurrentUserTracks(offset);
   const { gridApiRef } = useTableInfiniteScroll({
     isLoading: isFetching,
     onNextPage: () => {
-      setOffset(data?.next ? (savedTracksOffset as number) + 50 : null);
+      const latestOffset = useStore.getState().savedTracks.offset;
+
+      if (latestOffset) {
+        refetch();
+      }
     },
   });
 
   useEffect(() => {
-    setSavedTracks({
-      tracks: [ ...savedTracks, ...data?.items || []],
-      total: data?.total || 0,
-    });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.items]);
+    if (data && isFetchedAfterMount) {
+      setTracksData({
+        tracks: [...tracks, ...(data?.items || [])],
+        total: data?.total || 0,
+        offset: data?.next ? (offset as number) + 50 : null,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, isFetchedAfterMount]);
 
   return {
     gridApiRef,
-    savedTracks,
-    totalSavedTracks,
+    tracks,
+    total,
     isFetching,
   };
 };
