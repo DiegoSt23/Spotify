@@ -1,1 +1,1 @@
-export * from './useSavedAlbums';
+export * from './useCurrentUserSavedAlbums';

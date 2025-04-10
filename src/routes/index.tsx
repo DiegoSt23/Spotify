@@ -10,10 +10,10 @@ import {
   Home,
   Search,
   Stats,
-  SavedSongs,
-  FollowedArtists,
-  SavedAlbums,
-  Playlists,
+  CurrentUserSavedSongs,
+  CurrentUserFollowedArtists,
+  CurrentUserSavedAlbums,
+  CurrentUserPlaylists,
   AlbumDetails,
   ArtistProfile,
   ArtistAlbums,
@@ -57,11 +57,15 @@ export const router = createBrowserRouter([
       },
       {
         path: 'saved-songs',
-        element: <SavedSongs />,
+        element: <CurrentUserSavedSongs />,
       },
       {
         path: 'followed-artists',
-        element: <FollowedArtists />,
+        element: <CurrentUserFollowedArtists />,
+      },
+      {
+        path: 'saved-albums',
+        element: <CurrentUserSavedAlbums />,
       },
       {
         path: 'artist',
@@ -90,16 +94,12 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: 'saved-albums',
-        element: <SavedAlbums />,
-      },
-      {
         path: 'albums/:id',
         element: <AlbumDetails />,
       },
       {
         path: 'playlists',
-        element: <Playlists />,
+        element: <CurrentUserPlaylists />,
       },
       {
         path: 'playlist/:id',

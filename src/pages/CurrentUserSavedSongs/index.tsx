@@ -1,10 +1,10 @@
 import { Stack } from '@mui/material';
-import { useSavedSongs } from '@hooks/tracks';
+import { useCurrentUserSavedSongs } from '@hooks/tracks';
 import { useExtendedTracksTable } from '@hooks/tracks';
 import { Table } from '@components/common';
 
-export const SavedSongs = () => {
-  const { gridApiRef, tracks, total, isFetching } = useSavedSongs();
+export const CurrentUserSavedSongs = () => {
+  const { gridApiRef, tracks, total, isFetching } = useCurrentUserSavedSongs();
   const { columns, isSmartphone } = useExtendedTracksTable();
 
   return (

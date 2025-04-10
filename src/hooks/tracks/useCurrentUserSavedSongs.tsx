@@ -3,7 +3,7 @@ import { useGetCurrentUserTracks } from '@services/tracks';
 import { useTableInfiniteScroll } from '@hooks/common';
 import { useStore } from '@store/index';
 
-export const useSavedSongs = () => {
+export const useCurrentUserSavedSongs = () => {
   const tracks = useStore((state) => state.savedTracks.tracks);
   const total = useStore((state) => state.savedTracks.total);
   const offset = useStore((state) => state.savedTracks.offset);

@@ -1,1 +1,1 @@
-export * from './useUserPlaylists';
+export * from './useCurrentUserPlaylists';

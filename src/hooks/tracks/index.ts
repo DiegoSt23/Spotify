@@ -1,4 +1,4 @@
 export * from './useTracksTable';
 export * from './useExtendedTracksTable';
 export * from './useMinimalTracksTable';
-export * from './useSavedSongs';
+export * from './useCurrentUserSavedSongs';

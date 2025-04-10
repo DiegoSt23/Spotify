@@ -1,1 +1,1 @@
-export * from './useFollowedArtists';
+export * from './useCurrentUserFollowedArtists';

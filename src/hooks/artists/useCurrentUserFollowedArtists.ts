@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { useStore } from '@store/index';
 import { useGetCurrentUserFollowedArtists } from '@services/artists';
 
-export const useFollowedArtists = () => {
+export const useCurrentUserFollowedArtists = () => {
   const { ref, inView } = useInView();
   const artists = useStore((state) => state.followedArtists.artists);
   const after = useStore((state) => state.followedArtists.after);

@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { useStore } from '@store/index';
 import { useGetCurrentUserPlaylists } from '@services/playlists';
 
-export const useUserPlaylists = () => {
+export const useCurrentUserPlaylists = () => {
   const { ref, inView } = useInView();
   const playlists = useStore((state) => state.userPlaylists.playlists);
   const total = useStore((state) => state.userPlaylists.total);

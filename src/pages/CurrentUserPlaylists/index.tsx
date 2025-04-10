@@ -1,15 +1,15 @@
 import { Stack, Typography, CircularProgress } from '@mui/material';
+import { useCurrentUserPlaylists } from '@hooks/playlists';
 import { Page } from '@components/layout';
-import { ArtistsGrid } from '@components/artists';
-import { useFollowedArtists } from '@hooks/artists';
+import { PlaylistsGrid } from '@components/playlists';
 
-export const FollowedArtists = () => {
-  const { ref, artists, isFetching, total, loadingFirstTime } =
-    useFollowedArtists();
+export const CurrentUserPlaylists = () => {
+  const { ref, playlists, total, isFetching, loadingFirstTime } =
+    useCurrentUserPlaylists();
 
   return (
     <Page
-      title='Followed Artists'
+      title='Playlists'
       headerElement={
         loadingFirstTime ? (
           <CircularProgress size={20} />
@@ -24,9 +24,9 @@ export const FollowedArtists = () => {
         )
       }
     >
-      <ArtistsGrid data={artists} loading={loadingFirstTime} />
+      <PlaylistsGrid data={playlists} loading={loadingFirstTime} displayOwner />
       <div ref={ref} style={{ position: 'relative', top: '-500px' }} />
-      {artists.length && isFetching && (
+      {playlists.length && isFetching && (
         <Stack sx={{ alignItems: 'center', paddingTop: 2 }}>
           <CircularProgress size={30} />
         </Stack>

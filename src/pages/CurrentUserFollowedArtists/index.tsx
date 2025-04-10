@@ -1,15 +1,15 @@
 import { Stack, Typography, CircularProgress } from '@mui/material';
-import { useSavedAlbums } from '@hooks/albums';
-import { AlbumsGrid } from '@components/albums';
-
 import { Page } from '@components/layout';
+import { ArtistsGrid } from '@components/artists';
+import { useCurrentUserFollowedArtists } from '@hooks/artists';
 
-export const SavedAlbums = () => {
-  const { ref, albums, total, isFetching, loadingFirstTime } = useSavedAlbums();
+export const CurrentUserFollowedArtists = () => {
+  const { ref, artists, isFetching, total, loadingFirstTime } =
+    useCurrentUserFollowedArtists();
 
   return (
     <Page
-      title='Saved Albums'
+      title='Followed Artists'
       headerElement={
         loadingFirstTime ? (
           <CircularProgress size={20} />
@@ -24,9 +24,9 @@ export const SavedAlbums = () => {
         )
       }
     >
-      <AlbumsGrid data={albums} loading={loadingFirstTime} displayArtist />
+      <ArtistsGrid data={artists} loading={loadingFirstTime} />
       <div ref={ref} style={{ position: 'relative', top: '-500px' }} />
-      {albums.length && isFetching && (
+      {artists.length && isFetching && (
         <Stack sx={{ alignItems: 'center', paddingTop: 2 }}>
           <CircularProgress size={30} />
         </Stack>

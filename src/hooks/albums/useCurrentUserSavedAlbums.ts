@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { useStore } from '@store/index';
 import { useGetCurrentUserSavedAlbums } from '@services/albums';
 
-export const useSavedAlbums = () => {
+export const useCurrentUserSavedAlbums = () => {
   const { ref, inView } = useInView();
   const albums = useStore((state) => state.savedAlbums.albums);
   const total = useStore((state) => state.savedAlbums.total);
