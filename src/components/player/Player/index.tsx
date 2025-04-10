@@ -56,7 +56,7 @@ export const Player = () => {
             }}
           >
             <Avatar
-              src='https://i.scdn.co/image/ab67616d0000b2735c53799f473fa3e1a48c00ed'
+              src='https://i.scdn.co/image/ab67616d0000b273d6ff9db5360add3194861b08'
               variant='square'
               sx={{ width: 45, height: 45 }}
             />
@@ -89,9 +89,10 @@ export const Player = () => {
                 fontWeight: 500,
               }}
             >
-              Changes
+              Find My Way
             </Typography>
             <Typography
+              variant='body2'
               sx={{
                 color: (theme) => theme.palette.text.secondary,
                 whiteSpace: 'nowrap',
@@ -99,7 +100,7 @@ export const Player = () => {
                 textOverflow: 'ellipsis',
               }}
             >
-              Deftones
+              Nine Inch Nails
             </Typography>
           </Stack>
         </Stack>

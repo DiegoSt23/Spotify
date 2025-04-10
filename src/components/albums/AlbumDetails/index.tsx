@@ -14,6 +14,7 @@ import { Table, MediaHeader } from '@components/common';
 
 interface AlbumDetailsProps extends Partial<AlbumExtended> {
   isSaved?: boolean;
+  isLoadingRemainingTracks?: boolean;
 }
 
 export const AlbumDetails = ({
@@ -27,6 +28,7 @@ export const AlbumDetails = ({
   copyrights,
   album_type: albumType,
   isSaved,
+  isLoadingRemainingTracks,
 }: AlbumDetailsProps) => {
   const { t } = useLanguage('albums');
   const { columns, isSmartphone } = useMinimalTracksTable();
@@ -128,6 +130,7 @@ export const AlbumDetails = ({
         slots={{
           columnHeaders: () => null,
         }}
+        loading={isLoadingRemainingTracks}
         hideFooter
         disableRowSelectionOnClick
         disableColumnSelector

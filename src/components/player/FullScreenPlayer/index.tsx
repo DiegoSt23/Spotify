@@ -63,13 +63,13 @@ export const FullScreenPlayer = ({
       >
         {isDarkTheme ? (
           <img
-            src='https://i.scdn.co/image/ab67616d0000b2735c53799f473fa3e1a48c00ed'
+            src='https://i.scdn.co/image/ab67616d0000b273d6ff9db5360add3194861b08'
             className='player-background-img-dark'
           />
         ) : (
           <>
             <img
-              src='https://i.scdn.co/image/ab67616d0000b2735c53799f473fa3e1a48c00ed'
+              src='https://i.scdn.co/image/ab67616d0000b273d6ff9db5360add3194861b08'
               className='player-background-img-light'
             />
             <Stack
@@ -95,7 +95,7 @@ export const FullScreenPlayer = ({
         >
           <Card variant='outlined' sx={{ boxShadow: 10 }}>
             <Avatar
-              src='https://i.scdn.co/image/ab67616d0000b2735c53799f473fa3e1a48c00ed'
+              src='https://i.scdn.co/image/ab67616d0000b273d6ff9db5360add3194861b08'
               variant='rounded'
               sx={{
                 width: { xs: '100%', sm: 400, md: 500 },
@@ -104,9 +104,9 @@ export const FullScreenPlayer = ({
             />
           </Card>
           <Stack sx={{ textAlign: 'center', mt: 1 }}>
-            <Typography variant='subtitle1'>Changes</Typography>
+            <Typography variant='subtitle1'>Find My Way</Typography>
             <Typography sx={{ color: (theme) => theme.palette.text.secondary }}>
-              Deftones
+              Nine Inch Nails
             </Typography>
           </Stack>
           <Stack

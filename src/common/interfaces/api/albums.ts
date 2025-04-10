@@ -1,5 +1,6 @@
 import { ResponseBase } from './base';
 import { Album, AlbumExtended } from '../albums';
+import { AlbumTrack } from '../tracks';
 
 export interface AlbumsResponse extends ResponseBase {
   items: Album[];
@@ -13,6 +14,11 @@ export interface CurrentUserSavedAlbumsResponse extends ResponseBase {
 }
 
 export type AlbumResponse = AlbumExtended;
+
+export type AlbumTracksResponse = {
+  items: AlbumTrack[];
+  next: string | null;
+};
 
 export type AlbumSavedResponse = boolean[];
 

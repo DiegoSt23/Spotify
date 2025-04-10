@@ -10,5 +10,6 @@ export interface AlbumExtended extends Album {
   popularity: number;
   tracks: {
     items: AlbumTrack[];
+    next?: string | null,
   };
 }
