@@ -6,19 +6,19 @@ export const useGetArtistPartialAlbums = (id?: string) =>
     queries: [
       {
         queryKey: ['getPartialArtistAlbums', id],
-        queryFn: () => handleGetArtistCatalog(id, 10, 'album'),
+        queryFn: () => handleGetArtistCatalog(0, id, 10, 'album'),
       },
       {
         queryKey: ['getPartialArtistSingles', id],
-        queryFn: () => handleGetArtistCatalog(id, 10, 'single'),
+        queryFn: () => handleGetArtistCatalog(0, id, 10, 'single'),
       },
       {
         queryKey: ['getPartialArtistCompilations', id],
-        queryFn: () => handleGetArtistCatalog(id, 10, 'compilation'),
+        queryFn: () => handleGetArtistCatalog(0, id, 10, 'compilation'),
       },
       {
         queryKey: ['getPartialArtistAppearsOn', id],
-        queryFn: () => handleGetArtistCatalog(id, 10, 'appears_on'),
+        queryFn: () => handleGetArtistCatalog(0, id, 10, 'appears_on'),
       },
     ],
     combine: (results) => {

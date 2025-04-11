@@ -139,7 +139,7 @@ export const ArtistProfile = ({
   ];
 
   return (
-    <Stack gap={4}>
+    <Stack gap={2}>
       <MediaHeader
         title={name}
         cover={images?.[0]?.url}
@@ -208,10 +208,10 @@ export const ArtistProfile = ({
           />
         </Stack>
       )}
-      {discographyData.map(({ title, data, total, redirect }) =>
+      {discographyData.map(({ title, data, total, redirect }, index) =>
         total ? (
           <Stack key={title} gap={2}>
-            <Divider />
+            {index !== 0 && <Divider />}
             <Stack
               sx={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >

@@ -64,7 +64,7 @@ export const AlbumDetails = ({
   ];
 
   return (
-    <Stack gap={3}>
+    <Stack gap={2}>
       <MediaHeader
         cover={images?.[0]?.url}
         title={name}

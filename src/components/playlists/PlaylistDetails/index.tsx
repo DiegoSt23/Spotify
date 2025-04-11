@@ -13,6 +13,7 @@ import { Table, MediaHeader } from '@components/common';
 
 interface PlaylistDetailsProps extends Partial<PlaylistExtended> {
   isSaved?: boolean;
+  isLoadingRemainingTracks?: boolean;
 }
 
 export const PlaylistDetails = ({
@@ -25,6 +26,7 @@ export const PlaylistDetails = ({
   public: isPublic,
   collaborative,
   isSaved,
+  isLoadingRemainingTracks,
 }: PlaylistDetailsProps) => {
   const { t } = useLanguage('playlists');
   const { columns, isSmartphone } = useExtendedTracksTable();
@@ -59,7 +61,7 @@ export const PlaylistDetails = ({
   ];
 
   return (
-    <Stack gap={3}>
+    <Stack gap={2}>
       <MediaHeader
         cover={images?.[0]?.url}
         title={name}
@@ -80,9 +82,9 @@ export const PlaylistDetails = ({
               mt: { xs: 0, sm: 0.5 },
             }}
           >
-            {description && (
+            {/* {description && (
               <Typography color='textSecondary'>{description}</Typography>
-            )}
+            )} */}
             <Stack
               sx={{
                 flexDirection: 'row',
@@ -105,13 +107,15 @@ export const PlaylistDetails = ({
                 variant='subtitle2'
                 sx={{ color: (theme) => theme.palette.text.secondary }}
               >
-                {formatMs(
-                  tracks?.items.reduce(
-                    (acc, curr) => curr.track.duration_ms + acc,
-                    0
-                  ),
-                  true
-                )}
+                {tracks?.items && tracks?.items?.length
+                  ? formatMs(
+                      tracks?.items.reduce(
+                        (acc, curr) => curr.track.duration_ms + acc,
+                        0
+                      ),
+                      true
+                    )
+                  : '0h 0m'}
               </Typography>
               <Divider orientation='vertical' flexItem />
               <Typography
@@ -141,10 +145,13 @@ export const PlaylistDetails = ({
       <Table
         columns={columns.filter(Boolean)}
         rows={tracks?.items}
+        rowCount={tracks?.total}
         getRowId={(row) => row?.track?.id}
         slots={{
           columnHeaders: isSmartphone ? () => null : undefined,
         }}
+        loading={isLoadingRemainingTracks}
+        paginationMode='server'
         hideFooter
         disableRowSelectionOnClick
         disableColumnSelector

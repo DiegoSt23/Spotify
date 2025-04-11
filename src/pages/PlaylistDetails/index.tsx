@@ -1,34 +1,38 @@
-import { useParams } from 'react-router-dom';
-import { IconButton } from '@mui/material';
-import { MoreVert } from '@mui/icons-material';
-import {
-  useGetPlaylistDetails,
-  useCheckIsPlaylistSaved,
-} from '@services/playlists';
+// import { IconButton } from '@mui/material';
+// import { MoreVert } from '@mui/icons-material';
+import { usePlaylistDetails } from '@hooks/playlists';
 import { Page } from '@components/layout';
 import { PlaylistDetails as PlaylistDetailsTemplate } from '@components/playlists';
 import { Loading } from '@components/common';
 
 export const PlaylistDetails = () => {
-  const { id } = useParams<{ id: string }>();
-  const { data, isFetching } = useGetPlaylistDetails(id);
-  const { data: isPlaylistSaved, isFetching: isFetchingIsPlaylistSaved } =
-    useCheckIsPlaylistSaved(id);
+  const {
+    playlistData,
+    tracks,
+    isPlaylistSaved,
+    isLoading,
+    isLodingTracks,
+  } = usePlaylistDetails();
 
-  if (isFetching || isFetchingIsPlaylistSaved) {
+  if (isLoading) {
     return <Loading />;
   }
 
   return (
     <Page
-      title={data?.name}
-      headerElement={
-        <IconButton sx={{ position: 'relative', right: 4 }}>
-          <MoreVert />
-        </IconButton>
-      }
+      // title={playlistData?.name}
+      // headerElement={
+      //   <IconButton sx={{ position: 'relative', right: 4 }}>
+      //     <MoreVert />
+      //   </IconButton>
+      // }
     >
-      <PlaylistDetailsTemplate {...data} isSaved={isPlaylistSaved?.[0]} />
+      <PlaylistDetailsTemplate
+        {...playlistData}
+        tracks={tracks}
+        isSaved={isPlaylistSaved?.[0]}
+        isLoadingRemainingTracks={isLodingTracks}
+      />
     </Page>
   );
 };

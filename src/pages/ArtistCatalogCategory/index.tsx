@@ -1,20 +1,21 @@
 import { Stack, CircularProgress } from '@mui/material';
-import { useUserPlaylists } from '@hooks/playlists';
+import { useArtistCatalogCategory } from '@hooks/albums';
 import { Loading } from '@components/common';
-import { PlaylistsGrid } from '@components/playlists';
+import { AlbumsGrid } from '@components/albums';
 
-export const UserPlaylists = () => {
-  const { ref, playlists, isFetching, loadingFirstTime } = useUserPlaylists();
+export const ArtistCatalogCategory = () => {
+  const { ref, albums, isLoading, isLoadingFirstTime } =
+    useArtistCatalogCategory();
 
-  if (loadingFirstTime) {
+  if (isLoadingFirstTime) {
     return <Loading />;
   }
 
   return (
     <>
-      <PlaylistsGrid data={playlists} displayTotalTracks displayOwner />
+      <AlbumsGrid data={albums} displayReleaseDate />
       <div ref={ref} style={{ position: 'relative', top: '-500px' }} />
-      {playlists.length && isFetching && (
+      {albums.length && isLoading && (
         <Stack sx={{ alignItems: 'center', paddingTop: 2 }}>
           <CircularProgress size={30} />
         </Stack>

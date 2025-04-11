@@ -103,6 +103,7 @@ export const PlaylistsGrid = ({
                 )}
                 {displayTotalTracks && (
                   <Typography
+                    variant='caption'
                     sx={{
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',

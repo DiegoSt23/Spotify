@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { GridColDef } from '@mui/x-data-grid';
 import { Stack, Typography } from '@mui/material';
 import { useMediaQuery, useTheme } from '@mui/material';
@@ -13,7 +14,6 @@ export const useMinimalTracksTable = () => {
   const theme = useTheme();
   const { t } = useLanguage('tracks');
   const isSmartphone = useMediaQuery(theme.breakpoints.down('sm'));
-
   const columns: GridColDef[] | false[] = [
     {
       field: 'name',
@@ -47,7 +47,7 @@ export const useMinimalTracksTable = () => {
           <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
             {params?.row?.artists?.map(
               (artist: ArtistBase, index: number) => (
-                <>
+                <Fragment key={artist.id}>
                   <TrackLink
                     name={artist.name}
                     path='artist'
@@ -56,7 +56,7 @@ export const useMinimalTracksTable = () => {
                   {index !== params?.row?.artists?.length - 1 && (
                     <Typography sx={{ mr: 0.5 }}>,</Typography>
                   )}
-                </>
+                </Fragment>
               )
             )}
           </Stack>

@@ -141,8 +141,8 @@ export const MediaHeader = ({
         }}
       >
         {actions?.length &&
-          actions?.map(({ icon, onClick, description }) => (
-            <Tooltip title={description} arrow>
+          actions?.map(({ icon, onClick, description }, index) => (
+            <Tooltip key={index} title={description} arrow>
               <IconButton sx={actionButtonStyle} onClick={onClick}>
                 {icon}
               </IconButton>

@@ -5,7 +5,9 @@ import { PlaylistResponse } from '@common/interfaces';
 const handleGetPlaylistDetails = async (
   id?: string
 ): Promise<PlaylistResponse> => {
-  const response = await Api.get<PlaylistResponse>(`playlists/${id}`);
+  const response = await Api.get<PlaylistResponse>(
+    `playlists/${id}?fields=collaborative,description,followers,images,name,owner,public`
+  );
 
   return response;
 };

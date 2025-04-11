@@ -1,14 +1,15 @@
 import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import { ArtistResponse } from '@common/interfaces';
+import { ArtistResponse, AlbumCategory } from '@common/interfaces';
 import { useLanguage } from '@hooks/common';
 import { useGetArtistDetails } from '@services/artists';
 import { Page } from '@components/layout';
 
 export interface ArtistContext {
+  isFetchingArtistData: boolean;
+  category: AlbumCategory;
   id?: string;
   artistData?: ArtistResponse;
-  isFetchingArtistData: boolean;
 }
 
 export const ArtistLayout = () => {
@@ -16,6 +17,13 @@ export const ArtistLayout = () => {
   const { pathname } = useLocation();
   const { id } = useParams<{ id: string }>();
   const { data, isLoading } = useGetArtistDetails(id);
+
+  const categories = {
+    'albums': 'album',
+    'singles': 'single',
+    'compilations': 'compilation',
+    'appears-on': 'appears_on',
+  };
 
   const getCategoryName = () => {
     if (pathname.includes('artist') && pathname.includes('albums')) {
@@ -38,6 +46,8 @@ export const ArtistLayout = () => {
     id,
     artistData: data,
     isFetchingArtistData: isLoading,
+    category: (categories[pathname.split('/')[3] as keyof typeof categories] ||
+      '') as AlbumCategory,
   };
 
   return (

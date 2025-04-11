@@ -24,7 +24,12 @@ export const CurrentUserPlaylists = () => {
         )
       }
     >
-      <PlaylistsGrid data={playlists} loading={loadingFirstTime} displayOwner />
+      <PlaylistsGrid
+        data={playlists}
+        loading={loadingFirstTime}
+        displayTotalTracks
+        displayOwner
+      />
       <div ref={ref} style={{ position: 'relative', top: '-500px' }} />
       {playlists.length && isFetching && (
         <Stack sx={{ alignItems: 'center', paddingTop: 2 }}>

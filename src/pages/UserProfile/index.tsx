@@ -9,7 +9,7 @@ export const UserProfile = () => {
   const { id } = useParams();
   const { userData, isFetchingUserData } = useOutletContext<UserContext>();
   const { data: userPlaylists, isFetching: isFetchingUserPlaylists } =
-    useGetUserPlaylists(id);
+    useGetUserPlaylists(0, id);
   const { data: isUserFollowed, isFetching: isFetchingUserFollowed } = useCheckIsUserFollowed(id);
 
   if (isFetchingUserData || isFetchingUserPlaylists || isFetchingUserFollowed) {
