@@ -1,6 +1,6 @@
 import { Stack, Typography, IconButton } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
-import { formatMs } from '@common/utils';
+import { useFormatMs } from '@hooks/common';
 
 interface TrackTimeAndOptionsCellProps {
   ms: number;
@@ -10,26 +10,30 @@ interface TrackTimeAndOptionsCellProps {
 export const TrackTimeAndOptionsCell = ({
   ms,
   isSmartphone,
-}: TrackTimeAndOptionsCellProps) => (
-  <Stack
-    sx={{
-      height: '100%',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: isSmartphone ? 'flex-end' : 'space-between',
-      gap: 1,
-    }}
-  >
-    <Typography
+}: TrackTimeAndOptionsCellProps) => {
+  const { formattedTime } = useFormatMs(ms);
+
+  return (
+    <Stack
       sx={{
-        color: (theme) => theme.palette.text.secondary,
-        display: { xs: 'none', sm: 'flex' },
+        height: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: isSmartphone ? 'flex-end' : 'space-between',
+        gap: 1,
       }}
     >
-      {formatMs(ms)}
-    </Typography>
-    <IconButton size='small' edge='end'>
-      <MoreVert />
-    </IconButton>
-  </Stack>
-);
+      <Typography
+        sx={{
+          color: (theme) => theme.palette.text.secondary,
+          display: { xs: 'none', sm: 'flex' },
+        }}
+      >
+        {formattedTime}
+      </Typography>
+      <IconButton size='small' edge='end'>
+        <MoreVert />
+      </IconButton>
+    </Stack>
+  );
+};

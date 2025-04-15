@@ -6,8 +6,8 @@ import {
   Shuffle,
 } from '@mui/icons-material';
 import { PlaylistExtended } from '@common/interfaces';
-import { formatMs, getFeaturedArtists } from '@common/utils';
-import { useLanguage } from '@hooks/common';
+import { getFeaturedArtists } from '@common/utils';
+import { useLanguage, useFormatMs } from '@hooks/common';
 import { useExtendedTracksTable } from '@hooks/tracks';
 import { Table, MediaHeader } from '@components/common';
 import { FeaturedArtists } from '@components/artists';
@@ -31,6 +31,10 @@ export const PlaylistDetails = ({
   isLoadingTracks,
 }: PlaylistDetailsProps) => {
   const { t } = useLanguage('playlists');
+  const { formattedTime } = useFormatMs(
+    tracks?.items?.reduce((acc, curr) => curr.track.duration_ms + acc, 0) ?? 0,
+    true
+  );
   const { columns, isSmartphone } = useExtendedTracksTable();
   const featuredArtists = getFeaturedArtists(tracks?.items, 'playlist');
   const actions = [
@@ -68,12 +72,7 @@ export const PlaylistDetails = ({
         ? 'playlistDetails.header.metadata.tracks.singular'
         : 'playlistDetails.header.metadata.tracks.plural'
     )}`,
-    tracks?.items && tracks?.items?.length
-      ? formatMs(
-          tracks?.items.reduce((acc, curr) => curr.track.duration_ms + acc, 0),
-          true
-        )
-      : '0h 0m',
+    formattedTime,
     `${new Intl.NumberFormat().format(followers?.total ?? 0)} ${t(
       followers?.total === 1
         ? 'playlistDetails.header.metadata.followers.singular'

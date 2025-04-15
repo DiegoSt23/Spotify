@@ -6,8 +6,8 @@ import {
   Shuffle,
 } from '@mui/icons-material';
 import { AlbumExtended } from '@common/interfaces';
-import { formatMs, getFeaturedArtists } from '@common/utils';
-import { useLanguage } from '@hooks/common';
+import { getFeaturedArtists } from '@common/utils';
+import { useLanguage, useFormatMs } from '@hooks/common';
 import { useMinimalTracksTable } from '@hooks/tracks';
 import { Table, MediaHeader } from '@components/common';
 import { FeaturedArtists } from '@components/artists';
@@ -34,6 +34,10 @@ export const AlbumDetails = ({
   isLoadingRemainingTracks,
 }: AlbumDetailsProps) => {
   const { t } = useLanguage('albums');
+  const { formattedTime } = useFormatMs(
+    tracks?.items.reduce((acc, curr) => curr.duration_ms + acc, 0) ?? 0,
+    true
+  );
   const { columns, isSmartphone } = useMinimalTracksTable();
   const featuredArtists = getFeaturedArtists(tracks?.items, 'album');
   const actions = [
@@ -67,17 +71,12 @@ export const AlbumDetails = ({
   ];
   const trackListData = [
     release_date?.split('-')[0] ?? '-',
-    total_tracks
-      ? `${new Intl.NumberFormat().format(total_tracks ?? 0)} ${t(
-          total_tracks === 1
-            ? 'albumDetails.header.metadata.tracks.singular'
-            : 'albumDetails.header.metadata.tracks.plural'
-        )}`
-      : '0',
-    formatMs(
-      tracks?.items.reduce((acc, curr) => curr.duration_ms + acc, 0),
-      true
-    ),
+    `${new Intl.NumberFormat().format(total_tracks ?? 0)} ${t(
+      total_tracks === 1
+        ? 'albumDetails.header.metadata.tracks.singular'
+        : 'albumDetails.header.metadata.tracks.plural'
+    )}`,
+    formattedTime,
   ];
 
   return (
