@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Stack, Typography, Chip, Button } from '@mui/material';
+import { Stack, Typography, Chip, Button, Skeleton } from '@mui/material';
 import { Favorite, FavoriteBorder, ChevronRight } from '@mui/icons-material';
 import { PlaylistsResponse, UserResponse } from '@common/interfaces';
 import { useLanguage } from '@hooks/common';
@@ -10,12 +10,14 @@ interface UserProfileResponse {
   data?: Partial<UserResponse>;
   userPlaylists?: PlaylistsResponse;
   isFollowed?: boolean;
+  isLoading?: boolean;
 }
 
 export const UserProfile = ({
   data,
   userPlaylists,
   isFollowed,
+  isLoading,
 }: UserProfileResponse) => {
   const navigate = useNavigate();
   const { t } = useLanguage('users');
@@ -57,63 +59,80 @@ export const UserProfile = ({
               variant='subtitle2'
               sx={{ color: (theme) => theme.palette.accent.main }}
             >
-              {new Intl.NumberFormat().format(data?.followers?.total ?? 0)}
+              {isLoading ? (
+                <Skeleton width={20} />
+              ) : (
+                new Intl.NumberFormat().format(data?.followers?.total ?? 0)
+              )}
             </Typography>
             <Typography
               variant='subtitle2'
               sx={{ color: (theme) => theme.palette.text.secondary }}
             >
-              {t(
-                data?.followers?.total === 1
-                  ? 'header.metadata.followers.singular'
-                  : 'header.metadata.followers.plural'
+              {isLoading ? (
+                <Skeleton width={60} />
+              ) : (
+                t(
+                  data?.followers?.total === 1
+                    ? 'header.metadata.followers.singular'
+                    : 'header.metadata.followers.plural'
+                )
               )}
             </Typography>
           </Stack>
         }
         actions={actions}
+        isLoading={isLoading}
         isArtist
       />
-      <Stack gap={2}>
-        <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Stack sx={{ flexDirection: 'row', alignItems: 'center', gap: 1 }}>
-            <Typography variant='h6' textAlign='left'>
-              {t('sections.playlists')}
-            </Typography>
-            <Chip
-              label={userPlaylists?.total}
-              size='small'
-              sx={{
-                color: (theme) => theme.palette.accent.main,
-                fontWeight: 'fontWeightBold',
-              }}
+      {!isLoading && (
+        <>
+          <Stack gap={2}>
+            <Stack
+              sx={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
+              <Stack
+                sx={{ flexDirection: 'row', alignItems: 'center', gap: 1 }}
+              >
+                <Typography variant='h6' textAlign='left'>
+                  {t('sections.playlists')}
+                </Typography>
+                <Chip
+                  label={userPlaylists?.total}
+                  size='small'
+                  sx={{
+                    color: (theme) => theme.palette.accent.main,
+                    fontWeight: 'fontWeightBold',
+                  }}
+                />
+              </Stack>
+              {userPlaylists?.total && userPlaylists.total > 10 && (
+                <Button
+                  size='small'
+                  variant='text'
+                  endIcon={<ChevronRight />}
+                  onClick={() => navigate('playlists')}
+                  sx={{
+                    display: {
+                      xs: 'none',
+                      sm: 'flex',
+                    },
+                  }}
+                >
+                  {t('sections.more')}
+                </Button>
+              )}
+            </Stack>
+            <PlaylistsGrid
+              data={userPlaylists?.items}
+              onMoreClick={() => navigate('playlists')}
+              displayMore={!!(userPlaylists?.total && userPlaylists.total > 10)}
+              carousell
+              displayTotalTracks
             />
           </Stack>
-          {userPlaylists?.total && userPlaylists.total > 10 && (
-            <Button
-              size='small'
-              variant='text'
-              endIcon={<ChevronRight />}
-              onClick={() => navigate('playlists')}
-              sx={{
-                display: {
-                  xs: 'none',
-                  sm: 'flex',
-                },
-              }}
-            >
-              {t('sections.more')}
-            </Button>
-          )}
-        </Stack>
-        <PlaylistsGrid
-          data={userPlaylists?.items}
-          onMoreClick={() => navigate('playlists')}
-          displayMore={!!(userPlaylists?.total && userPlaylists.total > 10)}
-          carousell
-          displayTotalTracks
-        />
-      </Stack>
+        </>
+      )}
     </Stack>
   );
 };

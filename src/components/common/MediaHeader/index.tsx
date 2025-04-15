@@ -8,6 +8,7 @@ import {
   Avatar,
   Tooltip,
   Link,
+  Skeleton,
   type Theme,
 } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
@@ -30,10 +31,16 @@ interface MediaHeaderProps {
     onClick: () => void;
     description?: string;
   }[];
+  isLoading?: boolean;
 }
 
 const actionButtonStyle = {
   border: (theme: Theme) => `1px solid ${theme.palette.divider}`,
+  width: { xs: 50, sm: 40 },
+  height: { xs: 50, sm: 40 },
+};
+
+const skeletonButtonStyle = {
   width: { xs: 50, sm: 40 },
   height: { xs: 50, sm: 40 },
 };
@@ -46,6 +53,7 @@ export const MediaHeader = ({
   isSmartphone,
   isArtist,
   actions,
+  isLoading,
 }: MediaHeaderProps) => (
   <Stack
     sx={{
@@ -54,24 +62,34 @@ export const MediaHeader = ({
       gap: 3,
     }}
   >
-    <Card
-      variant='outlined'
-      sx={{
-        borderRadius: isArtist && !isSmartphone ? '100%' : undefined,
-        width: isSmartphone ? '100%' : 300,
-        height: isSmartphone ? 'auto' : 300,
-      }}
-    >
-      <Avatar
-        src={cover}
-        alt={title}
-        variant={isArtist ? (isSmartphone ? 'square' : 'circular') : 'rounded'}
+    {isLoading ? (
+      <Skeleton
+        variant={isArtist ? 'circular' : 'rounded'}
+        width={isSmartphone ? '100%' : 300}
+        height={300}
+      />
+    ) : (
+      <Card
+        variant='outlined'
         sx={{
+          borderRadius: isArtist && !isSmartphone ? '100%' : undefined,
           width: isSmartphone ? '100%' : 300,
           height: isSmartphone ? 'auto' : 300,
         }}
-      />
-    </Card>
+      >
+        <Avatar
+          src={cover}
+          alt={title}
+          variant={
+            isArtist ? (isSmartphone ? 'square' : 'circular') : 'rounded'
+          }
+          sx={{
+            width: isSmartphone ? '100%' : 300,
+            height: isSmartphone ? 'auto' : 300,
+          }}
+        />
+      </Card>
+    )}
     <Stack
       sx={{
         flex: 1,
@@ -85,7 +103,7 @@ export const MediaHeader = ({
             isSmartphone ? (isArtist ? 'h4' : 'h5') : isArtist ? 'h3' : 'h4'
           }
         >
-          {title}
+          {isLoading ? <Skeleton width={250} /> : title}
         </Typography>
         {owner && owner.length && (
           <Stack
@@ -110,7 +128,7 @@ export const MediaHeader = ({
                   variant={isSmartphone ? 'h6' : 'h5'}
                   sx={{ color: (theme) => theme.palette.accent.main }}
                 >
-                  {name}
+                  {isLoading ? <Skeleton width={150} /> : name}
                   {index !== owner.length - 1 && (
                     <Typography sx={{ mr: 0.5 }} component='span'>
                       ,
@@ -127,7 +145,7 @@ export const MediaHeader = ({
               variant='subtitle2'
               sx={{ color: (theme) => theme.palette.text.secondary }}
             >
-              {details}
+              {isLoading ? <Skeleton /> : details}
             </Typography>
           ) : (
             details
@@ -140,17 +158,26 @@ export const MediaHeader = ({
           justifyContent: { xs: 'center', sm: 'flex-start' },
         }}
       >
-        {actions?.length &&
-          actions?.map(({ icon, onClick, description }, index) => (
-            <Tooltip key={index} title={description} arrow>
-              <IconButton sx={actionButtonStyle} onClick={onClick}>
-                {icon}
-              </IconButton>
-            </Tooltip>
-          ))}
-        <IconButton sx={actionButtonStyle} onClick={() => {}}>
-          <MoreVert />
-        </IconButton>
+        {!isLoading && actions?.length
+          ? actions?.map(({ icon, onClick, description }, index) => (
+              <Tooltip key={index} title={description} arrow>
+                <IconButton sx={actionButtonStyle} onClick={onClick}>
+                  {icon}
+                </IconButton>
+              </Tooltip>
+            ))
+          : [1, 2, 3].map((_, index) => (
+              <Skeleton
+                key={index}
+                variant='circular'
+                sx={skeletonButtonStyle}
+              />
+            ))}
+        {!isLoading && (
+          <IconButton sx={actionButtonStyle} onClick={() => {}}>
+            <MoreVert />
+          </IconButton>
+        )}
       </Stack>
     </Stack>
   </Stack>

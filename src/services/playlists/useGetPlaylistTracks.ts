@@ -15,7 +15,7 @@ const handleGetPlaylistTracks = async (
 
 export const useGetPlaylistTracks = (offset: number | null, id?: string) =>
   useQuery({
-    queryKey: ['getPlaylistTracks', offset],
+    queryKey: ['getPlaylistTracks', offset, id],
     queryFn: () => handleGetPlaylistTracks(offset, id),
     enabled: offset !== null,
   });

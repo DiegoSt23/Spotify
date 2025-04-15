@@ -22,22 +22,22 @@ export const usePlaylistDetails = () => {
   const { data: isPlaylistSaved, isFetching: isLoadingIsPlaylistSaved } =
     useCheckIsPlaylistSaved(id);
 
-  // useEffect(() => {
-  //   if (playlistTracks?.items) {
-  //     setTracks({
-  //       items: [...tracks.items, ...(playlistTracks?.items || [])],
-  //       total: playlistTracks?.total || 0,
-  //     });
-  //     setOffset(playlistTracks?.next ? (offset as number) + 50 : null);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [playlistTracks?.items]);
+  useEffect(() => {
+    if (playlistTracks?.items) {
+      setTracks({
+        items: [...tracks.items, ...(playlistTracks?.items || [])],
+        total: playlistTracks?.total || 0,
+      });
+      setOffset(playlistTracks?.next ? (offset as number) + 50 : null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playlistTracks?.items]);
 
   return {
     playlistData,
     tracks,
     isPlaylistSaved,
     isLoading: isFetching || isLoadingIsPlaylistSaved,
-    isLodingTracks: isLoadingPlaylistTracks,
+    isLoadingTracks: isLoadingPlaylistTracks,
   };
 };

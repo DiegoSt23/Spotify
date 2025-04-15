@@ -1,5 +1,4 @@
-import { Link as Routerlink } from 'react-router-dom';
-import { Stack, Typography, Divider, Chip, Button } from '@mui/material';
+import { Stack, Typography, Chip, Skeleton } from '@mui/material';
 import {
   PlayArrow,
   Favorite,
@@ -11,9 +10,12 @@ import { formatMs, getFeaturedArtists } from '@common/utils';
 import { useLanguage } from '@hooks/common';
 import { useMinimalTracksTable } from '@hooks/tracks';
 import { Table, MediaHeader } from '@components/common';
+import { FeaturedArtists } from '@components/artists';
+import { TrackListData } from '@components/tracks';
 
 interface AlbumDetailsProps extends Partial<AlbumExtended> {
   isSaved?: boolean;
+  isLoading?: boolean;
   isLoadingRemainingTracks?: boolean;
 }
 
@@ -28,11 +30,12 @@ export const AlbumDetails = ({
   copyrights,
   album_type: albumType,
   isSaved,
+  isLoading,
   isLoadingRemainingTracks,
 }: AlbumDetailsProps) => {
   const { t } = useLanguage('albums');
   const { columns, isSmartphone } = useMinimalTracksTable();
-  const featuredArtists = getFeaturedArtists(tracks?.items);
+  const featuredArtists = getFeaturedArtists(tracks?.items, 'album');
   const actions = [
     {
       icon: isSaved ? (
@@ -62,6 +65,20 @@ export const AlbumDetails = ({
       description: t('albumDetails.header.actions.shuffle'),
     },
   ];
+  const trackListData = [
+    release_date?.split('-')[0] ?? '-',
+    total_tracks
+      ? `${new Intl.NumberFormat().format(total_tracks ?? 0)} ${t(
+          total_tracks === 1
+            ? 'albumDetails.header.metadata.tracks.singular'
+            : 'albumDetails.header.metadata.tracks.plural'
+        )}`
+      : '0',
+    formatMs(
+      tracks?.items.reduce((acc, curr) => curr.duration_ms + acc, 0),
+      true
+    ),
+  ];
 
   return (
     <Stack gap={2}>
@@ -77,116 +94,70 @@ export const AlbumDetails = ({
         actions={actions}
         details={
           <Stack
-            gap={1}
-            sx={{ alignItems: { xs: 'center', sm: 'flex-start' } }}
+            sx={{
+              justifyContent: { xs: 'center', sm: 'flex-start' },
+              flexDirection: 'row',
+              mt: 1,
+              gap: 1,
+            }}
           >
-            <Stack
-              sx={{
-                flexDirection: 'row',
-                justifyContent: { xs: 'center', sm: 'flex-start' },
-                gap: 1,
-                mt: { xs: 0, sm: 0.5 },
-              }}
-            >
-              <Typography
-                variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.secondary }}
-              >
-                {release_date?.split('-')[0]}
-              </Typography>
-              <Divider orientation='vertical' flexItem />
-              <Typography
-                variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.secondary }}
-              >
-                {total_tracks &&
-                  `${new Intl.NumberFormat().format(total_tracks ?? 0)} ${t(
-                    total_tracks === 1
-                      ? 'albumDetails.header.metadata.tracks.singular'
-                      : 'albumDetails.header.metadata.tracks.plural'
-                  )}`}
-              </Typography>
-              <Divider orientation='vertical' flexItem />
-              <Typography
-                variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.secondary }}
-              >
-                {formatMs(
-                  tracks?.items.reduce(
-                    (acc, curr) => curr.duration_ms + acc,
-                    0
-                  ),
-                  true
+            {isLoading ? (
+              <Skeleton
+                variant='text'
+                width={45}
+                height={38}
+                sx={{ position: 'relative', top: -7 }}
+              />
+            ) : (
+              <>
+                <Chip label={release_date?.split('-')[0]} size='small' />
+                {albumType === 'compilation' && (
+                  <Chip label={albumType} size='small' />
                 )}
-              </Typography>
-            </Stack>
-            <Chip label={albumType} size='small' />
+              </>
+            )}
           </Stack>
         }
+        isLoading={isLoading}
       />
       <Table
         columns={columns.filter(Boolean)}
-        rows={tracks?.items}
+        rows={isLoading ? [] : tracks?.items}
+        rowCount={total_tracks ?? 10}
         slots={{
           columnHeaders: () => null,
         }}
-        loading={isLoadingRemainingTracks}
+        loading={isLoading || isLoadingRemainingTracks}
+        paginationMode='server'
         hideFooter
         disableRowSelectionOnClick
         disableColumnSelector
       />
-      <Stack>
-        <Typography
-          variant='caption'
-          sx={{
-            color: (theme) => theme.palette.text.secondary,
-          }}
-        >
-          {copyrights?.[0]?.text}
-        </Typography>
-        <Divider orientation='vertical' flexItem />
-        <Typography
-          variant='caption'
-          sx={{
-            color: (theme) => theme.palette.text.secondary,
-          }}
-        >
-          {label}
-        </Typography>
-      </Stack>
-      {featuredArtists.length > 1 && (
-        <Stack gap={1}>
-          <Stack sx={{ flexDirection: 'row', alignItems: 'center', gap: 1 }}>
-            <Typography variant='h6'>
-              {t('albumDetails.sections.featuredArtists')}
-            </Typography>
-            <Chip
-              label={featuredArtists.length}
-              size='small'
-              sx={{ color: (theme) => theme.palette.accent.main }}
-            />
-          </Stack>
-          <Stack
-            sx={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: 2,
-              overflow: 'auto',
-            }}
-          >
-            {featuredArtists.map(({ name, id }) => (
-              <Button
-                key={id}
-                variant='outlined'
-                component={Routerlink}
-                to={`/artist/${id}`}
-                sx={{ whiteSpace: 'nowrap', minWidth: 'max-content' }}
+      {!isLoading && !isLoadingRemainingTracks && (
+        <>
+          <TrackListData data={trackListData} />
+          <Stack>
+            {copyrights?.[0]?.text && (
+              <Typography
+                variant='caption'
+                sx={{
+                  color: (theme) => theme.palette.text.secondary,
+                }}
               >
-                {name}
-              </Button>
-            ))}
+                {copyrights?.[0]?.text}
+              </Typography>
+            )}
+            <Typography
+              variant='caption'
+              sx={{
+                color: (theme) => theme.palette.text.secondary,
+              }}
+            >
+              {label}
+            </Typography>
           </Stack>
-        </Stack>
+          <FeaturedArtists data={featuredArtists} />
+        </>
       )}
     </Stack>
   );

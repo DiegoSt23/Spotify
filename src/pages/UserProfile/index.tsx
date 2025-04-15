@@ -1,7 +1,6 @@
 import { useParams, useOutletContext } from 'react-router-dom';
 import { useCheckIsUserFollowed } from '@services/users';
 import { useGetUserPlaylists } from '@services/playlists';
-import { Loading } from '@components/common';
 import { type UserContext } from '@components/users';
 import { UserProfile as UserProfileTemplate } from '@components/users';
 
@@ -11,16 +10,15 @@ export const UserProfile = () => {
   const { data: userPlaylists, isFetching: isFetchingUserPlaylists } =
     useGetUserPlaylists(0, id);
   const { data: isUserFollowed, isFetching: isFetchingUserFollowed } = useCheckIsUserFollowed(id);
-
-  if (isFetchingUserData || isFetchingUserPlaylists || isFetchingUserFollowed) {
-    return <Loading />;
-  }
+  const isLoading =
+    isFetchingUserData || isFetchingUserPlaylists || isFetchingUserFollowed;
 
   return (
     <UserProfileTemplate
       data={userData}
       userPlaylists={userPlaylists}
       isFollowed={isUserFollowed?.[0]}
+      isLoading={isLoading}
     />
   );
 };

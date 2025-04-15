@@ -1,5 +1,5 @@
 import { Outlet, useParams, useLocation } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Typography, Skeleton } from '@mui/material';
 import { ArtistResponse, AlbumCategory } from '@common/interfaces';
 import { useLanguage } from '@hooks/common';
 import { useGetArtistDetails } from '@services/artists';
@@ -52,7 +52,7 @@ export const ArtistLayout = () => {
 
   return (
     <Page
-      title={data?.name || ''}
+      title={isLoading ? <Skeleton width={150} height={30} /> : data?.name || ''}
       headerElement={
         getCategoryName() && (
           <Typography color='textSecondary' variant='subtitle1'>

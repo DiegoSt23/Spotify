@@ -10,6 +10,7 @@ import {
   DialogContent,
   Button,
   Alert,
+  Skeleton,
 } from '@mui/material';
 import {
   PlayArrow,
@@ -38,6 +39,7 @@ type ArtistData = Partial<
 
 interface ArtistProfileProps extends ArtistData {
   isFollowed?: boolean;
+  isLoading?: boolean;
 }
 
 export const ArtistProfile = ({
@@ -52,12 +54,13 @@ export const ArtistProfile = ({
   compilations,
   appearsOn,
   isFollowed,
+  isLoading,
 }: ArtistProfileProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const { t } = useLanguage('artists');
   const { isSmartphone, columns } = useTracksTable();
-  
+
   const discographyData = [
     {
       title: t('artistProfile.sections.albums'),
@@ -139,7 +142,7 @@ export const ArtistProfile = ({
   ];
 
   return (
-    <Stack gap={2}>
+    <Stack gap={2} flex={1}>
       <MediaHeader
         title={name}
         cover={images?.[0]?.url}
@@ -160,103 +163,122 @@ export const ArtistProfile = ({
                 variant='subtitle2'
                 sx={{ color: (theme) => theme.palette.accent.main }}
               >
-                {new Intl.NumberFormat().format(followers?.total ?? 0)}
+                {isLoading ? (
+                  <Skeleton width={30} />
+                ) : (
+                  new Intl.NumberFormat().format(followers?.total ?? 0)
+                )}
               </Typography>
               <Typography
                 variant='subtitle2'
                 sx={{ color: (theme) => theme.palette.text.secondary }}
               >
-                {t(
-                  followers?.total === 1
-                    ? 'artistProfile.header.metadata.followers.singular'
-                    : 'artistProfile.header.metadata.followers.plural'
+                {isLoading ? (
+                  <Skeleton width={50} />
+                ) : (
+                  t(
+                    followers?.total === 1
+                      ? 'artistProfile.header.metadata.followers.singular'
+                      : 'artistProfile.header.metadata.followers.plural'
+                  )
                 )}
               </Typography>
             </Stack>
-            {Boolean(genres?.length) && (
-              <Stack
-                sx={{
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  gap: 1,
-                  mt: 1,
-                  justifyContent: { xs: 'center', sm: 'flex-start' },
-                }}
-              >
-                {genres?.map((genre) => (
-                  <Chip key={genre} label={genre} size='small' />
-                ))}
-              </Stack>
+            {isLoading ? (
+              <Skeleton variant='text' width={88} height={38} />
+            ) : (
+              Boolean(genres?.length) && (
+                <Stack
+                  sx={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    gap: 1,
+                    mt: 1,
+                    justifyContent: { xs: 'center', sm: 'flex-start' },
+                  }}
+                >
+                  {genres?.map((genre) => (
+                    <Chip key={genre} label={genre} size='small' />
+                  ))}
+                </Stack>
+              )
             )}
           </Stack>
         }
+        isLoading={isLoading}
       />
-      {Boolean(topTracks?.length) && (
-        <Stack gap={2}>
-          <Typography variant='h6'>
-            {t('artistProfile.sections.topTracks')}
-          </Typography>
-          <Table
-            rows={topTracks}
-            columns={columns.filter(Boolean)}
-            slots={{
-              columnHeaders: isSmartphone ? () => null : undefined,
-            }}
-            hideFooter
-            disableRowSelectionOnClick
-            disableColumnSelector
-          />
-        </Stack>
-      )}
-      {discographyData.map(({ title, data, total, redirect }, index) =>
-        total ? (
-          <Stack key={title} gap={2}>
-            {index !== 0 && <Divider />}
-            <Stack
-              sx={{ flexDirection: 'row', justifyContent: 'space-between' }}
-            >
-              <Stack
-                sx={{ flexDirection: 'row', alignItems: 'center', gap: 1 }}
-              >
-                <Typography variant='h6'>{title}</Typography>
-                <Chip
-                  label={total}
-                  size='small'
-                  sx={{
-                    color: (theme) => theme.palette.accent.main,
-                    fontWeight: 'fontWeightBold',
-                  }}
+      {!isLoading && (
+        <>
+          {Boolean(topTracks?.length) && (
+            <Stack gap={2}>
+              <Typography variant='h6'>
+                {t('artistProfile.sections.topTracks')}
+              </Typography>
+              <Table
+                rows={topTracks}
+                columns={columns.filter(Boolean)}
+                slots={{
+                  columnHeaders: isSmartphone ? () => null : undefined,
+                }}
+                hideFooter
+                disableRowSelectionOnClick
+                disableColumnSelector
+              />
+            </Stack>
+          )}
+          {discographyData.map(({ title, data, total, redirect }, index) =>
+            total ? (
+              <Stack key={title} gap={2}>
+                {index !== 0 && <Divider />}
+                <Stack
+                  sx={{ flexDirection: 'row', justifyContent: 'space-between' }}
+                >
+                  <Stack
+                    sx={{ flexDirection: 'row', alignItems: 'center', gap: 1 }}
+                  >
+                    <Typography variant='h6'>{title}</Typography>
+                    <Chip
+                      label={total}
+                      size='small'
+                      sx={{
+                        color: (theme) => theme.palette.accent.main,
+                        fontWeight: 'fontWeightBold',
+                      }}
+                    />
+                  </Stack>
+                  {total > 10 && (
+                    <Button
+                      size='small'
+                      variant='text'
+                      endIcon={<ChevronRight />}
+                      onClick={() => navigate(redirect)}
+                      sx={{
+                        display: {
+                          xs: 'none',
+                          sm: 'flex',
+                        },
+                      }}
+                    >
+                      {t('artistProfile.sections.more')}
+                    </Button>
+                  )}
+                </Stack>
+                <AlbumsGrid
+                  data={data}
+                  onMoreClick={() => navigate(redirect)}
+                  displayMore={total > 10}
+                  displayReleaseDate
+                  carousell
                 />
               </Stack>
-              {total > 10 && (
-                <Button
-                  size='small'
-                  variant='text'
-                  endIcon={<ChevronRight />}
-                  onClick={() => navigate(redirect)}
-                  sx={{
-                    display: {
-                      xs: 'none',
-                      sm: 'flex',
-                    },
-                  }}
-                >
-                  {t('artistProfile.sections.more')}
-                </Button>
-              )}
-            </Stack>
-            <AlbumsGrid
-              data={data}
-              onMoreClick={() => navigate(redirect)}
-              displayMore={total > 10}
-              displayReleaseDate
-              carousell
-            />
-          </Stack>
-        ) : null
-      )}
-      {noAvailableData && (
-        <Alert severity='info' variant="filled">{t('artistProfile.noContent')}</Alert>
+            ) : null
+          )}
+          {noAvailableData && (
+            <Alert severity='info' variant='filled'>
+              {t('artistProfile.noContent')}
+            </Alert>
+          )}
+        </>
       )}
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogContent>

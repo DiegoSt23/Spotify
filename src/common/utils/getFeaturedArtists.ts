@@ -1,15 +1,28 @@
-import { AlbumTrack, ArtistBase } from '@common/interfaces';
+import { AlbumTrack, ArtistBase, PlaylistTrack } from '@common/interfaces';
 
-export const getFeaturedArtists = (tracks?: AlbumTrack[]) => {
+export const getFeaturedArtists = (
+  tracks?: AlbumTrack[] | PlaylistTrack[],
+  type?: 'album' | 'playlist'
+) => {
   const featuredArtists: ArtistBase[] = [];
 
-  tracks?.forEach((track) => {
-    track.artists.forEach((artist) => {
-      if (!featuredArtists.some((item) => item.id === artist.id)) {
-        featuredArtists.push(artist);
-      }
+  if (type === 'album') {
+    (tracks as AlbumTrack[])?.forEach((track) => {
+      track.artists.forEach((artist) => {
+        if (!featuredArtists.some((item) => item.id === artist.id)) {
+          featuredArtists.push(artist);
+        }
+      });
     });
-  });
-
+  } else {
+    (tracks as PlaylistTrack[])?.forEach((track) => {
+      track.track.artists.forEach((artist) => {
+        if (!featuredArtists.some((item) => item.id === artist.id)) {
+          featuredArtists.push(artist);
+        }
+      });
+    });
+  }
+  
   return featuredArtists;
 };

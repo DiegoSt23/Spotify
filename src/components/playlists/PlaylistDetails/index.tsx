@@ -1,4 +1,4 @@
-import { Stack, Typography, Chip, Divider } from '@mui/material';
+import { Stack } from '@mui/material';
 import {
   PlayArrow,
   Favorite,
@@ -6,30 +6,33 @@ import {
   Shuffle,
 } from '@mui/icons-material';
 import { PlaylistExtended } from '@common/interfaces';
-import { formatMs } from '@common/utils';
+import { formatMs, getFeaturedArtists } from '@common/utils';
 import { useLanguage } from '@hooks/common';
 import { useExtendedTracksTable } from '@hooks/tracks';
 import { Table, MediaHeader } from '@components/common';
+import { FeaturedArtists } from '@components/artists';
+import { TrackListData } from '@components/tracks';
 
 interface PlaylistDetailsProps extends Partial<PlaylistExtended> {
   isSaved?: boolean;
-  isLoadingRemainingTracks?: boolean;
+  isLoading?: boolean;
+  isLoadingTracks?: boolean;
 }
 
 export const PlaylistDetails = ({
   images,
   name,
-  description,
+  // description,
   owner,
   tracks,
   followers,
-  public: isPublic,
-  collaborative,
   isSaved,
-  isLoadingRemainingTracks,
+  isLoading,
+  isLoadingTracks,
 }: PlaylistDetailsProps) => {
   const { t } = useLanguage('playlists');
   const { columns, isSmartphone } = useExtendedTracksTable();
+  const featuredArtists = getFeaturedArtists(tracks?.items, 'playlist');
   const actions = [
     {
       icon: isSaved ? (
@@ -59,6 +62,24 @@ export const PlaylistDetails = ({
       description: t('playlistDetails.header.actions.shuffle'),
     },
   ];
+  const trackListData = [
+    `${new Intl.NumberFormat().format(tracks?.total ?? 0)} ${t(
+      tracks?.total === 1
+        ? 'playlistDetails.header.metadata.tracks.singular'
+        : 'playlistDetails.header.metadata.tracks.plural'
+    )}`,
+    tracks?.items && tracks?.items?.length
+      ? formatMs(
+          tracks?.items.reduce((acc, curr) => curr.track.duration_ms + acc, 0),
+          true
+        )
+      : '0h 0m',
+    `${new Intl.NumberFormat().format(followers?.total ?? 0)} ${t(
+      followers?.total === 1
+        ? 'playlistDetails.header.metadata.followers.singular'
+        : 'playlistDetails.header.metadata.followers.plural'
+    )}`,
+  ];
 
   return (
     <Stack gap={2}>
@@ -74,73 +95,7 @@ export const PlaylistDetails = ({
         ]}
         isSmartphone={isSmartphone}
         actions={actions}
-        details={
-          <Stack
-            sx={{
-              justifyContent: { xs: 'center', sm: 'flex-start' },
-              gap: 1,
-              mt: { xs: 0, sm: 0.5 },
-            }}
-          >
-            {/* {description && (
-              <Typography color='textSecondary'>{description}</Typography>
-            )} */}
-            <Stack
-              sx={{
-                flexDirection: 'row',
-                gap: 1,
-                justifyContent: { xs: 'center', sm: 'flex-start' },
-              }}
-            >
-              <Typography
-                variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.secondary }}
-              >
-                {`${new Intl.NumberFormat().format(tracks?.total ?? 0)} ${t(
-                  tracks?.total === 1
-                    ? 'playlistDetails.header.metadata.tracks.singular'
-                    : 'playlistDetails.header.metadata.tracks.plural'
-                )}`}
-              </Typography>
-              <Divider orientation='vertical' flexItem />
-              <Typography
-                variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.secondary }}
-              >
-                {tracks?.items && tracks?.items?.length
-                  ? formatMs(
-                      tracks?.items.reduce(
-                        (acc, curr) => curr.track.duration_ms + acc,
-                        0
-                      ),
-                      true
-                    )
-                  : '0h 0m'}
-              </Typography>
-              <Divider orientation='vertical' flexItem />
-              <Typography
-                variant='subtitle2'
-                sx={{ color: (theme) => theme.palette.text.secondary }}
-              >
-                {`${new Intl.NumberFormat().format(followers?.total ?? 0)} ${t(
-                  followers?.total === 1
-                    ? 'playlistDetails.header.metadata.followers.singular'
-                    : 'playlistDetails.header.metadata.followers.plural'
-                )}`}
-              </Typography>
-            </Stack>
-            <Stack
-              sx={{
-                flexDirection: 'row',
-                gap: 1,
-                justifyContent: { xs: 'center', sm: 'flex-start' },
-              }}
-            >
-              <Chip label={isPublic ? 'Public' : 'Private'} size='small' />
-              {collaborative && <Chip label='Collaborative' size='small' />}
-            </Stack>
-          </Stack>
-        }
+        isLoading={isLoading}
       />
       <Table
         columns={columns.filter(Boolean)}
@@ -150,12 +105,18 @@ export const PlaylistDetails = ({
         slots={{
           columnHeaders: isSmartphone ? () => null : undefined,
         }}
-        loading={isLoadingRemainingTracks}
+        loading={isLoadingTracks}
         paginationMode='server'
         hideFooter
         disableRowSelectionOnClick
         disableColumnSelector
       />
+      {!isLoading && !isLoadingTracks && (
+        <>
+          <TrackListData data={trackListData} />
+          <FeaturedArtists data={featuredArtists} />
+        </>
+      )}
     </Stack>
   );
 };

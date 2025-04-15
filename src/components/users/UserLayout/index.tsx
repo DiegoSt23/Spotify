@@ -1,5 +1,5 @@
 import { Outlet, useParams, useLocation } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Typography, Skeleton } from '@mui/material';
 import { UserResponse } from '@common/interfaces';
 import { useLanguage } from '@hooks/common';
 import { useGetUserData } from '@services/users';
@@ -25,7 +25,9 @@ export const UserLayout = () => {
 
   return (
     <Page
-      title={data?.display_name}
+      title={
+        isFetching ? <Skeleton width={150} height={30} /> : data?.display_name
+      }
       headerElement={
         pathname.includes('playlists') && (
           <Typography color='textSecondary' variant='subtitle1'>

@@ -13,9 +13,6 @@
         "play": "Reproducir",
         "shuffle": "Aleatorio"
       }
-    },
-    "sections": {
-      "featuredArtists": "Artistas Destacados"
     }
   }
 }

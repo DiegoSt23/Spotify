@@ -6,7 +6,6 @@ import {
   useCheckIsArtistFollowed,
 } from '@services/artists';
 import { type ArtistContext } from '@components/artists';
-import { Loading } from '@components/common';
 import { ArtistProfile as ArtistProfileTemplate } from '@components/artists';
 
 export const ArtistProfile = () => {
@@ -21,16 +20,12 @@ export const ArtistProfile = () => {
   const { data: bioData, isFetching: isFetchingBio } = useGetArtistBio(
     artistData?.name
   );
-
-  if (
+  const isLoading =
     isFetchingArtistData ||
     isFetchingBio ||
     isFetchingTopTracks ||
     isFetchingPartialAlbums ||
-    isFetchingIsArtistFollowed
-  ) {
-    return <Loading />;
-  }
+    isFetchingIsArtistFollowed;
 
   return (
     <ArtistProfileTemplate
@@ -39,6 +34,7 @@ export const ArtistProfile = () => {
       {...topTracks}
       {...partialAlbums}
       isFollowed={isArtistFollowed?.[0]}
+      isLoading={isLoading}
     />
   );
 };
