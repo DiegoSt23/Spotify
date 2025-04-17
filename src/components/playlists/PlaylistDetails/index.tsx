@@ -1,8 +1,7 @@
 import { Stack } from '@mui/material';
 import {
   PlayArrow,
-  Favorite,
-  FavoriteBorder,
+  Add,
   Shuffle,
 } from '@mui/icons-material';
 import { PlaylistExtended } from '@common/interfaces';
@@ -39,16 +38,15 @@ export const PlaylistDetails = ({
   const featuredArtists = getFeaturedArtists(tracks?.items, 'playlist');
   const actions = [
     {
-      icon: isSaved ? (
-        <Favorite
+      icon: (
+        <Add
           sx={{
-            width: 20,
-            height: 20,
-            fill: (theme) => theme.palette.accent.main,
+            fill: (theme) =>
+              isSaved ? theme.palette.error.main : theme.palette.primary.main,
+            transform: isSaved ? 'rotate(45deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s',
           }}
         />
-      ) : (
-        <FavoriteBorder sx={{ width: 20, height: 20 }} />
       ),
       onClick: () => {},
       description: isSaved
