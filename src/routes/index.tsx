@@ -10,6 +10,7 @@ import {
   Home,
   Search,
   Stats,
+  CurrentUserLibrary,
   CurrentUserSavedSongs,
   CurrentUserFollowedArtists,
   CurrentUserSavedAlbums,
@@ -53,15 +54,19 @@ export const router = createBrowserRouter([
         element: <Stats />,
       },
       {
-        path: 'saved-songs',
+        path: 'library',
+        element: <CurrentUserLibrary />,
+      },
+      {
+        path: 'library/saved-songs',
         element: <CurrentUserSavedSongs />,
       },
       {
-        path: 'followed-artists',
+        path: 'library/followed-artists',
         element: <CurrentUserFollowedArtists />,
       },
       {
-        path: 'saved-albums',
+        path: 'library/saved-albums',
         element: <CurrentUserSavedAlbums />,
       },
       {
@@ -95,7 +100,7 @@ export const router = createBrowserRouter([
         element: <AlbumDetails />,
       },
       {
-        path: 'playlists',
+        path: 'library/playlists',
         element: <CurrentUserPlaylists />,
       },
       {

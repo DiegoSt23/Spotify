@@ -1,0 +1,18 @@
+{
+  "songs": {
+    "title": "Songs",
+    "description": "A collection of individual tracks you've saved to your library, ranging from all-time favorites to recent discoveries."
+  },
+  "albums": {
+    "title": "Albums",
+    "description": "Complete albums you've added to your library, perfect for listening to full projects just as the artists intended."
+  },
+  "artists": {
+    "title": "Artists",
+    "description": "Musicians and bands you follow to keep up with their latest releases, concerts, and updates."
+  },
+  "playlists": {
+    "title": "Playlists",
+    "description": "Personal playlists you've created to organize your favorite tracks by vibe, genre, or mood."
+  }
+}

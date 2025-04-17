@@ -57,20 +57,20 @@ export const useSideNavBar = () => {
         {
           label: t('navItems.myMusic.items.songs'),
           icon: <MusicNote />,
-          isActive: pathname === '/saved-songs',
-          onClick: () => navigate('/saved-songs'),
+          isActive: pathname === '/library/saved-songs',
+          onClick: () => navigate('/library/saved-songs'),
         },
         {
           label: t('navItems.myMusic.items.artists'),
           icon: <PeopleAlt />,
           isActive: pathname.includes('artist') || pathname.includes('artists'),
-          onClick: () => navigate('/followed-artists'),
+          onClick: () => navigate('/library/followed-artists'),
         },
         {
           label: t('navItems.myMusic.items.albums'),
           icon: <LibraryMusic />,
           isActive: pathname.includes('albums') && !pathname.includes('artist'),
-          onClick: () => navigate('/saved-albums'),
+          onClick: () => navigate('/library/saved-albums'),
         },
         {
           label: t('navItems.myMusic.items.playlists'),
@@ -79,7 +79,7 @@ export const useSideNavBar = () => {
             pathname.includes('playlist') ||
             pathname.includes('playlists') ||
             pathname.includes('user-profile'),
-          onClick: () => navigate('/playlists'),
+          onClick: () => navigate('library/playlists'),
         },
       ],
     },

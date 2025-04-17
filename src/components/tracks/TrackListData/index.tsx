@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Stack, Typography, Divider } from '@mui/material';
 
 interface TrackListDataProps {
@@ -18,12 +19,12 @@ export const TrackListData = ({ data = [] }: TrackListDataProps) => (
   >
     {data.length &&
       data.map((item, index) => (
-        <>
+        <Fragment key={index}>
           <Typography variant='subtitle2'>{item}</Typography>
           {index !== data.length - 1 && (
             <Divider orientation='vertical' flexItem sx={{ opacity: 1 }} />
           )}
-        </>
+        </Fragment>
       ))}
   </Stack>
 );

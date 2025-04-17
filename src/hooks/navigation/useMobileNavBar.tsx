@@ -31,8 +31,8 @@ export const useMobileNavBar = () => {
     },
     {
       icon: <MusicNote />,
-      isActive: pathname === '/songs',
-      onClick: () => navigate('/songs'),
+      isActive: pathname.includes('library'),
+      onClick: () => navigate('/library'),
     },
     {
       icon: <AccountCircle />,

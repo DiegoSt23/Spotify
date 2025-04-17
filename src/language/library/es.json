@@ -1,0 +1,18 @@
+{
+  "songs": {
+    "title": "Canciones",
+    "description": "Una colección de pistas que guardaste en tu biblioteca, desde tus favoritas de siempre hasta descubrimientos recientes."
+  },
+  "albums": {
+    "title": "Álbumes",
+    "description": "Álbumes completos que agregaste a tu biblioteca, perfectos para escucharlos tal como los pensaron los artistas."
+  },
+  "artists": {
+    "title": "Artistas",
+    "description": "Músicos y bandas que sigues para no perderte sus nuevos lanzamientos, conciertos y novedades."
+  },
+  "playlists": {
+    "title": "Listas de reproducción",
+    "description": "Listas personales que creaste para organizar tus canciones favoritas por estilo, género o mood."
+  }
+}
