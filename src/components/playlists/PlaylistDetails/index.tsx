@@ -1,22 +1,47 @@
-import { Stack } from '@mui/material';
+import { MouseEvent } from 'react';
+import { Stack, type Theme } from '@mui/material';
 import {
   PlayArrow,
   Add,
   Shuffle,
+  QueueMusic,
+  PlaylistAdd,
+  ContentCopy,
 } from '@mui/icons-material';
-import { PlaylistExtended } from '@common/interfaces';
+import {
+  PlaylistExtended,
+  ContextMenuPosition,
+  TrackContext,
+} from '@common/interfaces';
 import { getFeaturedArtists } from '@common/utils';
 import { useLanguage, useFormatMs } from '@hooks/common';
 import { useExtendedTracksTable } from '@hooks/tracks';
-import { Table, MediaHeader } from '@components/common';
+import { Table, MediaHeader, ContextMenu } from '@components/common';
 import { FeaturedArtists } from '@components/artists';
 import { TrackListData } from '@components/tracks';
 
 interface PlaylistDetailsProps extends Partial<PlaylistExtended> {
+  contextMenuPosition: ContextMenuPosition | null;
+  trackContext: TrackContext;
+  onOpenContextMenu: (
+    event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
+    id: string
+  ) => void;
+  onCloseContextMenu: () => void;
+  onAddTrack: () => void;
+  onAddTrackToQueue: () => void;
+  onAddTrackToPlaylist: () => void;
+  onCopyTrackLink: () => void;
   isSaved?: boolean;
   isLoading?: boolean;
   isLoadingTracks?: boolean;
 }
+
+const contextMenuIconSx = {
+  width: 20,
+  height: 20,
+  fill: (theme: Theme) => theme.palette.accent.main,
+};
 
 export const PlaylistDetails = ({
   images,
@@ -25,6 +50,14 @@ export const PlaylistDetails = ({
   owner,
   tracks,
   followers,
+  contextMenuPosition,
+  trackContext,
+  onOpenContextMenu,
+  onCloseContextMenu,
+  onAddTrack,
+  onAddTrackToQueue,
+  onAddTrackToPlaylist,
+  onCopyTrackLink,
   isSaved,
   isLoading,
   isLoadingTracks,
@@ -34,7 +67,7 @@ export const PlaylistDetails = ({
     tracks?.items?.reduce((acc, curr) => curr.track.duration_ms + acc, 0) ?? 0,
     true
   );
-  const { columns, isSmartphone } = useExtendedTracksTable();
+  const { columns, isSmartphone } = useExtendedTracksTable(onOpenContextMenu);
   const featuredArtists = getFeaturedArtists(tracks?.items, 'playlist');
   const actions = [
     {
@@ -77,6 +110,32 @@ export const PlaylistDetails = ({
         : 'playlistDetails.header.metadata.followers.plural'
     )}`,
   ];
+  const trackOptions = [
+    {
+      label: t('playlistDetails.trackOptions.add'),
+      action: onAddTrack,
+      icon: <Add sx={contextMenuIconSx} />,
+    },
+    {
+      label: t('playlistDetails.trackOptions.addToQueue'),
+      action: onAddTrackToQueue,
+      icon: <QueueMusic sx={contextMenuIconSx} />,
+    },
+    {
+      label: t('playlistDetails.trackOptions.addToPlaylist'),
+      action: onAddTrackToPlaylist,
+      icon: <PlaylistAdd sx={contextMenuIconSx} />,
+    },
+    {
+      label: t('playlistDetails.trackOptions.copyLink'),
+      action: onCopyTrackLink,
+      icon: (
+        <ContentCopy
+          sx={{ width: 18, height: 18, fill: contextMenuIconSx.fill }}
+        />
+      ),
+    },
+  ];
 
   return (
     <Stack gap={2}>
@@ -102,6 +161,7 @@ export const PlaylistDetails = ({
         slots={{
           columnHeaders: isSmartphone ? () => null : undefined,
         }}
+        onRowRightClick={onOpenContextMenu}
         loading={isLoadingTracks}
         paginationMode='server'
         hideFooter
@@ -113,6 +173,15 @@ export const PlaylistDetails = ({
           <TrackListData data={trackListData} />
           <FeaturedArtists data={featuredArtists} />
         </>
+      )}
+      {contextMenuPosition !== null && (
+        <ContextMenu
+          title={trackContext.name}
+          subtitle={trackContext.artists}
+          options={trackOptions}
+          anchorPosition={contextMenuPosition}
+          onClose={onCloseContextMenu}
+        />
       )}
     </Stack>
   );

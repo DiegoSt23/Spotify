@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, MouseEvent } from 'react';
 import { GridColDef } from '@mui/x-data-grid';
 import { Stack, Typography } from '@mui/material';
 import { useMediaQuery, useTheme } from '@mui/material';
@@ -10,7 +10,9 @@ import {
   TrackLink,
 } from '@components/tracks';
 
-export const useMinimalTracksTable = () => {
+export const useMinimalTracksTable = (
+  onClickContextMenu: (event: MouseEvent<HTMLButtonElement>, id: string) => void
+) => {
   const theme = useTheme();
   const { t } = useLanguage('tracks');
   const isSmartphone = useMediaQuery(theme.breakpoints.down('sm'));
@@ -45,20 +47,14 @@ export const useMinimalTracksTable = () => {
       renderCell: (params) => {
         return (
           <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
-            {params?.row?.artists?.map(
-              (artist: ArtistBase, index: number) => (
-                <Fragment key={artist.id}>
-                  <TrackLink
-                    name={artist.name}
-                    path='artist'
-                    id={artist?.id}
-                  />
-                  {index !== params?.row?.artists?.length - 1 && (
-                    <Typography sx={{ mr: 0.5 }}>,</Typography>
-                  )}
-                </Fragment>
-              )
-            )}
+            {params?.row?.artists?.map((artist: ArtistBase, index: number) => (
+              <Fragment key={artist.id}>
+                <TrackLink name={artist.name} path='artist' id={artist?.id} />
+                {index !== params?.row?.artists?.length - 1 && (
+                  <Typography sx={{ mr: 0.5 }}>,</Typography>
+                )}
+              </Fragment>
+            ))}
           </Stack>
         );
       },
@@ -67,9 +63,14 @@ export const useMinimalTracksTable = () => {
       field: 'duration_ms',
       headerName: t('tracksTable.headerLabels.time'),
       width: isSmartphone ? 20 : 100,
-      renderCell: ({ value }) => {
+      renderCell: ({ value, row }) => {
         return (
-          <TrackTimeAndOptionsCell ms={value} isSmartphone={isSmartphone} />
+          <TrackTimeAndOptionsCell
+            id={row.id}
+            ms={value}
+            isSmartphone={isSmartphone}
+            onClickContextMenu={onClickContextMenu}
+          />
         );
       },
     },

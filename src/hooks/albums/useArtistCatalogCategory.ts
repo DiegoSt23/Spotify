@@ -13,7 +13,6 @@ export const useArtistCatalogCategory = () => {
   const { id, isFetchingArtistData, category } = useOutletContext<ArtistContext>();
   const { data, refetch, isFetching, isFetchedAfterMount } =
     useGetArtistCatalog(offset, id, 50, category);
-  console.log(category);
 
   useEffect(() => {
     if (inView && offset) {

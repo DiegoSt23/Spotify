@@ -1,14 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type MouseEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import { AlbumExtended } from '@common/interfaces';
+import {
+  AlbumExtended,
+  ContextMenuPosition,
+  TrackContext,
+} from '@common/interfaces';
 import {
   useGetAlbumDetails,
   useGetAlbumTracks,
   useCheckIsAlbumSaved,
 } from '@services/albums';
 
+const initialTrackContext: TrackContext = {
+  id: '',
+  name: '',
+  artists: '',
+};
+
 export const useAlbumDetails = () => {
   const { id } = useParams<{ id: string }>();
+  const [trackContext, setTrackContext] =
+    useState<TrackContext>(initialTrackContext);
+  const [contextMenuPosition, setContextMenuPosition] =
+    useState<ContextMenuPosition | null>(null);
   const [tracks, setTracks] = useState<AlbumExtended['tracks']>({
     items: [],
   });
@@ -18,6 +32,55 @@ export const useAlbumDetails = () => {
     useGetAlbumTracks(offset, id);
   const { data: isAlbumSaved, isFetching: isFetchingIsAlbumSaved } =
     useCheckIsAlbumSaved(id);
+
+  const handleOpenContextMenu = (
+    event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
+    id: string
+  ) => {
+    event.preventDefault();
+
+    const name = tracks?.items?.find((track) => track.id === id)?.name ?? '';
+    const artists =
+      tracks?.items
+        ?.find((track) => track.id === id)
+        ?.artists?.map((artist) => artist.name)
+        ?.join(', ') ?? '';
+
+    setTrackContext({
+      id: id ?? '',
+      name,
+      artists,
+    });
+    setContextMenuPosition(
+      contextMenuPosition === null
+        ? {
+            top: event.clientY - 6,
+            left: event.clientX + 2,
+          }
+        : null
+    );
+  };
+
+  const handleCloseContextMenu = () => {
+    setContextMenuPosition(null);
+    setTrackContext(initialTrackContext);
+  };
+
+  const handleAddTrack = () => {
+    console.log('Add track', trackContext.id);
+  };
+
+  const handleAddTrackToQueue = () => {
+    console.log('Add to queue', trackContext.id);
+  };
+
+  const handleAddTrackToPlaylist = () => {
+    console.log('Add track to playlist', trackContext.id);
+  };
+
+  const handleCopyTrackLink = () => {
+    console.log('Copy track link', trackContext.id);
+  };
 
   useEffect(() => {
     if (albumData?.tracks) {
@@ -45,5 +108,13 @@ export const useAlbumDetails = () => {
     isAlbumSaved,
     isLoading: isFetching || isFetchingIsAlbumSaved,
     isLoadingRemainingTracks,
+    contextMenuPosition,
+    trackContext,
+    handleOpenContextMenu,
+    handleCloseContextMenu,
+    handleAddTrack,
+    handleAddTrackToQueue,
+    handleAddTrackToPlaylist,
+    handleCopyTrackLink,
   };
 };

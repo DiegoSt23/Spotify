@@ -17,6 +17,12 @@
         "play": "Play",
         "shuffle": "Shuffle"
       }
+    },
+    "trackOptions": {
+      "add": "Add",
+      "addToQueue": "Play Next",
+      "addToPlaylist": "Add to Playlist",
+      "copyLink": "Copy Link"
     }
   }
 }

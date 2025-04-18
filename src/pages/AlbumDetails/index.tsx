@@ -11,6 +11,14 @@ export const AlbumDetails = () => {
     isAlbumSaved,
     isLoading,
     isLoadingRemainingTracks,
+    contextMenuPosition,
+    trackContext,
+    handleOpenContextMenu,
+    handleCloseContextMenu,
+    handleAddTrack,
+    handleAddTrackToQueue,
+    handleAddTrackToPlaylist,
+    handleCopyTrackLink,
   } = useAlbumDetails();
 
   return (
@@ -28,6 +36,14 @@ export const AlbumDetails = () => {
         isSaved={isAlbumSaved?.[0]}
         isLoading={isLoading}
         isLoadingRemainingTracks={isLoadingRemainingTracks}
+        contextMenuPosition={contextMenuPosition}
+        trackContext={trackContext}
+        onOpenContextMenu={handleOpenContextMenu}
+        onCloseContextMenu={handleCloseContextMenu}
+        onAddTrack={handleAddTrack}
+        onAddTrackToQueue={handleAddTrackToQueue}
+        onAddTrackToPlaylist={handleAddTrackToPlaylist}
+        onCopyTrackLink={handleCopyTrackLink}
       />
     </Page>
   );

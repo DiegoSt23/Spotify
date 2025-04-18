@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, MouseEvent } from 'react';
 import { GridColDef } from '@mui/x-data-grid';
 import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import dayjs from 'dayjs';
@@ -10,7 +10,9 @@ import {
   TrackTimeAndOptionsCell,
 } from '@components/tracks';
 
-export const useExtendedTracksTable = () => {
+export const useExtendedTracksTable = (
+  onClickContextMenu: (event: MouseEvent<HTMLButtonElement>, id: string) => void
+) => {
   const { t } = useLanguage('tracks');
   const theme = useTheme();
   const isSmartphone = useMediaQuery(theme.breakpoints.down('sm'));
@@ -55,11 +57,7 @@ export const useExtendedTracksTable = () => {
             {params?.row?.track?.artists?.map(
               (artist: ArtistBase, index: number) => (
                 <Fragment key={artist?.id}>
-                  <TrackLink
-                    name={artist.name}
-                    path='artist'
-                    id={artist?.id}
-                  />
+                  <TrackLink name={artist.name} path='artist' id={artist?.id} />
                   {index !== params?.row?.track?.artists?.length - 1 && (
                     <Typography sx={{ mr: 0.5 }}>,</Typography>
                   )}
@@ -91,8 +89,13 @@ export const useExtendedTracksTable = () => {
       headerName: t('tracksTable.headerLabels.time'),
       width: isSmartphone ? 20 : 100,
       valueGetter: (_, row) => row?.track?.duration_ms,
-      renderCell: ({ value }) => (
-        <TrackTimeAndOptionsCell ms={value} isSmartphone={isSmartphone} />
+      renderCell: ({ value, row }) => (
+        <TrackTimeAndOptionsCell
+          id={row?.track?.id ?? ''}
+          ms={value}
+          isSmartphone={isSmartphone}
+          onClickContextMenu={onClickContextMenu}
+        />
       ),
     },
   ] as GridColDef[];

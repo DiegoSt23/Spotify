@@ -2,5 +2,11 @@
   "searchBar": {
     "placeholder": "Search..."
   },
-  "searchMessage": "Use the input above to search your favorite songs, artists, albums or playlists."
+  "searchMessage": "Use the input above to search your favorite songs, artists, albums or playlists.",
+  "trackOptions": {
+    "add": "Add",
+    "addToQueue": "Play Next",
+    "addToPlaylist": "Add to Playlist",
+    "copyLink": "Copy Link"
+  }
 }

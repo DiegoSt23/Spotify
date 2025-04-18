@@ -52,7 +52,12 @@ export const Dashboard = () => (
     </Stack>
     <Stack>
       {/* Player */}
-      <Divider sx={{ display: { xs: 'block', sm: 'none' } }} />
+      <Divider
+        sx={{
+          display: { xs: 'block', sm: 'none' },
+          backgroundColor: (theme) => theme.palette.divider,
+        }}
+      />
       <Stack
         sx={{
           height: 'fit-content',
@@ -71,7 +76,11 @@ export const Dashboard = () => (
         </Stack>
       </Stack>
       {/* Mobile Nav */}
-      <Divider sx={{ display: { xs: 'block', sm: 'none' } }} />
+      <Divider
+        sx={{
+          display: { xs: 'block', sm: 'none' },
+        }}
+      />
       <Stack
         sx={{
           display: { xs: 'flex', md: 'none' },
@@ -83,7 +92,7 @@ export const Dashboard = () => (
             height: '100%',
             backgroundColor: (theme) => theme.palette.background.paper,
             borderRadius: { xs: 0, sm: 1.5 },
-            padding: { xs: '0.5rem 0.8rem 1rem 0.8rem', sm: '0.7rem' },
+            padding: { xs: '0.5rem 0.8rem 0.8rem 0.8rem', sm: '0.7rem' },
           }}
         >
           <MobileNavBar />

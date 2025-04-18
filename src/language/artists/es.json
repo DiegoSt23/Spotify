@@ -22,7 +22,13 @@
       "appearsOn": "Aparece en",
       "more": "Más"
     },
-    "noContent": "Este artista no tiene contenido disponible"
+    "noContent": "Este artista no tiene contenido disponible",
+    "trackOptions": {
+      "add": "Agregar",
+      "addToQueue": "Reproducir siguiente",
+      "addToPlaylist": "Agregar a una lista de reproducción",
+      "copyLink": "Copiar enlace"
+    }
   },
   "featuredArtists": "Artistas Incluidos"
 }

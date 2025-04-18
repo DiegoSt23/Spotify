@@ -22,7 +22,13 @@
       "appearsOn": "Appears on",
       "more": "More"
     },
-    "noContent": "This artist has no content available"
+    "noContent": "This artist has no content available",
+    "trackOptions": {
+      "add": "Add",
+      "addToQueue": "Play Next",
+      "addToPlaylist": "Add to Playlist",
+      "copyLink": "Copy Link"
+    }
   },
   "featuredArtists": "Featured Artists"
 }

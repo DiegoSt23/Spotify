@@ -1,12 +1,26 @@
+import { MouseEvent } from 'react';
 import { DataGrid, type DataGridProps } from '@mui/x-data-grid';
 
-export const Table = (props: DataGridProps) => (
+interface TableProps extends DataGridProps {
+  onRowRightClick: (
+    event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
+    id: string
+  ) => void;
+}
+
+export const Table = ({ onRowRightClick, ...props }: TableProps) => (
   <DataGrid
     {...props}
     slotProps={{
       ...props.slotProps,
       loadingOverlay: {
         noRowsVariant: 'skeleton',
+      },
+      row: {
+        onContextMenu: (event) => {
+          const id = event.currentTarget.getAttribute('data-id') ?? '';
+          onRowRightClick(event, id);
+        },
       },
     }}
     sx={{

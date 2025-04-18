@@ -1,36 +1,70 @@
-import { useState} from 'react';
-import { Stack } from '@mui/material';
-import {
-  TracksResponse,
-  ArtistsResponse,
-  AlbumsResponse,
-  PlaylistsResponse,
-} from '@common/interfaces';
-import { useSearch } from '@services/search';
+import { Stack, type Theme } from '@mui/material';
+import { Add, QueueMusic, PlaylistAdd, ContentCopy } from '@mui/icons-material';
 import { useLanguage } from '@hooks/common';
 import { useTracksTable } from '@hooks/tracks';
+import { useSearchResults } from '@hooks/search';
 import { Page } from '@components/layout';
-import { Table } from '@components/common';
+import { Table, ContextMenu } from '@components/common';
 import { SearchBar, InitialMessage, ResultsTabs } from '@components/search';
 import { ArtistsGrid } from '@components/artists';
 import { AlbumsGrid } from '@components/albums';
 import { PlaylistsGrid } from '@components/playlists';
 
+const contextMenuIconSx = {
+  width: 20,
+  height: 20,
+  fill: (theme: Theme) => theme.palette.accent.main,
+};
+
 export const Search = () => {
   const { t } = useLanguage('search');
-  const [currentTab, setCurrentTab] = useState<number>(0);
-  const [debouncedInputValue, setDebouncedInputValue] = useState<string>('');
-  const { data, isFetching, isFetched } = useSearch(debouncedInputValue);
-  const { columns, isSmartphone } = useTracksTable();
-  const tabsHeaderData = data ? Object.keys(data) : [];
-  const tracks: TracksResponse | undefined = data?.['tracks'];
-  const artists: ArtistsResponse | undefined = data?.['artists'];
-  const albums: AlbumsResponse | undefined = data?.['albums'];
-  const playlists: PlaylistsResponse | undefined = data?.['playlists'];
-
-  const handleSelectTab = (newValue: number) => {
-    setCurrentTab(newValue);
-  };
+  const {
+    tabsHeaderData,
+    tracks,
+    artists,
+    albums,
+    playlists,
+    isFetching,
+    isFetched,
+    currentTab,
+    handleSelectTab,
+    setDebouncedInputValue,
+    contextMenuPosition,
+    trackContext,
+    handleOpenContextMenu,
+    handleCloseContextMenu,
+    handleAddTrack,
+    handleAddTrackToQueue,
+    handleAddTrackToPlaylist,
+    handleCopyTrackLink,
+  } = useSearchResults();
+  const { columns, isSmartphone } = useTracksTable(handleOpenContextMenu);
+  const trackOptions = [
+    {
+      label: t('trackOptions.add'),
+      action: handleAddTrack,
+      icon: <Add sx={contextMenuIconSx} />,
+    },
+    {
+      label: t('trackOptions.addToQueue'),
+      action: handleAddTrackToQueue,
+      icon: <QueueMusic sx={contextMenuIconSx} />,
+    },
+    {
+      label: t('trackOptions.addToPlaylist'),
+      action: handleAddTrackToPlaylist,
+      icon: <PlaylistAdd sx={contextMenuIconSx} />,
+    },
+    {
+      label: t('trackOptions.copyLink'),
+      action: handleCopyTrackLink,
+      icon: (
+        <ContentCopy
+          sx={{ width: 18, height: 18, fill: contextMenuIconSx.fill }}
+        />
+      ),
+    },
+  ];
 
   return (
     <Page
@@ -60,6 +94,7 @@ export const Search = () => {
               slots={{
                 columnHeaders: isSmartphone ? () => null : undefined,
               }}
+              onRowRightClick={handleOpenContextMenu}
               hideFooter
               disableRowSelectionOnClick
               disableColumnSelector
@@ -75,6 +110,15 @@ export const Search = () => {
             <PlaylistsGrid data={playlists?.items} displayOwner />
           </Stack>
         </Stack>
+      )}
+      {contextMenuPosition !== null && (
+        <ContextMenu
+          title={trackContext.name}
+          subtitle={trackContext.artists}
+          options={trackOptions}
+          anchorPosition={contextMenuPosition}
+          onClose={handleCloseContextMenu}
+        />
       )}
     </Page>
   );

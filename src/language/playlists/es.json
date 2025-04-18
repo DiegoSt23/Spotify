@@ -17,6 +17,12 @@
         "play": "Reproducir",
         "shuffle": "Aleatorio"
       }
+    },
+    "trackOptions": {
+      "add": "Agregar",
+      "addToQueue": "Reproducir siguiente",
+      "addToPlaylist": "Agregar a una lista de reproducción",
+      "copyLink": "Copiar enlace"
     }
   }
 }

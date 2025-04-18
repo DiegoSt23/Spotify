@@ -6,6 +6,11 @@
       "album": "Album",
       "added": "Added",
       "time": "Time"
+    },
+    "trackOptions": {
+      "addToQueue": "Play Next",
+      "addToPlaylist": "Add to Playlist",
+      "copyLink": "Copy Link"
     }
   }
 }

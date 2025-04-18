@@ -1,22 +1,54 @@
-import { Stack, Typography, Chip, Skeleton } from '@mui/material';
+import { MouseEvent } from 'react';
+import {
+  Stack,
+  Typography,
+  Chip,
+  Skeleton,
+  type Theme,
+} from '@mui/material';
 import {
   PlayArrow,
   Add,
   Shuffle,
+  QueueMusic,
+  PlaylistAdd,
+  ContentCopy
 } from '@mui/icons-material';
-import { AlbumExtended } from '@common/interfaces';
+import {
+  AlbumExtended,
+  ContextMenuPosition,
+  TrackContext,
+} from '@common/interfaces';
 import { getFeaturedArtists } from '@common/utils';
 import { useLanguage, useFormatMs } from '@hooks/common';
 import { useMinimalTracksTable } from '@hooks/tracks';
-import { Table, MediaHeader } from '@components/common';
+import { Table, MediaHeader, ContextMenu } from '@components/common';
 import { FeaturedArtists } from '@components/artists';
 import { TrackListData } from '@components/tracks';
 
 interface AlbumDetailsProps extends Partial<AlbumExtended> {
+  contextMenuPosition: ContextMenuPosition | null;
+  trackContext: TrackContext;
+  onOpenContextMenu: (
+    event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
+    id: string
+  ) => void;
+  onCloseContextMenu: () => void;
+  onAddTrack: () => void;
+  onAddTrackToQueue: () => void;
+  onAddTrackToPlaylist: () => void;
+  onCopyTrackLink: () => void;
   isSaved?: boolean;
   isLoading?: boolean;
   isLoadingRemainingTracks?: boolean;
 }
+
+
+const contextMenuIconSx = {
+  width: 20,
+  height: 20,
+  fill: (theme: Theme) => theme.palette.accent.main,
+};
 
 export const AlbumDetails = ({
   name,
@@ -28,18 +60,35 @@ export const AlbumDetails = ({
   tracks,
   copyrights,
   album_type: albumType,
+  contextMenuPosition,
+  trackContext,
+  onOpenContextMenu,
+  onCloseContextMenu,
+  onAddTrack,
+  onAddTrackToQueue,
+  onAddTrackToPlaylist,
+  onCopyTrackLink,
   isSaved,
   isLoading,
   isLoadingRemainingTracks,
 }: AlbumDetailsProps) => {
   const { t } = useLanguage('albums');
+  const { columns, isSmartphone } = useMinimalTracksTable(onOpenContextMenu);
   const { formattedTime } = useFormatMs(
     tracks?.items.reduce((acc, curr) => curr.duration_ms + acc, 0) ?? 0,
     true
   );
-  const { columns, isSmartphone } = useMinimalTracksTable();
+  const trackListData = [
+    release_date?.split('-')[0] ?? '-',
+    `${new Intl.NumberFormat().format(total_tracks ?? 0)} ${t(
+      total_tracks === 1
+        ? 'albumDetails.header.metadata.tracks.singular'
+        : 'albumDetails.header.metadata.tracks.plural'
+    )}`,
+    formattedTime,
+  ];
   const featuredArtists = getFeaturedArtists(tracks?.items, 'album');
-  const actions = [
+  const headerActions = [
     {
       icon: (
         <Add
@@ -67,14 +116,31 @@ export const AlbumDetails = ({
       description: t('albumDetails.header.actions.shuffle'),
     },
   ];
-  const trackListData = [
-    release_date?.split('-')[0] ?? '-',
-    `${new Intl.NumberFormat().format(total_tracks ?? 0)} ${t(
-      total_tracks === 1
-        ? 'albumDetails.header.metadata.tracks.singular'
-        : 'albumDetails.header.metadata.tracks.plural'
-    )}`,
-    formattedTime,
+  const trackOptions = [
+    {
+      label: t('albumDetails.trackOptions.add'),
+      action: onAddTrack,
+      icon: <Add sx={contextMenuIconSx} />,
+    },
+    {
+      label: t('albumDetails.trackOptions.addToQueue'),
+      action: onAddTrackToQueue,
+      icon: <QueueMusic sx={contextMenuIconSx} />,
+    },
+    {
+      label: t('albumDetails.trackOptions.addToPlaylist'),
+      action: onAddTrackToPlaylist,
+      icon: <PlaylistAdd sx={contextMenuIconSx} />,
+    },
+    {
+      label: t('albumDetails.trackOptions.copyLink'),
+      action: onCopyTrackLink,
+      icon: (
+        <ContentCopy
+          sx={{ width: 18, height: 18, fill: contextMenuIconSx.fill }}
+        />
+      ),
+    },
   ];
 
   return (
@@ -88,7 +154,7 @@ export const AlbumDetails = ({
           path: `/artist/${id}`,
         }))}
         isSmartphone={isSmartphone}
-        actions={actions}
+        actions={headerActions}
         details={
           <Stack
             sx={{
@@ -124,6 +190,7 @@ export const AlbumDetails = ({
         slots={{
           columnHeaders: () => null,
         }}
+        onRowRightClick={onOpenContextMenu}
         loading={isLoading || isLoadingRemainingTracks}
         paginationMode='server'
         hideFooter
@@ -141,7 +208,7 @@ export const AlbumDetails = ({
                   color: (theme) => theme.palette.text.secondary,
                 }}
               >
-                {copyrights?.[0]?.text}
+                {copyrights[0].text}
               </Typography>
             )}
             <Typography
@@ -155,6 +222,15 @@ export const AlbumDetails = ({
           </Stack>
           <FeaturedArtists data={featuredArtists} />
         </>
+      )}
+      {contextMenuPosition !== null && (
+        <ContextMenu
+          title={trackContext.name}
+          subtitle={trackContext.artists}
+          options={trackOptions}
+          anchorPosition={contextMenuPosition}
+          onClose={onCloseContextMenu}
+        />
       )}
     </Stack>
   );

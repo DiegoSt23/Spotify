@@ -1,14 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type MouseEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import { PlaylistsTracksResponse } from '@common/interfaces';
+import {
+  PlaylistsTracksResponse,
+  TrackContext,
+  ContextMenuPosition,
+} from '@common/interfaces';
 import {
   useGetPlaylistDetails,
   useGetPlaylistTracks,
   useCheckIsPlaylistSaved,
 } from '@services/playlists';
 
+const initialTrackContext: TrackContext = {
+  id: '',
+  name: '',
+  artists: '',
+};
+
 export const usePlaylistDetails = () => {
   const { id } = useParams<{ id: string }>();
+   const [trackContext, setTrackContext] =
+     useState<TrackContext>(initialTrackContext);
+   const [contextMenuPosition, setContextMenuPosition] =
+     useState<ContextMenuPosition | null>(null);
   const [tracks, setTracks] = useState<PlaylistsTracksResponse>({
     items: [],
     total: 0,
@@ -21,6 +35,56 @@ export const usePlaylistDetails = () => {
   } = useGetPlaylistTracks(offset, id);
   const { data: isPlaylistSaved, isFetching: isLoadingIsPlaylistSaved } =
     useCheckIsPlaylistSaved(id);
+  
+  const handleOpenContextMenu = (
+    event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
+    id: string
+  ) => {
+    event.preventDefault();
+
+    const name =
+      tracks?.items?.find((item) => item.track.id === id)?.track.name ?? '';
+    const artists =
+      tracks?.items
+        ?.find((item) => item.track.id === id)
+        ?.track?.artists?.map((artist) => artist.name)
+        ?.join(', ') ?? '';
+
+    setTrackContext({
+      id: id ?? '',
+      name,
+      artists,
+    });
+    setContextMenuPosition(
+      contextMenuPosition === null
+        ? {
+            top: event.clientY - 6,
+            left: event.clientX + 2,
+          }
+        : null
+    );
+  };
+
+  const handleCloseContextMenu = () => {
+    setContextMenuPosition(null);
+    setTrackContext(initialTrackContext);
+  };
+
+  const handleAddTrack = () => {
+    console.log('Add track', trackContext.id);
+  };
+
+  const handleAddTrackToQueue = () => {
+    console.log('Add to queue', trackContext.id);
+  };
+
+  const handleAddTrackToPlaylist = () => {
+    console.log('Add track to playlist', trackContext.id);
+  };
+
+  const handleCopyTrackLink = () => {
+    console.log('Copy track link', trackContext.id);
+  };
 
   useEffect(() => {
     if (playlistTracks?.items) {
@@ -39,5 +103,13 @@ export const usePlaylistDetails = () => {
     isPlaylistSaved,
     isLoading: isFetching || isLoadingIsPlaylistSaved,
     isLoadingTracks: isLoadingPlaylistTracks,
+    contextMenuPosition,
+    trackContext,
+    handleOpenContextMenu,
+    handleCloseContextMenu,
+    handleAddTrack,
+    handleAddTrackToQueue,
+    handleAddTrackToPlaylist,
+    handleCopyTrackLink,
   };
 };

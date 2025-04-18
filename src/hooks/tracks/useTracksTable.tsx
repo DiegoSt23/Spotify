@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import { GridColDef } from '@mui/x-data-grid';
 import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { ArtistBase } from '@common/interfaces';
@@ -8,7 +9,9 @@ import {
   TrackTimeAndOptionsCell,
 } from '@components/tracks';
 
-export const useTracksTable = () => {
+export const useTracksTable = (
+  onClickContextMenu: (event: MouseEvent<HTMLButtonElement>, id: string) => void
+) => {
   const { t } = useLanguage('tracks');
   const theme = useTheme();
   const isSmartphone = useMediaQuery(theme.breakpoints.down('sm'));
@@ -77,8 +80,13 @@ export const useTracksTable = () => {
       field: 'duration_ms',
       headerName: t('tracksTable.headerLabels.time'),
       width: isSmartphone ? 20 : 100,
-      renderCell: ({ value }) => (
-        <TrackTimeAndOptionsCell ms={value} isSmartphone={isSmartphone} />
+      renderCell: ({ value, row }) => (
+        <TrackTimeAndOptionsCell
+          id={row?.id ?? ''}
+          ms={value}
+          isSmartphone={isSmartphone}
+          onClickContextMenu={onClickContextMenu}
+        />
       ),
     },
   ] as GridColDef[];

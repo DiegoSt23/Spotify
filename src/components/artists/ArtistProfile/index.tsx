@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import {
@@ -11,23 +11,30 @@ import {
   Button,
   Alert,
   Skeleton,
+  type Theme,
 } from '@mui/material';
 import {
   PlayArrow,
   Favorite,
   FavoriteBorder,
   ChevronRight,
+  Add,
+  QueueMusic,
+  PlaylistAdd,
+  ContentCopy,
 } from '@mui/icons-material';
 import {
   ArtistExtended,
   ArtistBioResponse,
   ArtistTopTracksResponse,
   PartialAlbumsResponse,
+  ContextMenuPosition,
+  TrackContext,
 } from '@common/interfaces';
 import { About } from '@assets/customIcons';
 import { useLanguage } from '@hooks/common';
 import { useTracksTable } from '@hooks/tracks';
-import { MediaHeader, Table } from '@components/common';
+import { MediaHeader, Table, ContextMenu } from '@components/common';
 import { AlbumsGrid } from '@components/albums';
 
 type ArtistData = Partial<
@@ -38,9 +45,26 @@ type ArtistData = Partial<
 >;
 
 interface ArtistProfileProps extends ArtistData {
+  contextMenuPosition: ContextMenuPosition | null;
+  trackContext: TrackContext;
+  onOpenContextMenu: (
+    event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
+    id: string
+  ) => void;
+  onCloseContextMenu: () => void;
+  onAddTrack: () => void;
+  onAddTrackToQueue: () => void;
+  onAddTrackToPlaylist: () => void;
+  onCopyTrackLink: () => void;
   isFollowed?: boolean;
   isLoading?: boolean;
 }
+
+const contextMenuIconSx = {
+  width: 20,
+  height: 20,
+  fill: (theme: Theme) => theme.palette.accent.main,
+};
 
 export const ArtistProfile = ({
   name,
@@ -53,13 +77,21 @@ export const ArtistProfile = ({
   singles,
   compilations,
   appearsOn,
+  contextMenuPosition,
+  trackContext,
+  onOpenContextMenu,
+  onCloseContextMenu,
+  onAddTrack,
+  onAddTrackToQueue,
+  onAddTrackToPlaylist,
+  onCopyTrackLink,
   isFollowed,
   isLoading,
 }: ArtistProfileProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const { t } = useLanguage('artists');
-  const { isSmartphone, columns } = useTracksTable();
+  const { isSmartphone, columns } = useTracksTable(onOpenContextMenu);
 
   const discographyData = [
     {
@@ -141,6 +173,33 @@ export const ArtistProfile = ({
     ...playButtonData,
   ];
 
+  const trackOptions = [
+    {
+      label: t('artistProfile.trackOptions.add'),
+      action: onAddTrack,
+      icon: <Add sx={contextMenuIconSx} />,
+    },
+    {
+      label: t('artistProfile.trackOptions.addToQueue'),
+      action: onAddTrackToQueue,
+      icon: <QueueMusic sx={contextMenuIconSx} />,
+    },
+    {
+      label: t('artistProfile.trackOptions.addToPlaylist'),
+      action: onAddTrackToPlaylist,
+      icon: <PlaylistAdd sx={contextMenuIconSx} />,
+    },
+    {
+      label: t('artistProfile.trackOptions.copyLink'),
+      action: onCopyTrackLink,
+      icon: (
+        <ContentCopy
+          sx={{ width: 18, height: 18, fill: contextMenuIconSx.fill }}
+        />
+      ),
+    },
+  ];
+
   return (
     <Stack gap={2} flex={1}>
       <MediaHeader
@@ -220,6 +279,7 @@ export const ArtistProfile = ({
                 slots={{
                   columnHeaders: isSmartphone ? () => null : undefined,
                 }}
+                onRowRightClick={onOpenContextMenu}
                 hideFooter
                 disableRowSelectionOnClick
                 disableColumnSelector
@@ -288,6 +348,15 @@ export const ArtistProfile = ({
           </Stack>
         </DialogContent>
       </Dialog>
+      {contextMenuPosition !== null && (
+        <ContextMenu
+          title={trackContext.name}
+          subtitle={trackContext.artists}
+          options={trackOptions}
+          anchorPosition={contextMenuPosition}
+          onClose={onCloseContextMenu}
+        />
+      )}
     </Stack>
   );
 };
