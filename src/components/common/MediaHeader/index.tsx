@@ -11,7 +11,7 @@ import {
   Skeleton,
   type Theme,
 } from '@mui/material';
-import { MoreVert } from '@mui/icons-material';
+// import { MoreVert } from '@mui/icons-material';
 
 type Owner = {
   name?: string;
@@ -173,11 +173,11 @@ export const MediaHeader = ({
                 sx={skeletonButtonStyle}
               />
             ))}
-        {!isLoading && (
+        {/* {!isLoading && (
           <IconButton sx={actionButtonStyle} onClick={() => {}}>
             <MoreVert />
           </IconButton>
-        )}
+        )} */}
       </Stack>
     </Stack>
   </Stack>

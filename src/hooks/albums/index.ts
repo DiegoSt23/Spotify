@@ -1,3 +1,3 @@
 export * from './useCurrentUserSavedAlbums';
-export * from './useAlbumDetails';
+export * from './useAlbum';
 export * from './useArtistCatalogCategory';

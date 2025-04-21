@@ -13,6 +13,8 @@ export const ArtistProfile = () => {
     trackContext,
     handleOpenContextMenu,
     handleCloseContextMenu,
+    handleFollowUnfollowArtist,
+    handlePlayArtist,
     handleAddTrack,
     handleAddTrackToQueue,
     handleAddTrackToPlaylist,
@@ -31,6 +33,8 @@ export const ArtistProfile = () => {
       trackContext={trackContext}
       onOpenContextMenu={handleOpenContextMenu}
       onCloseContextMenu={handleCloseContextMenu}
+      onFollowUnfollowArtist={handleFollowUnfollowArtist}
+      onPlayArtist={handlePlayArtist}
       onAddTrack={handleAddTrack}
       onAddTrackToQueue={handleAddTrackToQueue}
       onAddTrackToPlaylist={handleAddTrackToPlaylist}

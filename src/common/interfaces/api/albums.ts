@@ -15,9 +15,8 @@ export interface CurrentUserSavedAlbumsResponse extends ResponseBase {
 
 export type AlbumResponse = AlbumExtended;
 
-export type AlbumTracksResponse = {
+export interface AlbumTracksResponse extends ResponseBase {
   items: AlbumTrack[];
-  next: string | null;
 };
 
 export type AlbumSavedResponse = boolean[];

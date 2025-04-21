@@ -15,7 +15,8 @@
         "add": "Guardar en tu biblioteca",
         "remove": "Eliminar de tu biblioteca",
         "play": "Reproducir",
-        "shuffle": "Aleatorio"
+        "shuffle": "Aleatorio",
+        "edit": "Editar"
       }
     },
     "trackOptions": {

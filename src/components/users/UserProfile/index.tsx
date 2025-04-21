@@ -7,6 +7,7 @@ import {MediaHeader } from '@components/common';
 import { PlaylistsGrid } from '@components/playlists';
 
 interface UserProfileResponse {
+  onFollowUnfollowUser: () => void;
   data?: Partial<UserResponse>;
   userPlaylists?: PlaylistsResponse;
   isFollowed?: boolean;
@@ -14,6 +15,7 @@ interface UserProfileResponse {
 }
 
 export const UserProfile = ({
+  onFollowUnfollowUser,
   data,
   userPlaylists,
   isFollowed,
@@ -34,7 +36,7 @@ export const UserProfile = ({
       ) : (
         <FavoriteBorder sx={{ width: 20, height: 20 }} />
       ),
-      onClick: () => {},
+      onClick: onFollowUnfollowUser,
       description: isFollowed
         ? t('header.actions.unfollow')
         : t('header.actions.follow'),

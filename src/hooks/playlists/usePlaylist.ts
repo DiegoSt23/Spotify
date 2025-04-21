@@ -17,25 +17,23 @@ const initialTrackContext: TrackContext = {
   artists: '',
 };
 
-export const usePlaylistDetails = () => {
+export const usePlaylist = () => {
   const { id } = useParams<{ id: string }>();
-   const [trackContext, setTrackContext] =
-     useState<TrackContext>(initialTrackContext);
-   const [contextMenuPosition, setContextMenuPosition] =
-     useState<ContextMenuPosition | null>(null);
+  const [trackContext, setTrackContext] =
+    useState<TrackContext>(initialTrackContext);
+  const [contextMenuPosition, setContextMenuPosition] =
+    useState<ContextMenuPosition | null>(null);
   const [tracks, setTracks] = useState<PlaylistsTracksResponse>({
     items: [],
     total: 0,
   });
   const [offset, setOffset] = useState<number | null>(0);
   const { data: playlistData, isFetching } = useGetPlaylistDetails(id);
-  const {
-    data: playlistTracks,
-    isFetching: isLoadingPlaylistTracks,
-  } = useGetPlaylistTracks(offset, id);
+  const { data: playlistTracks, isFetching: isLoadingPlaylistTracks } =
+    useGetPlaylistTracks(offset, id);
   const { data: isPlaylistSaved, isFetching: isLoadingIsPlaylistSaved } =
     useCheckIsPlaylistSaved(id);
-  
+
   const handleOpenContextMenu = (
     event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
     id: string
@@ -70,6 +68,24 @@ export const usePlaylistDetails = () => {
     setTrackContext(initialTrackContext);
   };
 
+  // General actions
+  const handleAddRemovePlaylist = () => {
+    console.log(isPlaylistSaved ? 'Remove playlist' : ' Add playlist');
+  };
+
+  const handlePlayPlaylist = () => {
+    console.log('Play playlist');
+  };
+
+  const handleShufflePlaylist = () => {
+    console.log('Play playlist on shuffle');
+  };
+
+  const handleEditPlaylist = () => {
+    console.log('Playlist edit');
+  };
+
+  // Track actions
   const handleAddTrack = () => {
     console.log('Add track', trackContext.id);
   };
@@ -107,6 +123,10 @@ export const usePlaylistDetails = () => {
     trackContext,
     handleOpenContextMenu,
     handleCloseContextMenu,
+    handleAddRemovePlaylist,
+    handlePlayPlaylist,
+    handleShufflePlaylist,
+    handleEditPlaylist,
     handleAddTrack,
     handleAddTrackToQueue,
     handleAddTrackToPlaylist,

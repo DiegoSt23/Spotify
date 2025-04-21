@@ -17,7 +17,7 @@ const initialTrackContext: TrackContext = {
   artists: '',
 };
 
-export const useAlbumDetails = () => {
+export const useAlbum = () => {
   const { id } = useParams<{ id: string }>();
   const [trackContext, setTrackContext] =
     useState<TrackContext>(initialTrackContext);
@@ -65,7 +65,21 @@ export const useAlbumDetails = () => {
     setContextMenuPosition(null);
     setTrackContext(initialTrackContext);
   };
+  
+  // General actions
+  const handleAddRemoveAlbum = () => {
+    console.log(isAlbumSaved ? 'Remove album' : ' Add album');
+  };
 
+  const handlePlayAlbum = () => {
+    console.log('Play album');
+  };
+
+  const handleShuffleAlbum = () => {
+    console.log('Play album on shuffle');
+  };
+
+  // Track actions
   const handleAddTrack = () => {
     console.log('Add track', trackContext.id);
   };
@@ -112,6 +126,9 @@ export const useAlbumDetails = () => {
     trackContext,
     handleOpenContextMenu,
     handleCloseContextMenu,
+    handleAddRemoveAlbum,
+    handlePlayAlbum,
+    handleShuffleAlbum,
     handleAddTrack,
     handleAddTrackToQueue,
     handleAddTrackToPlaylist,

@@ -7,6 +7,7 @@ import {
   QueueMusic,
   PlaylistAdd,
   ContentCopy,
+  Edit,
 } from '@mui/icons-material';
 import {
   PlaylistExtended,
@@ -28,6 +29,10 @@ interface PlaylistDetailsProps extends Partial<PlaylistExtended> {
     id: string
   ) => void;
   onCloseContextMenu: () => void;
+  onAddRemovePlaylist: () => void;
+  onPlayPlaylist: () => void;
+  onShufflePlaylist: () => void;
+  onEditPlaylist: () => void;
   onAddTrack: () => void;
   onAddTrackToQueue: () => void;
   onAddTrackToPlaylist: () => void;
@@ -54,6 +59,10 @@ export const PlaylistDetails = ({
   trackContext,
   onOpenContextMenu,
   onCloseContextMenu,
+  onAddRemovePlaylist,
+  onPlayPlaylist,
+  onShufflePlaylist,
+  onEditPlaylist,
   onAddTrack,
   onAddTrackToQueue,
   onAddTrackToPlaylist,
@@ -81,20 +90,25 @@ export const PlaylistDetails = ({
           }}
         />
       ),
-      onClick: () => {},
+      onClick: onAddRemovePlaylist,
       description: isSaved
         ? t('playlistDetails.header.actions.remove')
         : t('playlistDetails.header.actions.add'),
     },
     {
       icon: <PlayArrow />,
-      onClick: () => {},
+      onClick: onPlayPlaylist,
       description: t('playlistDetails.header.actions.play'),
     },
     {
       icon: <Shuffle />,
-      onClick: () => {},
+      onClick: onShufflePlaylist,
       description: t('playlistDetails.header.actions.shuffle'),
+    },
+    {
+      icon: <Edit sx={{ width: 20, height: 20 }} />,
+      onClick: onEditPlaylist,
+      description: t('playlistDetails.header.actions.edit'),
     },
   ];
   const trackListData = [

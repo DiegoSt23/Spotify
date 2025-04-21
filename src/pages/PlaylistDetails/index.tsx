@@ -1,6 +1,4 @@
-import { IconButton } from '@mui/material';
-import { MoreVert } from '@mui/icons-material';
-import { usePlaylistDetails } from '@hooks/playlists';
+import { usePlaylist } from '@hooks/playlists';
 import { Page } from '@components/layout';
 import { PlaylistDetails as PlaylistDetailsTemplate } from '@components/playlists';
 
@@ -15,21 +13,18 @@ export const PlaylistDetails = () => {
     trackContext,
     handleOpenContextMenu,
     handleCloseContextMenu,
+    handleAddRemovePlaylist,
+    handlePlayPlaylist,
+    handleShufflePlaylist,
+    handleEditPlaylist,
     handleAddTrack,
     handleAddTrackToQueue,
     handleAddTrackToPlaylist,
     handleCopyTrackLink,
-  } = usePlaylistDetails();
+  } = usePlaylist();
 
   return (
-    <Page
-      title={playlistData?.name}
-      headerElement={
-        <IconButton sx={{ position: 'relative', right: 4 }}>
-          <MoreVert />
-        </IconButton>
-      }
-    >
+    <Page title={playlistData?.name}>
       <PlaylistDetailsTemplate
         {...playlistData}
         tracks={tracks}
@@ -40,6 +35,10 @@ export const PlaylistDetails = () => {
         trackContext={trackContext}
         onOpenContextMenu={handleOpenContextMenu}
         onCloseContextMenu={handleCloseContextMenu}
+        onAddRemovePlaylist={handleAddRemovePlaylist}
+        onPlayPlaylist={handlePlayPlaylist}
+        onShufflePlaylist={handleShufflePlaylist}
+        onEditPlaylist={handleEditPlaylist}
         onAddTrack={handleAddTrack}
         onAddTrackToQueue={handleAddTrackToQueue}
         onAddTrackToPlaylist={handleAddTrackToPlaylist}

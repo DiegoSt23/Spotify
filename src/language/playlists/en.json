@@ -15,7 +15,8 @@
         "add": "Save to your library",
         "remove": "Remove from your library",
         "play": "Play",
-        "shuffle": "Shuffle"
+        "shuffle": "Shuffle",
+        "edit": "Edit"
       }
     },
     "trackOptions": {

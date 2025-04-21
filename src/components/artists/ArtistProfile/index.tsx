@@ -52,6 +52,8 @@ interface ArtistProfileProps extends ArtistData {
     id: string
   ) => void;
   onCloseContextMenu: () => void;
+  onFollowUnfollowArtist: () => void;
+  onPlayArtist: () => void;
   onAddTrack: () => void;
   onAddTrackToQueue: () => void;
   onAddTrackToPlaylist: () => void;
@@ -81,6 +83,8 @@ export const ArtistProfile = ({
   trackContext,
   onOpenContextMenu,
   onCloseContextMenu,
+  onFollowUnfollowArtist,
+  onPlayArtist,
   onAddTrack,
   onAddTrackToQueue,
   onAddTrackToPlaylist,
@@ -146,7 +150,7 @@ export const ArtistProfile = ({
     : [
         {
           icon: <PlayArrow />,
-          onClick: () => {},
+          onClick: onPlayArtist,
           description: t('artistProfile.header.actions.play'),
         },
       ];
@@ -164,13 +168,13 @@ export const ArtistProfile = ({
       ) : (
         <FavoriteBorder sx={{ width: 20, height: 20 }} />
       ),
-      onClick: () => {},
+      onClick: onFollowUnfollowArtist,
       description: isFollowed
         ? t('artistProfile.header.actions.remove')
         : t('artistProfile.header.actions.add'),
     },
-    ...aboutButtonData,
     ...playButtonData,
+    ...aboutButtonData,
   ];
 
   const trackOptions = [

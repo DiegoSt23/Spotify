@@ -44,7 +44,8 @@ export const useArtistProfile = () => {
   ) => {
     event.preventDefault();
 
-    const name = topTracks?.tracks?.find((track) => track.id === id)?.name ?? '';
+    const name =
+      topTracks?.tracks?.find((track) => track.id === id)?.name ?? '';
     const artists =
       topTracks?.tracks
         ?.find((track) => track.id === id)
@@ -71,6 +72,16 @@ export const useArtistProfile = () => {
     setTrackContext(initialTrackContext);
   };
 
+  // general actions
+  const handleFollowUnfollowArtist = () => {
+    console.log(isArtistFollowed ? 'Unfollow artist' : ' Follow artist');
+  };
+
+  const handlePlayArtist = () => {
+    console.log('Play artist');
+  };
+
+  // track actions
   const handleAddTrack = () => {
     console.log('Add track', trackContext.id);
   };
@@ -98,6 +109,8 @@ export const useArtistProfile = () => {
     trackContext,
     handleOpenContextMenu,
     handleCloseContextMenu,
+    handleFollowUnfollowArtist,
+    handlePlayArtist,
     handleAddTrack,
     handleAddTrackToQueue,
     handleAddTrackToPlaylist,

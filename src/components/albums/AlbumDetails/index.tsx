@@ -34,6 +34,9 @@ interface AlbumDetailsProps extends Partial<AlbumExtended> {
     id: string
   ) => void;
   onCloseContextMenu: () => void;
+  onAddRemoveAlbum: () => void;
+  onPlayAlbum: () => void;
+  onShuffleAlbum: () => void;
   onAddTrack: () => void;
   onAddTrackToQueue: () => void;
   onAddTrackToPlaylist: () => void;
@@ -64,6 +67,9 @@ export const AlbumDetails = ({
   trackContext,
   onOpenContextMenu,
   onCloseContextMenu,
+  onAddRemoveAlbum,
+  onPlayAlbum,
+  onShuffleAlbum,
   onAddTrack,
   onAddTrackToQueue,
   onAddTrackToPlaylist,
@@ -100,19 +106,19 @@ export const AlbumDetails = ({
           }}
         />
       ),
-      onClick: () => {},
+      onClick: onAddRemoveAlbum,
       description: isSaved
         ? t('albumDetails.header.actions.remove')
         : t('albumDetails.header.actions.add'),
     },
     {
       icon: <PlayArrow />,
-      onClick: () => {},
+      onClick: onPlayAlbum,
       description: t('albumDetails.header.actions.play'),
     },
     {
       icon: <Shuffle />,
-      onClick: () => {},
+      onClick: onShuffleAlbum,
       description: t('albumDetails.header.actions.shuffle'),
     },
   ];
