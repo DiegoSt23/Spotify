@@ -10,6 +10,7 @@ import {
   Home,
   Search,
   Stats,
+  CurrentUserProfile,
   CurrentUserLibrary,
   CurrentUserSavedSongs,
   CurrentUserFollowedArtists,
@@ -21,7 +22,6 @@ import {
   PlaylistDetails,
   UserProfile,
   UserPlaylists,
-  Profile,
   About,
   Settings,
   NotFound,
@@ -123,7 +123,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'profile',
-        element: <Profile />,
+        element: <CurrentUserProfile />,
       },
       {
         path: 'about',

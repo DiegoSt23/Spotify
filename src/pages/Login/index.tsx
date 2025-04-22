@@ -11,6 +11,8 @@ import {
   useTheme,
 } from '@mui/material';
 import { GitHub, LinkedIn, Launch } from '@mui/icons-material';
+import { useGetCurrentUserData } from '@services/users';
+import { useStore } from '@store/index';
 import { useLanguage } from '@hooks/common';
 import { useGetAccessToken } from '@hooks/auth';
 import fullLogo from '@assets/svg/Full_Logo_Green_RGB.svg';
@@ -19,20 +21,23 @@ import blackHeadphones from '@assets/img/black-headphones.jpg';
 
 export const Login = () => {
   useGetAccessToken();
+  const accessToken = Cookies.get('token') || '';
   const isDarkTheme = useTheme().palette.mode === 'dark';
   const navigate = useNavigate();
   const { t } = useLanguage('login');
-  const accessToken = Cookies.get('token') || '';
+  const setCurrentUser = useStore((state) => state.setCurrentUser);
+  const { data, isFetching } = useGetCurrentUserData(accessToken);
 
   const handleNavigateLogin = () => {
     window.location.href = 'http://localhost:8888';
   };
 
   useEffect(() => {
-    if (accessToken) {
-     navigate('/home', { replace: true });
+    if (data?.id) {
+      setCurrentUser(data);
+      navigate('/home', { replace: true });
     }
-  }, [accessToken, navigate]);
+  }, [data?.id, navigate]);
 
   return (
     <Stack
@@ -77,7 +82,12 @@ export const Login = () => {
                 <img src={fullLogo} alt='Spotify' width={200} />
               </Stack>
               <Typography>{t('description')}</Typography>
-              <Button variant='contained' onClick={handleNavigateLogin}>
+              <Button
+                variant='contained'
+                onClick={handleNavigateLogin}
+                disabled={isFetching}
+                loading={isFetching}
+              >
                 {t('loginButton')}
               </Button>
               <Stack

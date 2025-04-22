@@ -1,16 +1,31 @@
+import { useEffect } from 'react';
 import { Stack, Avatar, Typography, Skeleton, Button } from '@mui/material';
-// import { useStore } from '@store/index';
-import { useGetCurrentUserData } from '@services/users';
+import { useStore } from '@store/index';
+import { useGetTotalFollowed } from '@services/users';
 import { Page } from '@components/layout';
 
-export const Profile = () => {
-  // const data = useStore((state) => state.data);
-  const { data, isFetching } = useGetCurrentUserData();
+export const CurrentUserProfile = () => {
+  const data = useStore((state) => state.currentUser);
+  const followedArtists = useStore((state) => state.followedArtists);
+  const setArtistsData = useStore((state) => state.followedArtists.setArtistsData);
+  const { data: followed, isFetching } = useGetTotalFollowed(
+    Boolean(!followedArtists?.artists?.length)
+  );
   const details = [
     { label: 'Country', value: data?.country || 'N/A' },
     { label: 'Followers', value: data?.followers?.total ?? 0 },
-    { label: 'Following', value: data?.artists?.total ?? 0 },
-  ]
+    { label: 'Following', value: followedArtists?.total ?? 0 },
+  ];
+
+  useEffect(() => {
+    if (followed) {
+      setArtistsData({
+        artists: [],
+        total: followed?.artists?.total,
+        after: '',
+      });
+    }
+  }, [followed, setArtistsData]);
 
   return (
     <Page title='Profile'>

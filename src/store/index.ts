@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import {
+  CurrentUserStore,
   NavigationStore,
   QueueStore,
   FollowedArtistsStore,
@@ -9,6 +10,7 @@ import {
   UserPlaylistsStore,
 } from '@common/interfaces';
 import {
+  currentUserSlice,
   navigationSlice,
   queueSlice,
   savedTracksSlice,
@@ -18,7 +20,8 @@ import {
 } from './slices';
 
 interface Store
-  extends NavigationStore,
+  extends CurrentUserStore,
+    NavigationStore,
     QueueStore,
     FollowedArtistsStore,
     SavedTracksStore,
@@ -27,6 +30,7 @@ interface Store
 
 export const useStore = create<Store>()(
   devtools((...args) => ({
+    ...currentUserSlice(...args),
     ...navigationSlice(...args),
     ...queueSlice(...args),
     ...followedArtistSlice(...args),

@@ -1,10 +1,9 @@
-import { useQueries } from '@tanstack/react-query';
+import {useQuery } from '@tanstack/react-query';
 import { Api } from '@common/utils';
 import {
   CurrentUserResponse,
   CurrentUserFollowedArtistsResponse,
 } from '@common/interfaces';
-// import { useStore } from '@store/index';
 
 const handleGetCurrentUserData = async (): Promise<CurrentUserResponse> => {
   const response = await Api.get<CurrentUserResponse>(`/me`);
@@ -21,26 +20,17 @@ const handleGetCurrentUserFollowedArtists =
     return response;
   };
 
-export const useGetCurrentUserData = (userId?: string) => {
-  return useQueries({
-    queries: [
-      {
-        queryKey: ['getCurrentUserData', userId],
-        queryFn: handleGetCurrentUserData,
-      },
-      {
-        queryKey: ['getCurrentUserArtists', userId],
-        queryFn: handleGetCurrentUserFollowedArtists,
-      },
-    ],
-    combine: (results) => {
-      return {
-        data: { ...results?.[0]?.data, ...results?.[1]?.data },
-        pending: results.some((result) => result.isPending),
-        isFetching: results.some((result) => result.isFetching),
-        isError: results.some((result) => result.isError),
-        isSuccess: results.every((result) => result.isSuccess),
-      };
-    },
+export const useGetCurrentUserData = (accessToken?: string) => (
+  useQuery({
+    queryKey: ['getCurrentUserData', accessToken],
+    queryFn: handleGetCurrentUserData,
+    enabled: !!accessToken,
+  })
+);
+
+export const useGetTotalFollowed = (enabled?: boolean) =>
+  useQuery({
+    queryKey: ['getCurrentTotalFollowed', enabled],
+    queryFn: handleGetCurrentUserFollowedArtists,
+    enabled,
   });
-};
