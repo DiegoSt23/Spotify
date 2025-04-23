@@ -11,6 +11,7 @@ interface UserProfileResponse {
   data?: Partial<UserResponse>;
   userPlaylists?: PlaylistsResponse;
   isFollowed?: boolean;
+  isCurrentUser?: boolean;
   isLoading?: boolean;
 }
 
@@ -19,29 +20,32 @@ export const UserProfile = ({
   data,
   userPlaylists,
   isFollowed,
+  isCurrentUser,
   isLoading,
 }: UserProfileResponse) => {
   const navigate = useNavigate();
   const { t } = useLanguage('users');
-  const actions = [
-    {
-      icon: isFollowed ? (
-        <Favorite
-          sx={{
-            width: 20,
-            height: 20,
-            fill: (theme) => theme.palette.accent.main,
-          }}
-        />
-      ) : (
-        <FavoriteBorder sx={{ width: 20, height: 20 }} />
-      ),
-      onClick: onFollowUnfollowUser,
-      description: isFollowed
-        ? t('header.actions.unfollow')
-        : t('header.actions.follow'),
-    },
-  ];
+  const actions = isCurrentUser
+    ? []
+    : [
+        {
+          icon: isFollowed ? (
+            <Favorite
+              sx={{
+                width: 20,
+                height: 20,
+                fill: (theme) => theme.palette.accent.main,
+              }}
+            />
+          ) : (
+            <FavoriteBorder sx={{ width: 20, height: 20 }} />
+          ),
+          onClick: onFollowUnfollowUser,
+          description: isFollowed
+            ? t('header.actions.unfollow')
+            : t('header.actions.follow'),
+        },
+      ];
 
   return (
     <Stack gap={4}>

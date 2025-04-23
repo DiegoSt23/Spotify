@@ -1,3 +1,4 @@
+import { Skeleton } from '@mui/material';
 import { useAlbum } from '@hooks/albums';
 import { Page } from '@components/layout';
 import { AlbumDetails as AlbumDetailsTemplate } from '@components/albums';
@@ -23,7 +24,11 @@ export const AlbumDetails = () => {
   } = useAlbum();
 
   return (
-    <Page title={albumData?.name}>
+    <Page
+      title={
+        isLoading ? <Skeleton width={150} height={30} /> : albumData?.name ?? ''
+      }
+    >
       <AlbumDetailsTemplate
         {...albumData}
         tracks={tracks}

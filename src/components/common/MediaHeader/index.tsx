@@ -11,7 +11,6 @@ import {
   Skeleton,
   type Theme,
 } from '@mui/material';
-// import { MoreVert } from '@mui/icons-material';
 
 type Owner = {
   name?: string;
@@ -158,26 +157,23 @@ export const MediaHeader = ({
           justifyContent: { xs: 'center', sm: 'flex-start' },
         }}
       >
-        {!isLoading && actions?.length
-          ? actions?.map(({ icon, onClick, description }, index) => (
-              <Tooltip key={index} title={description} arrow>
-                <IconButton sx={actionButtonStyle} onClick={onClick}>
-                  {icon}
-                </IconButton>
-              </Tooltip>
-            ))
-          : [1, 2, 3].map((_, index) => (
-              <Skeleton
-                key={index}
-                variant='circular'
-                sx={skeletonButtonStyle}
-              />
-            ))}
-        {/* {!isLoading && (
-          <IconButton sx={actionButtonStyle} onClick={() => {}}>
-            <MoreVert />
-          </IconButton>
-        )} */}
+        {actions?.length
+          ? !isLoading
+            ? actions?.map(({ icon, onClick, description }, index) => (
+                <Tooltip key={index} title={description} arrow>
+                  <IconButton sx={actionButtonStyle} onClick={onClick}>
+                    {icon}
+                  </IconButton>
+                </Tooltip>
+              ))
+            : [1, 2, 3].map((_, index) => (
+                <Skeleton
+                  key={index}
+                  variant='circular'
+                  sx={skeletonButtonStyle}
+                />
+              ))
+          : null}
       </Stack>
     </Stack>
   </Stack>

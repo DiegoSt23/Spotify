@@ -5,6 +5,7 @@ export const UserProfile = () => {
   const {
     userData,
     userPlaylists,
+    isCurrentUser,
     isFollowed,
     isLoading,
     handleFollowUnfollowUser,
@@ -15,6 +16,7 @@ export const UserProfile = () => {
       data={userData}
       userPlaylists={userPlaylists}
       isFollowed={isFollowed}
+      isCurrentUser={isCurrentUser}
       isLoading={isLoading}
       onFollowUnfollowUser={handleFollowUnfollowUser}
     />

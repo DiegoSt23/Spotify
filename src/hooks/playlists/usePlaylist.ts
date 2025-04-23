@@ -5,6 +5,7 @@ import {
   TrackContext,
   ContextMenuPosition,
 } from '@common/interfaces';
+import { useStore } from '@store/index';
 import {
   useGetPlaylistDetails,
   useGetPlaylistTracks,
@@ -19,6 +20,7 @@ const initialTrackContext: TrackContext = {
 
 export const usePlaylist = () => {
   const { id } = useParams<{ id: string }>();
+  const currentUserId = useStore((state) => state?.currentUser?.id);
   const [trackContext, setTrackContext] =
     useState<TrackContext>(initialTrackContext);
   const [contextMenuPosition, setContextMenuPosition] =
@@ -117,6 +119,7 @@ export const usePlaylist = () => {
     playlistData,
     tracks,
     isPlaylistSaved,
+    isOwnPlaylist: playlistData?.owner.id === currentUserId,
     isLoading: isFetching || isLoadingIsPlaylistSaved,
     isLoadingTracks: isLoadingPlaylistTracks,
     contextMenuPosition,

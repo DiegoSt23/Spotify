@@ -37,6 +37,7 @@ interface PlaylistDetailsProps extends Partial<PlaylistExtended> {
   onAddTrackToQueue: () => void;
   onAddTrackToPlaylist: () => void;
   onCopyTrackLink: () => void;
+  isOwnPlaylist: boolean;
   isSaved?: boolean;
   isLoading?: boolean;
   isLoadingTracks?: boolean;
@@ -67,6 +68,7 @@ export const PlaylistDetails = ({
   onAddTrackToQueue,
   onAddTrackToPlaylist,
   onCopyTrackLink,
+  isOwnPlaylist,
   isSaved,
   isLoading,
   isLoadingTracks,
@@ -78,6 +80,15 @@ export const PlaylistDetails = ({
   );
   const { columns, isSmartphone } = useExtendedTracksTable(onOpenContextMenu);
   const featuredArtists = getFeaturedArtists(tracks?.items, 'playlist');
+  const editAction = isOwnPlaylist
+    ? [
+        {
+          icon: <Edit sx={{ width: 20, height: 20 }} />,
+          onClick: onEditPlaylist,
+          description: t('playlistDetails.header.actions.edit'),
+        },
+      ]
+    : [];
   const actions = [
     {
       icon: (
@@ -105,11 +116,7 @@ export const PlaylistDetails = ({
       onClick: onShufflePlaylist,
       description: t('playlistDetails.header.actions.shuffle'),
     },
-    {
-      icon: <Edit sx={{ width: 20, height: 20 }} />,
-      onClick: onEditPlaylist,
-      description: t('playlistDetails.header.actions.edit'),
-    },
+    ...editAction,
   ];
   const trackListData = [
     `${new Intl.NumberFormat().format(tracks?.total ?? 0)} ${t(
