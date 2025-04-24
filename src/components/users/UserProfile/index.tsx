@@ -15,6 +15,7 @@ import { PlaylistsGrid } from '@components/playlists';
 
 interface UserProfileResponse {
   onFollowUnfollowUser: () => void;
+  isLoadingFollowUnfollow: boolean;
   data?: Partial<UserResponse>;
   userPlaylists?: PlaylistsResponse;
   isFollowed?: boolean;
@@ -24,6 +25,7 @@ interface UserProfileResponse {
 
 export const UserProfile = ({
   onFollowUnfollowUser,
+  isLoadingFollowUnfollow,
   data,
   userPlaylists,
   isFollowed,
@@ -51,6 +53,7 @@ export const UserProfile = ({
           description: isFollowed
             ? t('header.actions.unfollow')
             : t('header.actions.follow'),
+          disabled: isLoadingFollowUnfollow,
         },
       ];
 

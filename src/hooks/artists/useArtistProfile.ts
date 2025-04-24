@@ -44,7 +44,7 @@ export const useArtistProfile = () => {
     useGetArtistTopTracks(id);
   const { data: partialAlbums, isFetching: isFetchingPartialAlbums } =
     useGetArtistPartialAlbums(id);
-  const { data: isArtistFollowed, refetch: checkIsUserFollowed } =
+  const { data: isArtistFollowed, refetch: checkIsArtistFollowed } =
     useCheckIsArtistFollowed(id);
   const { data: bioData, isFetching: isFetchingBio } = useGetArtistBio(
     artistData?.name
@@ -145,7 +145,7 @@ export const useArtistProfile = () => {
 
   useEffect(() => {
     if (isSuccessFollowRequest || isSuccessUnfollowRequest) {
-      checkIsUserFollowed();
+      checkIsArtistFollowed();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccessFollowRequest, isSuccessUnfollowRequest]);

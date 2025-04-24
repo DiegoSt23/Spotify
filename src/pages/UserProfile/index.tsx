@@ -8,6 +8,7 @@ export const UserProfile = () => {
     isCurrentUser,
     isFollowed,
     isLoading,
+    isLoadingFollowUnfollow,
     handleFollowUnfollowUser,
   } = useUser();
 
@@ -18,6 +19,7 @@ export const UserProfile = () => {
       isFollowed={isFollowed}
       isCurrentUser={isCurrentUser}
       isLoading={isLoading}
+      isLoadingFollowUnfollow={isLoadingFollowUnfollow}
       onFollowUnfollowUser={handleFollowUnfollowUser}
     />
   );
