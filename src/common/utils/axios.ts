@@ -31,19 +31,19 @@ export const Api = {
     return data;
   },
 
-  post: async <T>(url: string, body: Record<string, any>): Promise<T> => {
+  post: async <T>(url: string, body?: Record<string, any>): Promise<T> => {
     const config = configureApiRequest({});
     const { data } = await axiosInstance.post<T>(url, body, config);
     return data;
   },
 
-  put: async <T>(url: string, body: Record<string, any>): Promise<T> => {
+  put: async <T>(url: string, body?: Record<string, any>): Promise<T> => {
     const config = configureApiRequest({});
     const { data } = await axiosInstance.put<T>(url, body, config);
     return data;
   },
 
-  patch: async <T>(url: string, body: Record<string, any>): Promise<T> => {
+  patch: async <T>(url: string, body?: Record<string, any>): Promise<T> => {
     const config = configureApiRequest({});
     const { data } = await axiosInstance.patch<T>(url, body, config);
     return data;

@@ -1,11 +1,14 @@
-import { useState, type MouseEvent } from 'react';
+import { useEffect, useState, type MouseEvent } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { ContextMenuPosition, TrackContext } from '@common/interfaces';
+import { ArtistExtended, ContextMenuPosition, TrackContext } from '@common/interfaces';
+import { useStore } from '@store/index';
 import {
   useGetArtistBio,
   useGetArtistTopTracks,
   useGetArtistPartialAlbums,
   useCheckIsArtistFollowed,
+  useFollow,
+  useUnfollow,
 } from '@services/artists';
 import { type ArtistContext } from '@components/artists';
 
@@ -16,17 +19,36 @@ const initialTrackContext: TrackContext = {
 };
 
 export const useArtistProfile = () => {
+  // store
+  const artists = useStore((state) => state.followedArtists.artists);
+  const totalArtists = useStore((state) => state.followedArtists.total);
+  const setArtistsData = useStore(
+    (state) => state.followedArtists.setArtistsData
+  );
+  // mutations
+  const {
+    mutate: handleFollow,
+    isPending: loadingFollow,
+    isSuccess: isSuccessFollowRequest,
+  } = useFollow();
+  const {
+    mutate: handleUnfollow,
+    isPending: loadingUnfollow,
+    isSuccess: isSuccessUnfollowRequest,
+  } = useUnfollow();
+  // queries
   const { id, artistData, isFetchingArtistData } =
     useOutletContext<ArtistContext>();
   const { data: topTracks, isFetching: isFetchingTopTracks } =
     useGetArtistTopTracks(id);
   const { data: partialAlbums, isFetching: isFetchingPartialAlbums } =
     useGetArtistPartialAlbums(id);
-  const { data: isArtistFollowed, isFetching: isFetchingIsArtistFollowed } =
+  const { data: isArtistFollowed, refetch: checkIsUserFollowed } =
     useCheckIsArtistFollowed(id);
   const { data: bioData, isFetching: isFetchingBio } = useGetArtistBio(
     artistData?.name
   );
+  // state variables
   const [trackContext, setTrackContext] =
     useState<TrackContext>(initialTrackContext);
   const [contextMenuPosition, setContextMenuPosition] =
@@ -35,9 +57,9 @@ export const useArtistProfile = () => {
     isFetchingArtistData ||
     isFetchingBio ||
     isFetchingTopTracks ||
-    isFetchingPartialAlbums ||
-    isFetchingIsArtistFollowed;
+    isFetchingPartialAlbums;
 
+  // context menu
   const handleOpenContextMenu = (
     event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
     id: string
@@ -74,7 +96,29 @@ export const useArtistProfile = () => {
 
   // general actions
   const handleFollowUnfollowArtist = () => {
-    console.log(isArtistFollowed ? 'Unfollow artist' : ' Follow artist');
+    if (isArtistFollowed?.[0]) {
+      handleUnfollow({ id: id ?? '', type: 'artist' });
+
+       if (artists?.length && artists.some((artist) => artist.id === id)) {
+        const updatedArtists = artists.filter((artist) => artist.id !== id);
+
+        setArtistsData({
+          artists: updatedArtists,
+          total: totalArtists - 1,
+          after: '',
+        });
+       }
+    } else {
+      handleFollow({ id: id ?? '', type: 'artist' });
+
+      if (artists?.length) {
+        setArtistsData({
+          artists: [artistData as ArtistExtended, ...artists],
+          total: totalArtists + 1,
+          after: '',
+        });
+      }
+    }
   };
 
   const handlePlayArtist = () => {
@@ -98,6 +142,13 @@ export const useArtistProfile = () => {
     console.log('Copy track link', trackContext.id);
   };
 
+  useEffect(() => {
+    if (isSuccessFollowRequest || isSuccessUnfollowRequest) {
+      checkIsUserFollowed();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessFollowRequest, isSuccessUnfollowRequest]);
+
   return {
     artistData,
     topTracks,
@@ -105,6 +156,8 @@ export const useArtistProfile = () => {
     isArtistFollowed,
     bioData,
     isLoading,
+    isLoadingFollowUnfollow:
+      loadingFollow || loadingUnfollow,
     contextMenuPosition,
     trackContext,
     handleOpenContextMenu,

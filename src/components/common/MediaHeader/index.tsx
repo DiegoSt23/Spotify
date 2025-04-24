@@ -29,6 +29,7 @@ interface MediaHeaderProps {
     icon: ReactNode;
     onClick: () => void;
     description?: string;
+    disabled?: boolean;
   }[];
   isLoading?: boolean;
 }
@@ -159,13 +160,23 @@ export const MediaHeader = ({
       >
         {actions?.length
           ? !isLoading
-            ? actions?.map(({ icon, onClick, description }, index) => (
-                <Tooltip key={index} title={description} arrow>
-                  <IconButton sx={actionButtonStyle} onClick={onClick}>
-                    {icon}
-                  </IconButton>
-                </Tooltip>
-              ))
+            ? actions?.map(
+                ({ icon, onClick, description, disabled }, index) => (
+                  <Tooltip
+                    key={index}
+                    title={description}
+                    arrow
+                  >
+                    <IconButton
+                      sx={actionButtonStyle}
+                      onClick={onClick}
+                      disabled={disabled}
+                    >
+                      {icon}
+                    </IconButton>
+                  </Tooltip>
+                )
+              )
             : [1, 2, 3].map((_, index) => (
                 <Skeleton
                   key={index}

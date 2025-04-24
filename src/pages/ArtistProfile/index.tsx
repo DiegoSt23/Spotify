@@ -9,6 +9,7 @@ export const ArtistProfile = () => {
     isArtistFollowed,
     bioData,
     isLoading,
+    isLoadingFollowUnfollow,
     contextMenuPosition,
     trackContext,
     handleOpenContextMenu,
@@ -29,6 +30,7 @@ export const ArtistProfile = () => {
       {...partialAlbums}
       isFollowed={isArtistFollowed?.[0]}
       isLoading={isLoading}
+      isLoadingFollowUnfollow={isLoadingFollowUnfollow}
       contextMenuPosition={contextMenuPosition}
       trackContext={trackContext}
       onOpenContextMenu={handleOpenContextMenu}

@@ -58,6 +58,7 @@ interface ArtistProfileProps extends ArtistData {
   onAddTrackToQueue: () => void;
   onAddTrackToPlaylist: () => void;
   onCopyTrackLink: () => void;
+  isLoadingFollowUnfollow: boolean;
   isFollowed?: boolean;
   isLoading?: boolean;
 }
@@ -89,6 +90,7 @@ export const ArtistProfile = ({
   onAddTrackToQueue,
   onAddTrackToPlaylist,
   onCopyTrackLink,
+  isLoadingFollowUnfollow,
   isFollowed,
   isLoading,
 }: ArtistProfileProps) => {
@@ -172,6 +174,7 @@ export const ArtistProfile = ({
       description: isFollowed
         ? t('artistProfile.header.actions.remove')
         : t('artistProfile.header.actions.add'),
+      disabled: isLoadingFollowUnfollow,
     },
     ...playButtonData,
     ...aboutButtonData,

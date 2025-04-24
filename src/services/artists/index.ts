@@ -5,3 +5,5 @@ export * from './useGetArtistTopTracks';
 export * from './useGetArtistCatalog';
 export * from './useGetArtistPartialAlbums';
 export * from './useCheckIsArtistFollowed';
+export * from './useFollow';
+export * from './useUnfollow';
