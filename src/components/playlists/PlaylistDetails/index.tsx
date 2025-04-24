@@ -38,6 +38,7 @@ interface PlaylistDetailsProps extends Partial<PlaylistExtended> {
   onAddTrackToPlaylist: () => void;
   onCopyTrackLink: () => void;
   isOwnPlaylist: boolean;
+  isLoadingFollowUnfollowPlaylist: boolean;
   isSaved?: boolean;
   isLoading?: boolean;
   isLoadingTracks?: boolean;
@@ -69,6 +70,7 @@ export const PlaylistDetails = ({
   onAddTrackToPlaylist,
   onCopyTrackLink,
   isOwnPlaylist,
+  isLoadingFollowUnfollowPlaylist,
   isSaved,
   isLoading,
   isLoadingTracks,
@@ -80,6 +82,29 @@ export const PlaylistDetails = ({
   );
   const { columns, isSmartphone } = useExtendedTracksTable(onOpenContextMenu);
   const featuredArtists = getFeaturedArtists(tracks?.items, 'playlist');
+  const addRemoveAction = !isOwnPlaylist
+    ? [
+        {
+          icon: (
+            <Add
+              sx={{
+                fill: (theme) =>
+                  isSaved
+                    ? theme.palette.error.main
+                    : theme.palette.primary.main,
+                transform: isSaved ? 'rotate(45deg)' : 'rotate(0deg)',
+                transition: 'transform 0.2s',
+              }}
+            />
+          ),
+          onClick: onAddRemovePlaylist,
+          description: isSaved
+            ? t('playlistDetails.header.actions.remove')
+            : t('playlistDetails.header.actions.add'),
+          disabled: isLoadingFollowUnfollowPlaylist,
+        },
+      ]
+    : [];
   const editAction = isOwnPlaylist
     ? [
         {
@@ -90,22 +115,7 @@ export const PlaylistDetails = ({
       ]
     : [];
   const actions = [
-    {
-      icon: (
-        <Add
-          sx={{
-            fill: (theme) =>
-              isSaved ? theme.palette.error.main : theme.palette.primary.main,
-            transform: isSaved ? 'rotate(45deg)' : 'rotate(0deg)',
-            transition: 'transform 0.2s',
-          }}
-        />
-      ),
-      onClick: onAddRemovePlaylist,
-      description: isSaved
-        ? t('playlistDetails.header.actions.remove')
-        : t('playlistDetails.header.actions.add'),
-    },
+    ...addRemoveAction,
     {
       icon: <PlayArrow />,
       onClick: onPlayPlaylist,

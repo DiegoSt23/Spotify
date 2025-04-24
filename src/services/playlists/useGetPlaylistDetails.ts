@@ -6,7 +6,7 @@ const handleGetPlaylistDetails = async (
   id?: string
 ): Promise<PlaylistResponse> => {
   const response = await Api.get<PlaylistResponse>(
-    `playlists/${id}?fields=collaborative,description,followers,images,name,owner,public`
+    `playlists/${id}?fields=id,collaborative,description,followers,images,name,owner,public`
   );
 
   return response;

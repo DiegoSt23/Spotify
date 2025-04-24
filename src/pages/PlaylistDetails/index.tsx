@@ -11,6 +11,7 @@ export const PlaylistDetails = () => {
     isOwnPlaylist,
     isLoading,
     isLoadingTracks,
+    isLoadingFollowUnfollowPlaylist,
     contextMenuPosition,
     trackContext,
     handleOpenContextMenu,
@@ -28,7 +29,11 @@ export const PlaylistDetails = () => {
   return (
     <Page
       title={
-        isLoading ? <Skeleton width={150} height={30} /> : playlistData?.name ?? ''
+        isLoading ? (
+          <Skeleton width={150} height={30} />
+        ) : (
+          playlistData?.name ?? ''
+        )
       }
     >
       <PlaylistDetailsTemplate
@@ -38,6 +43,7 @@ export const PlaylistDetails = () => {
         isOwnPlaylist={isOwnPlaylist}
         isLoading={isLoading}
         isLoadingTracks={isLoadingTracks}
+        isLoadingFollowUnfollowPlaylist={isLoadingFollowUnfollowPlaylist}
         contextMenuPosition={contextMenuPosition}
         trackContext={trackContext}
         onOpenContextMenu={handleOpenContextMenu}
