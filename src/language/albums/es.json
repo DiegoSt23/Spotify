@@ -19,6 +19,14 @@
       "addToQueue": "Reproducir siguiente",
       "addToPlaylist": "Agregar a una lista de reproducción",
       "copyLink": "Copiar enlace"
+    },
+    "actionsMessages": {
+      "add": {
+        "success": "fue guardado en tu biblioteca"
+      },
+      "remove": {
+        "success": "fue eliminado de tu biblioteca"
+      }
     }
   }
 }

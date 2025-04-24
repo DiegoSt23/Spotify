@@ -1,5 +1,6 @@
 import { useState, useEffect, type MouseEvent } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'sonner';
 import {
   PlaylistsTracksResponse,
   Playlist,
@@ -14,6 +15,7 @@ import {
   useFollowPlaylist,
   useUnfollowPlaylist,
 } from '@services/playlists';
+import { useLanguage } from '@hooks/common';
 
 const initialTrackContext: TrackContext = {
   id: '',
@@ -23,6 +25,7 @@ const initialTrackContext: TrackContext = {
 
 export const usePlaylist = () => {
   const { id } = useParams<{ id: string }>();
+  const { t } = useLanguage('playlists');
   // mutations
   const {
     mutate: handleFollowPlaylist,
@@ -172,6 +175,30 @@ export const usePlaylist = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccessFollowRequest, isSuccessUnfollowRequest]);
+
+  useEffect(() => {
+    if (isSuccessFollowRequest) {
+      checkIsPlaylistSaved();
+      toast.success(
+        `${playlistData?.name} ${t(
+          'playlistDetails.actionsMessages.add.success'
+        )}`
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessFollowRequest]);
+
+  useEffect(() => {
+    if (isSuccessUnfollowRequest) {
+      checkIsPlaylistSaved();
+      toast.success(
+        `${playlistData?.name} ${t(
+          'playlistDetails.actionsMessages.remove.success'
+        )}`
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessUnfollowRequest]);
 
   return {
     playlistData,

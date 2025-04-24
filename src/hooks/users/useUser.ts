@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
 import { useParams, useOutletContext } from 'react-router-dom';
+import { toast } from 'sonner';
 import { useCheckIsUserFollowed } from '@services/users';
 import { useFollow, useUnfollow } from '@services/artists';
 import { useGetUserPlaylists } from '@services/playlists';
 import { useStore } from '@store/index';
+import { useLanguage } from '@hooks/common';
 import { type UserContext } from '@components/users';
 
 export const useUser = () => {
   const { id } = useParams();
+  const { t } = useLanguage('users');
   const {
     mutate: handleFollow,
     isPending: loadingFollow,
@@ -36,11 +39,22 @@ export const useUser = () => {
   };
 
   useEffect(() => {
-    if (isSuccessFollowRequest || isSuccessUnfollowRequest) {
+    if (isSuccessFollowRequest) {
       checkIsUserFollowed();
+      toast.success(`${t('actionsMessages.follow.success')} ${userData?.display_name}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessFollowRequest, isSuccessUnfollowRequest]);
+  }, [isSuccessFollowRequest]);
+
+  useEffect(() => {
+    if (isSuccessUnfollowRequest) {
+      checkIsUserFollowed();
+      toast.success(
+        `${t('actionsMessages.unfollow.success')} ${userData?.display_name}`
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessUnfollowRequest]);
 
   return {
     userData,

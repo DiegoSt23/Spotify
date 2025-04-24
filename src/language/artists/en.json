@@ -28,6 +28,14 @@
       "addToQueue": "Play Next",
       "addToPlaylist": "Add to Playlist",
       "copyLink": "Copy Link"
+    },
+    "actionsMessages": {
+      "follow": {
+        "success": "Now you are following"
+      },
+      "unfollow": {
+        "success": "You are no longer following"
+      }
     }
   },
   "featuredArtists": "Featured Artists"

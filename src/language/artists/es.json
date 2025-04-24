@@ -28,6 +28,14 @@
       "addToQueue": "Reproducir siguiente",
       "addToPlaylist": "Agregar a una lista de reproducción",
       "copyLink": "Copiar enlace"
+    },
+    "actionsMessages": {
+      "follow": {
+        "success": "Ahora estás siguiendo a"
+      },
+      "unfollow": {
+        "success": "Ya no estás siguiendo a"
+      }
     }
   },
   "featuredArtists": "Artistas Incluidos"

@@ -19,6 +19,14 @@
       "addToQueue": "Play Next",
       "addToPlaylist": "Add to Playlist",
       "copyLink": "Copy Link"
+    },
+    "actionsMessages": {
+      "add": {
+        "success": "has been saved to your library"
+      },
+      "remove": {
+        "success": "has been removed from your library"
+      }
     }
   }
 }

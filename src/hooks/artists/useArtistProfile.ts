@@ -1,5 +1,6 @@
 import { useEffect, useState, type MouseEvent } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { toast } from 'sonner';
 import { ArtistExtended, ContextMenuPosition, TrackContext } from '@common/interfaces';
 import { useStore } from '@store/index';
 import {
@@ -10,6 +11,7 @@ import {
   useFollow,
   useUnfollow,
 } from '@services/artists';
+import { useLanguage } from '@hooks/common';
 import { type ArtistContext } from '@components/artists';
 
 const initialTrackContext: TrackContext = {
@@ -19,6 +21,7 @@ const initialTrackContext: TrackContext = {
 };
 
 export const useArtistProfile = () => {
+  const { t } = useLanguage('artists');
   // store
   const artists = useStore((state) => state.followedArtists.artists);
   const totalArtists = useStore((state) => state.followedArtists.total);
@@ -144,11 +147,28 @@ export const useArtistProfile = () => {
   };
 
   useEffect(() => {
-    if (isSuccessFollowRequest || isSuccessUnfollowRequest) {
+    if (isSuccessFollowRequest) {
       checkIsArtistFollowed();
+      toast.success(
+        `${t('artistProfile.actionsMessages.follow.success')} ${
+          artistData?.name
+        }`
+      );
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessFollowRequest, isSuccessUnfollowRequest]);
+  }, [isSuccessFollowRequest]);
+
+  useEffect(() => {
+    if (isSuccessUnfollowRequest) {
+      checkIsArtistFollowed();
+      toast.success(
+        `${t('artistProfile.actionsMessages.unfollow.success')} ${
+          artistData?.name
+        }`
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessUnfollowRequest]);
 
   return {
     artistData,

@@ -1,5 +1,6 @@
 import { useState, useEffect, type MouseEvent } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'sonner';
 import {
   AlbumExtended,
   ContextMenuPosition,
@@ -13,6 +14,7 @@ import {
   useAddAlbum,
   useRemoveAlbum,
 } from '@services/albums';
+import { useLanguage } from '@hooks/common';
 
 const initialTrackContext: TrackContext = {
   id: '',
@@ -22,6 +24,7 @@ const initialTrackContext: TrackContext = {
 
 export const useAlbum = () => {
   const { id } = useParams<{ id: string }>();
+  const { t } = useLanguage('albums');
   // store
   const albums = useStore((state) => state.savedAlbums.albums);
   const totalAlbums = useStore((state) => state.savedAlbums.total);
@@ -166,6 +169,26 @@ export const useAlbum = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccessAddRequest, isSuccessRemoveRequest]);
+
+  useEffect(() => {
+    if (isSuccessAddRequest) {
+      checkIsAlbumAdded();
+      toast.success(
+        `${albumData?.name} ${t('albumDetails.actionsMessages.add.success')}`
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessAddRequest]);
+
+  useEffect(() => {
+    if (isSuccessRemoveRequest) {
+      checkIsAlbumAdded();
+      toast.success(
+        `${albumData?.name} ${t('albumDetails.actionsMessages.remove.success')}`
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessRemoveRequest]);
 
   return {
     albumData,

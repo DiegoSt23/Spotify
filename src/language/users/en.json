@@ -15,5 +15,13 @@
     "playlists": "Playlists",
     "more": "More"
   },
-  "noContentAvailable": "This user has no content available"
+  "noContentAvailable": "This user has no content available",
+  "actionsMessages": {
+    "follow": {
+      "success": "Now you are following"
+    },
+    "unfollow": {
+      "success": "You are no longer following"
+    }
+  }
 }
