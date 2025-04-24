@@ -31,7 +31,7 @@ export const CurrentUserPlaylists = () => {
         displayOwner
       />
       <div ref={ref} style={{ position: 'relative', top: '-500px' }} />
-      {playlists.length && isFetching && (
+      {!!playlists.length && isFetching && (
         <Stack sx={{ alignItems: 'center', paddingTop: 2 }}>
           <CircularProgress size={30} />
         </Stack>

@@ -53,71 +53,72 @@ export const PlaylistsGrid = ({
       minColumnWidth={isSmallScreen ? 150 : 200}
       carousell={carousell}
     >
-      {data
-        ?.filter((item) => item)
-        ?.map((playlist) => (
-          <Stack key={playlist.id} sx={{ alignItems: 'center' }}>
-            <Stack
-              sx={{
-                width: { xs: carousell ? 150 : '100%', sm: '100%' },
-                gap: 1,
-              }}
-            >
-              <Card variant='outlined'>
-                <CardActionArea onClick={() => handleRedirect(playlist?.id)}>
-                  <Avatar
-                    key={playlist.id}
-                    src={playlist.images?.[0]?.url}
-                    alt={playlist.name}
-                    variant='rounded'
-                    sx={{
-                      width: '100%',
-                      height: 'auto',
-                    }}
-                  />
-                </CardActionArea>
-              </Card>
-              <Stack>
-                <Typography
-                  variant='subtitle2'
-                  sx={{
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
-                  {playlist?.name}
-                </Typography>
-                {displayOwner && (
+      {!!data?.length &&
+        data
+          ?.filter((item) => item)
+          ?.map((playlist) => (
+            <Stack key={playlist.id} sx={{ alignItems: 'center' }}>
+              <Stack
+                sx={{
+                  width: { xs: carousell ? 150 : '100%', sm: '100%' },
+                  gap: 1,
+                }}
+              >
+                <Card variant='outlined'>
+                  <CardActionArea onClick={() => handleRedirect(playlist?.id)}>
+                    <Avatar
+                      key={playlist.id}
+                      src={playlist.images?.[0]?.url}
+                      alt={playlist.name}
+                      variant='rounded'
+                      sx={{
+                        width: '100%',
+                        height: 'auto',
+                      }}
+                    />
+                  </CardActionArea>
+                </Card>
+                <Stack>
                   <Typography
-                    variant='caption'
+                    variant='subtitle2'
                     sx={{
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
-                      color: (theme) => theme.palette.text.secondary,
                     }}
                   >
-                    {playlist?.owner?.display_name}
+                    {playlist?.name}
                   </Typography>
-                )}
-                {displayTotalTracks && (
-                  <Typography
-                    variant='caption'
-                    sx={{
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      color: (theme) => theme.palette.text.secondary,
-                    }}
-                  >
-                    {playlist?.tracks?.total} tracks
-                  </Typography>
-                )}
+                  {displayOwner && (
+                    <Typography
+                      variant='caption'
+                      sx={{
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        color: (theme) => theme.palette.text.secondary,
+                      }}
+                    >
+                      {playlist?.owner?.display_name}
+                    </Typography>
+                  )}
+                  {displayTotalTracks && (
+                    <Typography
+                      variant='caption'
+                      sx={{
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        color: (theme) => theme.palette.text.secondary,
+                      }}
+                    >
+                      {playlist?.tracks?.total} tracks
+                    </Typography>
+                  )}
+                </Stack>
               </Stack>
             </Stack>
-          </Stack>
-        ))}
+          ))}
       {displayMore && onMoreClick && (
         <Stack
           sx={{

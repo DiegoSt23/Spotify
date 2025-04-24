@@ -53,7 +53,7 @@ export const AlbumsGrid = ({
       minColumnWidth={isSmallScreen ? 150 : 200}
       carousell={carousell}
     >
-      {data?.map((album) => (
+      {!!data?.length && data.map((album) => (
         <Stack key={album?.id} sx={{ alignItems: 'center' }}>
           <Stack
             sx={{ width: { xs: carousell ? 150 : '100%', sm: '100%' }, gap: 1 }}

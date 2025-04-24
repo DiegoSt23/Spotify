@@ -26,7 +26,7 @@ export const CurrentUserFollowedArtists = () => {
     >
       <ArtistsGrid data={artists} loading={loadingFirstTime} />
       <div ref={ref} style={{ position: 'relative', top: '-500px' }} />
-      {artists.length && isFetching && (
+      {!!artists.length && isFetching && (
         <Stack sx={{ alignItems: 'center', paddingTop: 2 }}>
           <CircularProgress size={30} />
         </Stack>

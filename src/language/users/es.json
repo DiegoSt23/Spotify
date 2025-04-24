@@ -14,5 +14,6 @@
   "sections": {
     "playlists": "Listas de reproducción",
     "more": "Más"
-  }
+  },
+  "noContentAvailable": "Este usuario no tiene contenido disponible"
 }

@@ -27,7 +27,7 @@ export const CurrentUserSavedAlbums = () => {
     >
       <AlbumsGrid data={albums} loading={loadingFirstTime} displayArtist />
       <div ref={ref} style={{ position: 'relative', top: '-500px' }} />
-      {albums.length && isFetching && (
+      {!!albums.length && isFetching && (
         <Stack sx={{ alignItems: 'center', paddingTop: 2 }}>
           <CircularProgress size={30} />
         </Stack>

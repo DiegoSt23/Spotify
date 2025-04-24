@@ -338,7 +338,7 @@ export const ArtistProfile = ({
             ) : null
           )}
           {noAvailableData && (
-            <Alert severity='info' variant='filled'>
+            <Alert severity='info' variant='filled' sx={{ mt: 2 }}>
               {t('artistProfile.noContent')}
             </Alert>
           )}

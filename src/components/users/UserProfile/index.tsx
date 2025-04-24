@@ -1,9 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import { Stack, Typography, Chip, Button, Skeleton } from '@mui/material';
+import {
+  Stack,
+  Typography,
+  Chip,
+  Button,
+  Skeleton,
+  Alert,
+} from '@mui/material';
 import { Favorite, FavoriteBorder, ChevronRight } from '@mui/icons-material';
 import { PlaylistsResponse, UserResponse } from '@common/interfaces';
 import { useLanguage } from '@hooks/common';
-import {MediaHeader } from '@components/common';
+import { MediaHeader } from '@components/common';
 import { PlaylistsGrid } from '@components/playlists';
 
 interface UserProfileResponse {
@@ -95,38 +102,52 @@ export const UserProfile = ({
         <>
           <Stack gap={2}>
             <Stack
-              sx={{ flexDirection: 'row', justifyContent: 'space-between' }}
+              sx={{
+                flexDirection: 'row',
+                justifyContent:
+                  userPlaylists?.total === 0
+                    ? 'space-between'
+                    : 'space-between',
+              }}
             >
-              <Stack
-                sx={{ flexDirection: 'row', alignItems: 'center', gap: 1 }}
-              >
-                <Typography variant='h6' textAlign='left'>
-                  {t('sections.playlists')}
-                </Typography>
-                <Chip
-                  label={userPlaylists?.total}
-                  size='small'
-                  sx={{
-                    color: (theme) => theme.palette.accent.main,
-                    fontWeight: 'fontWeightBold',
-                  }}
-                />
-              </Stack>
-              {userPlaylists?.total && userPlaylists.total > 10 && (
-                <Button
-                  size='small'
-                  variant='text'
-                  endIcon={<ChevronRight />}
-                  onClick={() => navigate('playlists')}
-                  sx={{
-                    display: {
-                      xs: 'none',
-                      sm: 'flex',
-                    },
-                  }}
-                >
-                  {t('sections.more')}
-                </Button>
+              {userPlaylists?.total === 0 ? (
+                <Alert variant='filled' severity='info' sx={{ width: '100%' }}>
+                  {t('noContentAvailable')}
+                </Alert>
+              ) : (
+                <>
+                  <Stack
+                    sx={{ flexDirection: 'row', alignItems: 'center', gap: 1 }}
+                  >
+                    <Typography variant='h6' textAlign='left'>
+                      {t('sections.playlists')}
+                    </Typography>
+                    <Chip
+                      label={userPlaylists?.total}
+                      size='small'
+                      sx={{
+                        color: (theme) => theme.palette.accent.main,
+                        fontWeight: 'fontWeightBold',
+                      }}
+                    />
+                  </Stack>
+                  {!!(userPlaylists?.total && userPlaylists.total > 10) && (
+                    <Button
+                      size='small'
+                      variant='text'
+                      endIcon={<ChevronRight />}
+                      onClick={() => navigate('playlists')}
+                      sx={{
+                        display: {
+                          xs: 'none',
+                          sm: 'flex',
+                        },
+                      }}
+                    >
+                      {t('sections.more')}
+                    </Button>
+                  )}
+                </>
               )}
             </Stack>
             <PlaylistsGrid
