@@ -22,10 +22,12 @@ const initialTrackContext: TrackContext = {
 
 export const useAlbum = () => {
   const { id } = useParams<{ id: string }>();
+  // store
   const albums = useStore((state) => state.savedAlbums.albums);
   const totalAlbums = useStore((state) => state.savedAlbums.total);
   const albumsOffset = useStore((state) => state.savedAlbums.offset);
   const setAlbumsData = useStore((state) => state.savedAlbums.setAlbumsData);
+  // mutations
   const {
     mutate: handleAddAlbum,
     isPending: loadingAdd,
@@ -36,6 +38,7 @@ export const useAlbum = () => {
     isPending: loadingRemove,
     isSuccess: isSuccessRemoveRequest,
   } = useRemoveAlbum();
+  // state variables
   const [trackContext, setTrackContext] =
     useState<TrackContext>(initialTrackContext);
   const [contextMenuPosition, setContextMenuPosition] =
@@ -44,12 +47,14 @@ export const useAlbum = () => {
     items: [],
   });
   const [offset, setOffset] = useState<number | null>(0);
+  // queries
   const { data: albumData, isFetching } = useGetAlbumDetails(id);
   const { data: remainingTracksData, isFetching: isLoadingRemainingTracks } =
     useGetAlbumTracks(offset, id);
   const { data: isAlbumSaved, refetch: checkIsAlbumAdded } =
     useCheckIsAlbumSaved(id);
 
+  // context menu
   const handleOpenContextMenu = (
     event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
     id: string

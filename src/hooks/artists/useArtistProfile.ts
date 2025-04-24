@@ -22,6 +22,7 @@ export const useArtistProfile = () => {
   // store
   const artists = useStore((state) => state.followedArtists.artists);
   const totalArtists = useStore((state) => state.followedArtists.total);
+  const after = useStore((state) => state.followedArtists.after);
   const setArtistsData = useStore(
     (state) => state.followedArtists.setArtistsData
   );
@@ -105,7 +106,7 @@ export const useArtistProfile = () => {
         setArtistsData({
           artists: updatedArtists,
           total: totalArtists - 1,
-          after: '',
+          after,
         });
        }
     } else {
@@ -115,7 +116,7 @@ export const useArtistProfile = () => {
         setArtistsData({
           artists: [artistData as ArtistExtended, ...artists],
           total: totalArtists + 1,
-          after: '',
+          after,
         });
       }
     }
