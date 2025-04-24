@@ -5,10 +5,13 @@ import {
   ContextMenuPosition,
   TrackContext,
 } from '@common/interfaces';
+import { useStore } from '@store/index';
 import {
   useGetAlbumDetails,
   useGetAlbumTracks,
   useCheckIsAlbumSaved,
+  useAddAlbum,
+  useRemoveAlbum,
 } from '@services/albums';
 
 const initialTrackContext: TrackContext = {
@@ -19,6 +22,20 @@ const initialTrackContext: TrackContext = {
 
 export const useAlbum = () => {
   const { id } = useParams<{ id: string }>();
+  const albums = useStore((state) => state.savedAlbums.albums);
+  const totalAlbums = useStore((state) => state.savedAlbums.total);
+  const albumsOffset = useStore((state) => state.savedAlbums.offset);
+  const setAlbumsData = useStore((state) => state.savedAlbums.setAlbumsData);
+  const {
+    mutate: handleAddAlbum,
+    isPending: loadingAdd,
+    isSuccess: isSuccessAddRequest,
+  } = useAddAlbum();
+  const {
+    mutate: handleRemoveAlbum,
+    isPending: loadingRemove,
+    isSuccess: isSuccessRemoveRequest,
+  } = useRemoveAlbum();
   const [trackContext, setTrackContext] =
     useState<TrackContext>(initialTrackContext);
   const [contextMenuPosition, setContextMenuPosition] =
@@ -30,7 +47,7 @@ export const useAlbum = () => {
   const { data: albumData, isFetching } = useGetAlbumDetails(id);
   const { data: remainingTracksData, isFetching: isLoadingRemainingTracks } =
     useGetAlbumTracks(offset, id);
-  const { data: isAlbumSaved, isFetching: isFetchingIsAlbumSaved } =
+  const { data: isAlbumSaved, refetch: checkIsAlbumAdded } =
     useCheckIsAlbumSaved(id);
 
   const handleOpenContextMenu = (
@@ -68,7 +85,29 @@ export const useAlbum = () => {
   
   // General actions
   const handleAddRemoveAlbum = () => {
-    console.log(isAlbumSaved ? 'Remove album' : ' Add album');
+    if (isAlbumSaved?.[0]) {
+      handleRemoveAlbum({ id: id ?? '' });
+
+      if (albums?.length && albums.some((album) => album.id === id)) {
+        const updatedAlbums = albums.filter((album) => album.id !== id);
+
+        setAlbumsData({
+          albums: updatedAlbums,
+          total: totalAlbums - 1,
+          offset: albumsOffset,
+        });
+      }
+    } else {
+      handleAddAlbum({ id: id ?? '' });
+
+      if (albums?.length) {
+        setAlbumsData({
+          albums: [albumData as AlbumExtended, ...albums],
+          total: totalAlbums + 1,
+          offset: albumsOffset,
+        });
+      }
+    }
   };
 
   const handlePlayAlbum = () => {
@@ -116,12 +155,20 @@ export const useAlbum = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remainingTracksData?.items]);
 
+  useEffect(() => {
+    if (isSuccessAddRequest || isSuccessRemoveRequest) {
+      checkIsAlbumAdded();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessAddRequest, isSuccessRemoveRequest]);
+
   return {
     albumData,
     tracks,
     isAlbumSaved,
-    isLoading: isFetching || isFetchingIsAlbumSaved,
+    isLoading: isFetching,
     isLoadingRemainingTracks,
+    isLoadingAddRemove: loadingAdd || loadingRemove,
     contextMenuPosition,
     trackContext,
     handleOpenContextMenu,

@@ -10,6 +10,7 @@ export const AlbumDetails = () => {
     isAlbumSaved,
     isLoading,
     isLoadingRemainingTracks,
+    isLoadingAddRemove,
     contextMenuPosition,
     trackContext,
     handleOpenContextMenu,
@@ -35,6 +36,7 @@ export const AlbumDetails = () => {
         isSaved={isAlbumSaved?.[0]}
         isLoading={isLoading}
         isLoadingRemainingTracks={isLoadingRemainingTracks}
+        isLoadingAddRemove={isLoadingAddRemove}
         contextMenuPosition={contextMenuPosition}
         trackContext={trackContext}
         onOpenContextMenu={handleOpenContextMenu}

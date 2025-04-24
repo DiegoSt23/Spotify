@@ -41,6 +41,7 @@ interface AlbumDetailsProps extends Partial<AlbumExtended> {
   onAddTrackToQueue: () => void;
   onAddTrackToPlaylist: () => void;
   onCopyTrackLink: () => void;
+  isLoadingAddRemove: boolean;
   isSaved?: boolean;
   isLoading?: boolean;
   isLoadingRemainingTracks?: boolean;
@@ -74,6 +75,7 @@ export const AlbumDetails = ({
   onAddTrackToQueue,
   onAddTrackToPlaylist,
   onCopyTrackLink,
+  isLoadingAddRemove,
   isSaved,
   isLoading,
   isLoadingRemainingTracks,
@@ -110,6 +112,7 @@ export const AlbumDetails = ({
       description: isSaved
         ? t('albumDetails.header.actions.remove')
         : t('albumDetails.header.actions.add'),
+      disabled: isLoadingAddRemove,
     },
     {
       icon: <PlayArrow />,
