@@ -3,7 +3,6 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import { Toaster } from 'sonner';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { theme } from '@theme/index.ts';
@@ -16,7 +15,6 @@ export const App = () => (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <RouterProvider router={router} />
-      <Toaster position='top-right' />
     </ThemeProvider>
   </QueryClientProvider>
 );
