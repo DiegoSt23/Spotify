@@ -12,9 +12,13 @@ const handleCheckIsArtistFollowed = async (
   return response;
 };
 
-export const useCheckIsArtistFollowed = (id?: string) =>
+export const useCheckIsArtistFollowed = (
+  id?: string,
+  isFollowSuccess?: boolean,
+  isUnfollowSuccess?: boolean
+) =>
   useQuery({
-    queryKey: ['checkIsArtistFollowed', id],
+    queryKey: ['checkIsArtistFollowed', id, isFollowSuccess, isUnfollowSuccess],
     enabled: !!id,
     queryFn: () => handleCheckIsArtistFollowed(id),
   });

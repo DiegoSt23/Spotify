@@ -12,16 +12,12 @@ export const AlbumDetails = () => {
     isLoadingRemainingTracks,
     isLoadingAddRemove,
     contextMenuPosition,
-    trackContext,
+    selectedTrack,
     handleOpenContextMenu,
     handleCloseContextMenu,
     handleAddRemoveAlbum,
     handlePlayAlbum,
     handleShuffleAlbum,
-    handleAddTrack,
-    handleAddTrackToQueue,
-    handleAddTrackToPlaylist,
-    handleCopyTrackLink,
   } = useAlbum();
 
   return (
@@ -38,16 +34,12 @@ export const AlbumDetails = () => {
         isLoadingRemainingTracks={isLoadingRemainingTracks}
         isLoadingAddRemove={isLoadingAddRemove}
         contextMenuPosition={contextMenuPosition}
-        trackContext={trackContext}
+        selectedTrack={selectedTrack}
         onOpenContextMenu={handleOpenContextMenu}
         onCloseContextMenu={handleCloseContextMenu}
         onAddRemoveAlbum={handleAddRemoveAlbum}
         onPlayAlbum={handlePlayAlbum}
         onShuffleAlbum={handleShuffleAlbum}
-        onAddTrack={handleAddTrack}
-        onAddTrackToQueue={handleAddTrackToQueue}
-        onAddTrackToPlaylist={handleAddTrackToPlaylist}
-        onCopyTrackLink={handleCopyTrackLink}
       />
     </Page>
   );

@@ -1,10 +1,9 @@
 import { useState, useEffect, type MouseEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import { toast } from 'sonner';
 import {
   PlaylistsTracksResponse,
   Playlist,
-  TrackContext,
+  Track,
   ContextMenuPosition,
 } from '@common/interfaces';
 import { useStore } from '@store/index';
@@ -15,27 +14,19 @@ import {
   useFollowPlaylist,
   useUnfollowPlaylist,
 } from '@services/playlists';
-import { useLanguage } from '@hooks/common';
-
-const initialTrackContext: TrackContext = {
-  id: '',
-  name: '',
-  artists: '',
-};
 
 export const usePlaylist = () => {
   const { id } = useParams<{ id: string }>();
-  const { t } = useLanguage('playlists');
   // mutations
   const {
     mutate: handleFollowPlaylist,
     isPending: loadingFollow,
-    isSuccess: isSuccessFollowRequest,
+    isSuccess: isFollowSuccess,
   } = useFollowPlaylist();
   const {
     mutate: handleUnfollowPlaylist,
     isPending: loadingUnfollow,
-    isSuccess: isSuccessUnfollowRequest,
+    isSuccess: isUnfollowSuccess,
   } = useUnfollowPlaylist();
   // store
   const currentUserId = useStore((state) => state?.currentUser?.id);
@@ -46,8 +37,7 @@ export const usePlaylist = () => {
      (state) => state.userPlaylists.setPlaylistsData
    );
   // state variables
-  const [trackContext, setTrackContext] =
-    useState<TrackContext>(initialTrackContext);
+  const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [contextMenuPosition, setContextMenuPosition] =
     useState<ContextMenuPosition | null>(null);
   const [tracks, setTracks] = useState<PlaylistsTracksResponse>({
@@ -59,29 +49,22 @@ export const usePlaylist = () => {
   const { data: playlistData, isFetching } = useGetPlaylistDetails(id);
   const { data: playlistTracks, isFetching: isLoadingPlaylistTracks } =
     useGetPlaylistTracks(offset, id);
-  const { data: isPlaylistSaved, refetch: checkIsPlaylistSaved } =
-    useCheckIsPlaylistSaved(id);
+  const { data: isPlaylistSaved } = useCheckIsPlaylistSaved(
+    id,
+    isFollowSuccess,
+    isUnfollowSuccess
+  );
 
-  // context menu
   const handleOpenContextMenu = (
     event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
     id: string
   ) => {
     event.preventDefault();
+    const track = tracks?.items?.find((item) => item.track.id === id);
 
-    const name =
-      tracks?.items?.find((item) => item.track.id === id)?.track.name ?? '';
-    const artists =
-      tracks?.items
-        ?.find((item) => item.track.id === id)
-        ?.track?.artists?.map((artist) => artist.name)
-        ?.join(', ') ?? '';
+    if (!track) return;
 
-    setTrackContext({
-      id: id ?? '',
-      name,
-      artists,
-    });
+    setSelectedTrack(track.track);
     setContextMenuPosition(
       contextMenuPosition === null
         ? {
@@ -94,10 +77,9 @@ export const usePlaylist = () => {
 
   const handleCloseContextMenu = () => {
     setContextMenuPosition(null);
-    setTrackContext(initialTrackContext);
+    setSelectedTrack(null);
   };
 
-  // General actions
   const handleAddRemovePlaylist = () => {
     if (isPlaylistSaved?.[0]) {
       handleUnfollowPlaylist({ id: id ?? '' });
@@ -141,23 +123,6 @@ export const usePlaylist = () => {
     console.log('Playlist edit');
   };
 
-  // Track actions
-  const handleAddTrack = () => {
-    console.log('Add track', trackContext.id);
-  };
-
-  const handleAddTrackToQueue = () => {
-    console.log('Add to queue', trackContext.id);
-  };
-
-  const handleAddTrackToPlaylist = () => {
-    console.log('Add track to playlist', trackContext.id);
-  };
-
-  const handleCopyTrackLink = () => {
-    console.log('Copy track link', trackContext.id);
-  };
-
   useEffect(() => {
     if (playlistTracks?.items) {
       setTracks({
@@ -169,37 +134,6 @@ export const usePlaylist = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playlistTracks?.items]);
 
-  useEffect(() => {
-    if (isSuccessFollowRequest || isSuccessUnfollowRequest) {
-      checkIsPlaylistSaved();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessFollowRequest, isSuccessUnfollowRequest]);
-
-  useEffect(() => {
-    if (isSuccessFollowRequest) {
-      checkIsPlaylistSaved();
-      toast.success(
-        `${playlistData?.name} ${t(
-          'playlistDetails.actionsMessages.add.success'
-        )}`
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessFollowRequest]);
-
-  useEffect(() => {
-    if (isSuccessUnfollowRequest) {
-      checkIsPlaylistSaved();
-      toast.success(
-        `${playlistData?.name} ${t(
-          'playlistDetails.actionsMessages.remove.success'
-        )}`
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessUnfollowRequest]);
-
   return {
     playlistData,
     tracks,
@@ -209,16 +143,12 @@ export const usePlaylist = () => {
     isLoadingTracks: isLoadingPlaylistTracks,
     isLoadingFollowUnfollowPlaylist: loadingFollow || loadingUnfollow,
     contextMenuPosition,
-    trackContext,
+    selectedTrack,
     handleOpenContextMenu,
     handleCloseContextMenu,
     handleAddRemovePlaylist,
     handlePlayPlaylist,
     handleShufflePlaylist,
     handleEditPlaylist,
-    handleAddTrack,
-    handleAddTrackToQueue,
-    handleAddTrackToPlaylist,
-    handleCopyTrackLink,
   };
 };

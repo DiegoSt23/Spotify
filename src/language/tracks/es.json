@@ -6,11 +6,23 @@
       "album": "Álbum",
       "added": "Agregado",
       "time": "Tiempo"
+    }
+  },
+  "trackOptions": {
+    "save": "Guardar",
+    "addToQueue": "Reproducir siguiente",
+    "addToPlaylist": "Agregar a una lista de reproducción",
+    "copyLink": "Copiar enlace",
+    "delete": "Eliminar"
+  },
+  "actionMessages": {
+    "add": {
+      "success": "Canción agregada a tu biblioteca",
+      "error": "Error al agregar la canción a tu biblioteca, inténtalo de nuevo más tarde"
     },
-    "trackOptions": {
-      "addToQueue": "Reproducir siguiente",
-      "addToPlaylist": "Agregar a una lista de reproducción",
-      "copyLink": "Copiar enlace"
+    "delete": {
+      "success": "Canción eliminada de tu biblioteca",
+      "error": "Error al eliminar la canción de tu biblioteca, intenta nuevamente más tarde"
     }
   }
 }

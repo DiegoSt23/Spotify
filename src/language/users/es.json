@@ -15,13 +15,5 @@
     "playlists": "Listas de reproducción",
     "more": "Más"
   },
-  "noContentAvailable": "Este usuario no tiene contenido disponible",
-  "actionsMessages": {
-    "follow": {
-      "success": "Ahora estás siguiendo a"
-    },
-    "unfollow": {
-      "success": "Ya no estás siguiendo a"
-    }
-  }
+  "noContentAvailable": "Este usuario no tiene contenido disponible"
 }

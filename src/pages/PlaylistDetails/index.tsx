@@ -13,17 +13,13 @@ export const PlaylistDetails = () => {
     isLoadingTracks,
     isLoadingFollowUnfollowPlaylist,
     contextMenuPosition,
-    trackContext,
+    selectedTrack,
     handleOpenContextMenu,
     handleCloseContextMenu,
     handleAddRemovePlaylist,
     handlePlayPlaylist,
     handleShufflePlaylist,
     handleEditPlaylist,
-    handleAddTrack,
-    handleAddTrackToQueue,
-    handleAddTrackToPlaylist,
-    handleCopyTrackLink,
   } = usePlaylist();
 
   return (
@@ -45,17 +41,13 @@ export const PlaylistDetails = () => {
         isLoadingTracks={isLoadingTracks}
         isLoadingFollowUnfollowPlaylist={isLoadingFollowUnfollowPlaylist}
         contextMenuPosition={contextMenuPosition}
-        trackContext={trackContext}
+        selectedTrack={selectedTrack}
         onOpenContextMenu={handleOpenContextMenu}
         onCloseContextMenu={handleCloseContextMenu}
         onAddRemovePlaylist={handleAddRemovePlaylist}
         onPlayPlaylist={handlePlayPlaylist}
         onShufflePlaylist={handleShufflePlaylist}
         onEditPlaylist={handleEditPlaylist}
-        onAddTrack={handleAddTrack}
-        onAddTrackToQueue={handleAddTrackToQueue}
-        onAddTrackToPlaylist={handleAddTrackToPlaylist}
-        onCopyTrackLink={handleCopyTrackLink}
       />
     </Page>
   );

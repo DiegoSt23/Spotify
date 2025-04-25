@@ -19,18 +19,14 @@
         "edit": "Edit"
       }
     },
-    "trackOptions": {
-      "add": "Add",
-      "addToQueue": "Play Next",
-      "addToPlaylist": "Add to Playlist",
-      "copyLink": "Copy Link"
-    },
     "actionsMessages": {
       "add": {
-        "success": "has been saved to your library"
+        "success": "Playlist has been saved to your library",
+        "error": "Playlist could not be saved to your library, try again later"
       },
       "remove": {
-        "success": "has been removed from your library"
+        "success": "Playlist has been removed from your library",
+        "error": "Playlist could not be removed from your library, try again later"
       }
     }
   }

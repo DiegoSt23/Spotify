@@ -14,18 +14,14 @@
         "shuffle": "Aleatorio"
       }
     },
-    "trackOptions": {
-      "add": "Agregar",
-      "addToQueue": "Reproducir siguiente",
-      "addToPlaylist": "Agregar a una lista de reproducción",
-      "copyLink": "Copiar enlace"
-    },
     "actionsMessages": {
       "add": {
-        "success": "fue guardado en tu biblioteca"
+        "success": "El álbum se ha guardado en tu biblioteca",
+        "error": "No se pudo guardar el álbum en tu biblioteca, inténtalo de nuevo más tarde"
       },
       "remove": {
-        "success": "fue eliminado de tu biblioteca"
+        "success": "El álbum se ha eliminado de tu biblioteca",
+        "error": "No se pudo eliminar el álbum de tu biblioteca, inténtalo de nuevo más tarde"
       }
     }
   }

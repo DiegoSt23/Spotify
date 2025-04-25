@@ -2,19 +2,14 @@ import { RouterProvider } from 'react-router-dom';
 import {
   QueryClient,
   QueryClientProvider,
-  QueryCache,
 } from '@tanstack/react-query';
-import { Toaster, toast } from 'sonner';
+import { Toaster } from 'sonner';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { theme } from '@theme/index.ts';
 import { router } from './routes/index';
 
-const queryClient = new QueryClient({
-  queryCache: new QueryCache({
-    onError: (error) => toast.error(error.message),
-  }),
-});
+const queryClient = new QueryClient({});
 
 export const App = () => (
   <QueryClientProvider client={queryClient}>

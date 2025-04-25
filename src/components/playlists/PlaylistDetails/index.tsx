@@ -1,29 +1,26 @@
 import { MouseEvent } from 'react';
-import { Stack, type Theme } from '@mui/material';
+import { Stack } from '@mui/material';
 import {
   PlayArrow,
   Add,
   Shuffle,
-  QueueMusic,
-  PlaylistAdd,
-  ContentCopy,
   Edit,
 } from '@mui/icons-material';
 import {
   PlaylistExtended,
   ContextMenuPosition,
-  TrackContext,
+  Track,
 } from '@common/interfaces';
 import { getFeaturedArtists } from '@common/utils';
 import { useLanguage, useFormatMs } from '@hooks/common';
 import { useExtendedTracksTable } from '@hooks/tracks';
-import { Table, MediaHeader, ContextMenu } from '@components/common';
+import { Table, MediaHeader } from '@components/common';
 import { FeaturedArtists } from '@components/artists';
-import { TrackListData } from '@components/tracks';
+import { TrackListData, TrackContextMenu } from '@components/tracks';
 
 interface PlaylistDetailsProps extends Partial<PlaylistExtended> {
   contextMenuPosition: ContextMenuPosition | null;
-  trackContext: TrackContext;
+  selectedTrack: Track | null;
   onOpenContextMenu: (
     event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
     id: string
@@ -33,22 +30,12 @@ interface PlaylistDetailsProps extends Partial<PlaylistExtended> {
   onPlayPlaylist: () => void;
   onShufflePlaylist: () => void;
   onEditPlaylist: () => void;
-  onAddTrack: () => void;
-  onAddTrackToQueue: () => void;
-  onAddTrackToPlaylist: () => void;
-  onCopyTrackLink: () => void;
   isOwnPlaylist: boolean;
   isLoadingFollowUnfollowPlaylist: boolean;
   isSaved?: boolean;
   isLoading?: boolean;
   isLoadingTracks?: boolean;
 }
-
-const contextMenuIconSx = {
-  width: 20,
-  height: 20,
-  fill: (theme: Theme) => theme.palette.accent.main,
-};
 
 export const PlaylistDetails = ({
   images,
@@ -58,17 +45,13 @@ export const PlaylistDetails = ({
   tracks,
   followers,
   contextMenuPosition,
-  trackContext,
+  selectedTrack,
   onOpenContextMenu,
   onCloseContextMenu,
   onAddRemovePlaylist,
   onPlayPlaylist,
   onShufflePlaylist,
   onEditPlaylist,
-  onAddTrack,
-  onAddTrackToQueue,
-  onAddTrackToPlaylist,
-  onCopyTrackLink,
   isOwnPlaylist,
   isLoadingFollowUnfollowPlaylist,
   isSaved,
@@ -141,32 +124,6 @@ export const PlaylistDetails = ({
         : 'playlistDetails.header.metadata.followers.plural'
     )}`,
   ];
-  const trackOptions = [
-    {
-      label: t('playlistDetails.trackOptions.add'),
-      action: onAddTrack,
-      icon: <Add sx={contextMenuIconSx} />,
-    },
-    {
-      label: t('playlistDetails.trackOptions.addToQueue'),
-      action: onAddTrackToQueue,
-      icon: <QueueMusic sx={contextMenuIconSx} />,
-    },
-    {
-      label: t('playlistDetails.trackOptions.addToPlaylist'),
-      action: onAddTrackToPlaylist,
-      icon: <PlaylistAdd sx={contextMenuIconSx} />,
-    },
-    {
-      label: t('playlistDetails.trackOptions.copyLink'),
-      action: onCopyTrackLink,
-      icon: (
-        <ContentCopy
-          sx={{ width: 18, height: 18, fill: contextMenuIconSx.fill }}
-        />
-      ),
-    },
-  ];
 
   return (
     <Stack gap={2}>
@@ -206,10 +163,8 @@ export const PlaylistDetails = ({
         </>
       )}
       {contextMenuPosition !== null && (
-        <ContextMenu
-          title={trackContext.name}
-          subtitle={trackContext.artists}
-          options={trackOptions}
+        <TrackContextMenu
+          selectedTrack={selectedTrack}
           anchorPosition={contextMenuPosition}
           onClose={onCloseContextMenu}
         />

@@ -2,11 +2,5 @@
   "searchBar": {
     "placeholder": "Buscar..."
   },
-  "searchMessage": "Usa el campo de arriba para buscar tus canciones, artistas, álbumes o listas de reproducción favoritas.",
-  "trackOptions": {
-    "add": "Agregar",
-    "addToQueue": "Reproducir siguiente",
-    "addToPlaylist": "Agregar a una lista de reproducción",
-    "copyLink": "Copiar enlace"
-  }
+  "searchMessage": "Usa el campo de arriba para buscar tus canciones, artistas, álbumes o listas de reproducción favoritas."
 }

@@ -23,18 +23,14 @@
       "more": "More"
     },
     "noContent": "This artist has no content available",
-    "trackOptions": {
-      "add": "Add",
-      "addToQueue": "Play Next",
-      "addToPlaylist": "Add to Playlist",
-      "copyLink": "Copy Link"
-    },
     "actionsMessages": {
       "follow": {
-        "success": "Now you are following"
+        "success": "You are now following",
+        "error": "Something went wrong, try again later"
       },
       "unfollow": {
-        "success": "You are no longer following"
+        "success": "You have stopped following",
+        "error": "Something went wrong, try again later"
       }
     }
   },

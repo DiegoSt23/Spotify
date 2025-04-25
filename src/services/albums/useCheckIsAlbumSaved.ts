@@ -12,9 +12,13 @@ const handleCheckIsAlbumSaved = async (
   return response;
 };
 
-export const useCheckIsAlbumSaved = (id?: string) =>
+export const useCheckIsAlbumSaved = (
+  id?: string,
+  isAddSuccess?: boolean,
+  isRemoveSuccess?: boolean
+) =>
   useQuery({
-    queryKey: ['checkIsAlbumSaved', id],
+    queryKey: ['checkIsAlbumSaved', id, isAddSuccess, isRemoveSuccess],
     enabled: !!id,
     queryFn: () => handleCheckIsAlbumSaved(id),
   });

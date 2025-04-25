@@ -1,7 +1,6 @@
-import { useEffect, useState, type MouseEvent } from 'react';
+import { useState, type MouseEvent } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { toast } from 'sonner';
-import { ArtistExtended, ContextMenuPosition, TrackContext } from '@common/interfaces';
+import { ArtistExtended, ContextMenuPosition, Track } from '@common/interfaces';
 import { useStore } from '@store/index';
 import {
   useGetArtistBio,
@@ -11,17 +10,9 @@ import {
   useFollow,
   useUnfollow,
 } from '@services/artists';
-import { useLanguage } from '@hooks/common';
 import { type ArtistContext } from '@components/artists';
 
-const initialTrackContext: TrackContext = {
-  id: '',
-  name: '',
-  artists: '',
-};
-
 export const useArtistProfile = () => {
-  const { t } = useLanguage('artists');
   // store
   const artists = useStore((state) => state.followedArtists.artists);
   const totalArtists = useStore((state) => state.followedArtists.total);
@@ -33,12 +24,12 @@ export const useArtistProfile = () => {
   const {
     mutate: handleFollow,
     isPending: loadingFollow,
-    isSuccess: isSuccessFollowRequest,
+    isSuccess: isFollowSuccess,
   } = useFollow();
   const {
     mutate: handleUnfollow,
     isPending: loadingUnfollow,
-    isSuccess: isSuccessUnfollowRequest,
+    isSuccess: isUnfollowSuccess,
   } = useUnfollow();
   // queries
   const { id, artistData, isFetchingArtistData } =
@@ -47,14 +38,16 @@ export const useArtistProfile = () => {
     useGetArtistTopTracks(id);
   const { data: partialAlbums, isFetching: isFetchingPartialAlbums } =
     useGetArtistPartialAlbums(id);
-  const { data: isArtistFollowed, refetch: checkIsArtistFollowed } =
-    useCheckIsArtistFollowed(id);
+  const { data: isArtistFollowed } = useCheckIsArtistFollowed(
+    id,
+    isFollowSuccess,
+    isUnfollowSuccess
+  );
   const { data: bioData, isFetching: isFetchingBio } = useGetArtistBio(
     artistData?.name
   );
   // state variables
-  const [trackContext, setTrackContext] =
-    useState<TrackContext>(initialTrackContext);
+  const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [contextMenuPosition, setContextMenuPosition] =
     useState<ContextMenuPosition | null>(null);
   const isLoading =
@@ -63,26 +56,16 @@ export const useArtistProfile = () => {
     isFetchingTopTracks ||
     isFetchingPartialAlbums;
 
-  // context menu
   const handleOpenContextMenu = (
     event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
     id: string
   ) => {
     event.preventDefault();
+     const track = topTracks?.tracks?.find((track) => track.id === id);
 
-    const name =
-      topTracks?.tracks?.find((track) => track.id === id)?.name ?? '';
-    const artists =
-      topTracks?.tracks
-        ?.find((track) => track.id === id)
-        ?.artists?.map((artist) => artist.name)
-        ?.join(', ') ?? '';
+     if (!track) return;
 
-    setTrackContext({
-      id: id ?? '',
-      name,
-      artists,
-    });
+    setSelectedTrack(track);
     setContextMenuPosition(
       contextMenuPosition === null
         ? {
@@ -95,13 +78,12 @@ export const useArtistProfile = () => {
 
   const handleCloseContextMenu = () => {
     setContextMenuPosition(null);
-    setTrackContext(initialTrackContext);
+    setSelectedTrack(null);
   };
 
-  // general actions
   const handleFollowUnfollowArtist = () => {
     if (isArtistFollowed?.[0]) {
-      handleUnfollow({ id: id ?? '', type: 'artist' });
+      handleUnfollow({ id: id ?? '', type: 'artist', name: artistData?.name ?? '' });
 
        if (artists?.length && artists.some((artist) => artist.id === id)) {
         const updatedArtists = artists.filter((artist) => artist.id !== id);
@@ -113,7 +95,11 @@ export const useArtistProfile = () => {
         });
        }
     } else {
-      handleFollow({ id: id ?? '', type: 'artist' });
+      handleFollow({
+        id: id ?? '',
+        type: 'artist',
+        name: artistData?.name ?? '',
+      });
 
       if (artists?.length) {
         setArtistsData({
@@ -129,47 +115,6 @@ export const useArtistProfile = () => {
     console.log('Play artist');
   };
 
-  // track actions
-  const handleAddTrack = () => {
-    console.log('Add track', trackContext.id);
-  };
-
-  const handleAddTrackToQueue = () => {
-    console.log('Add to queue', trackContext.id);
-  };
-
-  const handleAddTrackToPlaylist = () => {
-    console.log('Add track to playlist', trackContext.id);
-  };
-
-  const handleCopyTrackLink = () => {
-    console.log('Copy track link', trackContext.id);
-  };
-
-  useEffect(() => {
-    if (isSuccessFollowRequest) {
-      checkIsArtistFollowed();
-      toast.success(
-        `${t('artistProfile.actionsMessages.follow.success')} ${
-          artistData?.name
-        }`
-      );
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessFollowRequest]);
-
-  useEffect(() => {
-    if (isSuccessUnfollowRequest) {
-      checkIsArtistFollowed();
-      toast.success(
-        `${t('artistProfile.actionsMessages.unfollow.success')} ${
-          artistData?.name
-        }`
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessUnfollowRequest]);
-
   return {
     artistData,
     topTracks,
@@ -177,17 +122,12 @@ export const useArtistProfile = () => {
     isArtistFollowed,
     bioData,
     isLoading,
-    isLoadingFollowUnfollow:
-      loadingFollow || loadingUnfollow,
+    isLoadingFollowUnfollow: loadingFollow || loadingUnfollow,
     contextMenuPosition,
-    trackContext,
+    selectedTrack,
     handleOpenContextMenu,
     handleCloseContextMenu,
     handleFollowUnfollowArtist,
     handlePlayArtist,
-    handleAddTrack,
-    handleAddTrackToQueue,
-    handleAddTrackToPlaylist,
-    handleCopyTrackLink,
   };
 };

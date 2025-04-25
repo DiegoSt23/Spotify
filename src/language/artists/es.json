@@ -23,18 +23,14 @@
       "more": "Más"
     },
     "noContent": "Este artista no tiene contenido disponible",
-    "trackOptions": {
-      "add": "Agregar",
-      "addToQueue": "Reproducir siguiente",
-      "addToPlaylist": "Agregar a una lista de reproducción",
-      "copyLink": "Copiar enlace"
-    },
     "actionsMessages": {
       "follow": {
-        "success": "Ahora estás siguiendo a"
+        "success": "Ahora estás siguiendo a",
+        "error": "Algo salió mal, intenta nuevamente más tarde"
       },
       "unfollow": {
-        "success": "Ya no estás siguiendo a"
+        "success": "Has dejado de seguir a",
+        "error": "Algo salió mal, intenta nuevamente más tarde"
       }
     }
   },

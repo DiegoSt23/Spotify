@@ -1,10 +1,9 @@
 import { useState, useEffect, type MouseEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import { toast } from 'sonner';
 import {
   AlbumExtended,
   ContextMenuPosition,
-  TrackContext,
+  Track,
 } from '@common/interfaces';
 import { useStore } from '@store/index';
 import {
@@ -14,17 +13,9 @@ import {
   useAddAlbum,
   useRemoveAlbum,
 } from '@services/albums';
-import { useLanguage } from '@hooks/common';
-
-const initialTrackContext: TrackContext = {
-  id: '',
-  name: '',
-  artists: '',
-};
 
 export const useAlbum = () => {
   const { id } = useParams<{ id: string }>();
-  const { t } = useLanguage('albums');
   // store
   const albums = useStore((state) => state.savedAlbums.albums);
   const totalAlbums = useStore((state) => state.savedAlbums.total);
@@ -34,16 +25,15 @@ export const useAlbum = () => {
   const {
     mutate: handleAddAlbum,
     isPending: loadingAdd,
-    isSuccess: isSuccessAddRequest,
+    isSuccess: isAddSuccess,
   } = useAddAlbum();
   const {
     mutate: handleRemoveAlbum,
     isPending: loadingRemove,
-    isSuccess: isSuccessRemoveRequest,
+    isSuccess: isRemoveSuccess,
   } = useRemoveAlbum();
   // state variables
-  const [trackContext, setTrackContext] =
-    useState<TrackContext>(initialTrackContext);
+  const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [contextMenuPosition, setContextMenuPosition] =
     useState<ContextMenuPosition | null>(null);
   const [tracks, setTracks] = useState<AlbumExtended['tracks']>({
@@ -54,28 +44,39 @@ export const useAlbum = () => {
   const { data: albumData, isFetching } = useGetAlbumDetails(id);
   const { data: remainingTracksData, isFetching: isLoadingRemainingTracks } =
     useGetAlbumTracks(offset, id);
-  const { data: isAlbumSaved, refetch: checkIsAlbumAdded } =
-    useCheckIsAlbumSaved(id);
+  const { data: isAlbumSaved } = useCheckIsAlbumSaved(
+    id,
+    isAddSuccess,
+    isRemoveSuccess
+  );
 
-  // context menu
   const handleOpenContextMenu = (
     event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
     id: string
   ) => {
     event.preventDefault();
+    const track = tracks?.items?.find((track) => track.id === id);
 
-    const name = tracks?.items?.find((track) => track.id === id)?.name ?? '';
-    const artists =
-      tracks?.items
-        ?.find((track) => track.id === id)
-        ?.artists?.map((artist) => artist.name)
-        ?.join(', ') ?? '';
+    if (!track) return;
 
-    setTrackContext({
-      id: id ?? '',
-      name,
-      artists,
-    });
+    setSelectedTrack({
+      ...track,
+      album: {
+        album_type: albumData?.album_type ?? '',
+        href: albumData?.href ?? '',
+        id: albumData?.id ?? '',
+        name: albumData?.name ?? '',
+        images: albumData?.images ?? [],
+        artists: albumData?.artists ?? [],
+        release_date: albumData?.release_date ?? '',
+        release_date_precision: albumData?.release_date_precision ?? '',
+        type: albumData?.type ?? '',
+        uri: albumData?.uri ?? '',
+        external_urls: albumData?.external_urls ?? { spotify: '' },
+        total_tracks: albumData?.total_tracks ?? 0,
+        available_markets: albumData?.available_markets ?? [],
+      },
+    } as Track);
     setContextMenuPosition(
       contextMenuPosition === null
         ? {
@@ -88,10 +89,9 @@ export const useAlbum = () => {
 
   const handleCloseContextMenu = () => {
     setContextMenuPosition(null);
-    setTrackContext(initialTrackContext);
+    setSelectedTrack(null);
   };
   
-  // General actions
   const handleAddRemoveAlbum = () => {
     if (isAlbumSaved?.[0]) {
       handleRemoveAlbum({ id: id ?? '' });
@@ -126,23 +126,6 @@ export const useAlbum = () => {
     console.log('Play album on shuffle');
   };
 
-  // Track actions
-  const handleAddTrack = () => {
-    console.log('Add track', trackContext.id);
-  };
-
-  const handleAddTrackToQueue = () => {
-    console.log('Add to queue', trackContext.id);
-  };
-
-  const handleAddTrackToPlaylist = () => {
-    console.log('Add track to playlist', trackContext.id);
-  };
-
-  const handleCopyTrackLink = () => {
-    console.log('Copy track link', trackContext.id);
-  };
-
   useEffect(() => {
     if (albumData?.tracks) {
       setTracks({
@@ -163,33 +146,6 @@ export const useAlbum = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remainingTracksData?.items]);
 
-  useEffect(() => {
-    if (isSuccessAddRequest || isSuccessRemoveRequest) {
-      checkIsAlbumAdded();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessAddRequest, isSuccessRemoveRequest]);
-
-  useEffect(() => {
-    if (isSuccessAddRequest) {
-      checkIsAlbumAdded();
-      toast.success(
-        `${albumData?.name} ${t('albumDetails.actionsMessages.add.success')}`
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessAddRequest]);
-
-  useEffect(() => {
-    if (isSuccessRemoveRequest) {
-      checkIsAlbumAdded();
-      toast.success(
-        `${albumData?.name} ${t('albumDetails.actionsMessages.remove.success')}`
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessRemoveRequest]);
-
   return {
     albumData,
     tracks,
@@ -198,15 +154,11 @@ export const useAlbum = () => {
     isLoadingRemainingTracks,
     isLoadingAddRemove: loadingAdd || loadingRemove,
     contextMenuPosition,
-    trackContext,
+    selectedTrack,
     handleOpenContextMenu,
     handleCloseContextMenu,
     handleAddRemoveAlbum,
     handlePlayAlbum,
     handleShuffleAlbum,
-    handleAddTrack,
-    handleAddTrackToQueue,
-    handleAddTrackToPlaylist,
-    handleCopyTrackLink,
   };
 };

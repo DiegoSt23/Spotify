@@ -1,57 +1,25 @@
-import { Stack, type Theme } from '@mui/material';
-import { QueueMusic, PlaylistAdd, ContentCopy } from '@mui/icons-material';
-import { useLanguage } from '@hooks/common';
+import { Stack } from '@mui/material';
 import {
   useCurrentUserSavedSongs,
   useExtendedTracksTable,
 } from '@hooks/tracks';
-import { Table, ContextMenu } from '@components/common';
-
-const contextMenuIconSx = {
-  width: 20,
-  height: 20,
-  fill: (theme: Theme) => theme.palette.accent.main,
-};
+import { Table } from '@components/common';
+import { TrackContextMenu } from '@components/tracks';
 
 export const CurrentUserSavedSongs = () => {
-  const { t } = useLanguage('tracks');
   const {
     gridApiRef,
     tracks,
     total,
     isFetching,
-    trackContext,
+    selectedTrack,
     contextMenuPosition,
     handleOpenContextMenu,
     handleCloseContextMenu,
-    handleAddTrackToQueue,
-    handleAddTrackToPlaylist,
-    handleCopyTrackLink,
   } = useCurrentUserSavedSongs();
   const { columns, isSmartphone } = useExtendedTracksTable(
     handleOpenContextMenu
   );
-  const trackOptions = [
-    {
-      label: t('tracksTable.trackOptions.addToQueue'),
-      action: handleAddTrackToQueue,
-      icon: <QueueMusic sx={contextMenuIconSx} />,
-    },
-    {
-      label: t('tracksTable.trackOptions.addToPlaylist'),
-      action: handleAddTrackToPlaylist,
-      icon: <PlaylistAdd sx={contextMenuIconSx} />,
-    },
-    {
-      label: t('tracksTable.trackOptions.copyLink'),
-      action: handleCopyTrackLink,
-      icon: (
-        <ContentCopy
-          sx={{ width: 18, height: 18, fill: contextMenuIconSx.fill }}
-        />
-      ),
-    },
-  ];
 
   return (
     <Stack
@@ -81,12 +49,11 @@ export const CurrentUserSavedSongs = () => {
         disableColumnSelector
       />
       {contextMenuPosition !== null && (
-        <ContextMenu
-          title={trackContext.name}
-          subtitle={trackContext.artists}
-          options={trackOptions}
+        <TrackContextMenu
+          selectedTrack={selectedTrack}
           anchorPosition={contextMenuPosition}
           onClose={handleCloseContextMenu}
+          isSavedTracksList
         />
       )}
     </Stack>

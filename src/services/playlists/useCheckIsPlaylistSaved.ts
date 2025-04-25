@@ -12,9 +12,13 @@ const handleCheckIsPlaylistSaved = async (
   return response;
 };
 
-export const useCheckIsPlaylistSaved = (id?: string) =>
+export const useCheckIsPlaylistSaved = (
+  id?: string,
+  isFollowSuccess?: boolean,
+  isUnfollowSuccess?: boolean
+) =>
   useQuery({
-    queryKey: ['checkIsPlaylistSaved', id],
+    queryKey: ['checkIsPlaylistSaved', id, isFollowSuccess, isUnfollowSuccess],
     enabled: !!id,
     queryFn: () => handleCheckIsPlaylistSaved(id),
   });

@@ -6,11 +6,23 @@
       "album": "Album",
       "added": "Added",
       "time": "Time"
+    }
+  },
+  "trackOptions": {
+    "save": "Save",
+    "addToQueue": "Play Next",
+    "addToPlaylist": "Add to Playlist",
+    "copyLink": "Copy Link",
+    "delete": "Delete"
+  },
+  "actionMessages": {
+    "add": {
+      "success": "Track added to your library",
+      "error": "Error adding track to your library, try again later"
     },
-    "trackOptions": {
-      "addToQueue": "Play Next",
-      "addToPlaylist": "Add to Playlist",
-      "copyLink": "Copy Link"
+    "delete": {
+      "success": "Track removed from your library",
+      "error": "Error removing track from your library, try again later"
     }
   }
 }

@@ -1,34 +1,21 @@
 import { MouseEvent } from 'react';
-import {
-  Stack,
-  Typography,
-  Chip,
-  Skeleton,
-  type Theme,
-} from '@mui/material';
-import {
-  PlayArrow,
-  Add,
-  Shuffle,
-  QueueMusic,
-  PlaylistAdd,
-  ContentCopy
-} from '@mui/icons-material';
+import { Stack, Typography, Chip, Skeleton } from '@mui/material';
+import { PlayArrow, Add, Shuffle } from '@mui/icons-material';
 import {
   AlbumExtended,
   ContextMenuPosition,
-  TrackContext,
+  Track,
 } from '@common/interfaces';
 import { getFeaturedArtists } from '@common/utils';
 import { useLanguage, useFormatMs } from '@hooks/common';
 import { useMinimalTracksTable } from '@hooks/tracks';
-import { Table, MediaHeader, ContextMenu } from '@components/common';
+import { Table, MediaHeader } from '@components/common';
 import { FeaturedArtists } from '@components/artists';
-import { TrackListData } from '@components/tracks';
+import { TrackListData, TrackContextMenu } from '@components/tracks';
 
 interface AlbumDetailsProps extends Partial<AlbumExtended> {
   contextMenuPosition: ContextMenuPosition | null;
-  trackContext: TrackContext;
+  selectedTrack: Track | null;
   onOpenContextMenu: (
     event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
     id: string
@@ -37,22 +24,11 @@ interface AlbumDetailsProps extends Partial<AlbumExtended> {
   onAddRemoveAlbum: () => void;
   onPlayAlbum: () => void;
   onShuffleAlbum: () => void;
-  onAddTrack: () => void;
-  onAddTrackToQueue: () => void;
-  onAddTrackToPlaylist: () => void;
-  onCopyTrackLink: () => void;
   isLoadingAddRemove: boolean;
   isSaved?: boolean;
   isLoading?: boolean;
   isLoadingRemainingTracks?: boolean;
 }
-
-
-const contextMenuIconSx = {
-  width: 20,
-  height: 20,
-  fill: (theme: Theme) => theme.palette.accent.main,
-};
 
 export const AlbumDetails = ({
   name,
@@ -65,16 +41,12 @@ export const AlbumDetails = ({
   copyrights,
   album_type: albumType,
   contextMenuPosition,
-  trackContext,
+  selectedTrack,
   onOpenContextMenu,
   onCloseContextMenu,
   onAddRemoveAlbum,
   onPlayAlbum,
   onShuffleAlbum,
-  onAddTrack,
-  onAddTrackToQueue,
-  onAddTrackToPlaylist,
-  onCopyTrackLink,
   isLoadingAddRemove,
   isSaved,
   isLoading,
@@ -123,32 +95,6 @@ export const AlbumDetails = ({
       icon: <Shuffle />,
       onClick: onShuffleAlbum,
       description: t('albumDetails.header.actions.shuffle'),
-    },
-  ];
-  const trackOptions = [
-    {
-      label: t('albumDetails.trackOptions.add'),
-      action: onAddTrack,
-      icon: <Add sx={contextMenuIconSx} />,
-    },
-    {
-      label: t('albumDetails.trackOptions.addToQueue'),
-      action: onAddTrackToQueue,
-      icon: <QueueMusic sx={contextMenuIconSx} />,
-    },
-    {
-      label: t('albumDetails.trackOptions.addToPlaylist'),
-      action: onAddTrackToPlaylist,
-      icon: <PlaylistAdd sx={contextMenuIconSx} />,
-    },
-    {
-      label: t('albumDetails.trackOptions.copyLink'),
-      action: onCopyTrackLink,
-      icon: (
-        <ContentCopy
-          sx={{ width: 18, height: 18, fill: contextMenuIconSx.fill }}
-        />
-      ),
     },
   ];
 
@@ -233,10 +179,8 @@ export const AlbumDetails = ({
         </>
       )}
       {contextMenuPosition !== null && (
-        <ContextMenu
-          title={trackContext.name}
-          subtitle={trackContext.artists}
-          options={trackOptions}
+        <TrackContextMenu
+          selectedTrack={selectedTrack}
           anchorPosition={contextMenuPosition}
           onClose={onCloseContextMenu}
         />

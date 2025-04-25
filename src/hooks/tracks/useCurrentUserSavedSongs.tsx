@@ -1,25 +1,15 @@
 import { useState, useEffect, type MouseEvent } from 'react';
-import {
-  ContextMenuPosition,
-  TrackContext,
-} from '@common/interfaces';
+import { ContextMenuPosition, Track } from '@common/interfaces';
 import { useGetCurrentUserTracks } from '@services/tracks';
 import { useTableInfiniteScroll } from '@hooks/common';
 import { useStore } from '@store/index';
-
-const initialTrackContext: TrackContext = {
-  id: '',
-  name: '',
-  artists: '',
-};
 
 export const useCurrentUserSavedSongs = () => {
   const tracks = useStore((state) => state.savedTracks.tracks);
   const total = useStore((state) => state.savedTracks.total);
   const offset = useStore((state) => state.savedTracks.offset);
   const setTracksData = useStore((state) => state.savedTracks.setTracksData);
-  const [trackContext, setTrackContext] =
-    useState<TrackContext>(initialTrackContext);
+  const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [contextMenuPosition, setContextMenuPosition] =
     useState<ContextMenuPosition | null>(null);
   const { data, refetch, isFetching, isFetchedAfterMount } = useGetCurrentUserTracks(offset);
@@ -39,20 +29,11 @@ export const useCurrentUserSavedSongs = () => {
     id: string
   ) => {
     event.preventDefault();
+    const track = tracks?.find((item) => item.track.id === id);
 
-    const name =
-      tracks?.find((item) => item.track.id === id)?.track?.name ?? '';
-    const artists =
-      tracks
-        ?.find((item) => item.track.id === id)
-        ?.track?.artists?.map((artist) => artist.name)
-        ?.join(', ') ?? '';
+    if (!track) return;
 
-    setTrackContext({
-      id: id ?? '',
-      name,
-      artists,
-    });
+    setSelectedTrack(track?.track);
     setContextMenuPosition(
       contextMenuPosition === null
         ? {
@@ -65,19 +46,7 @@ export const useCurrentUserSavedSongs = () => {
 
   const handleCloseContextMenu = () => {
     setContextMenuPosition(null);
-    setTrackContext(initialTrackContext);
-  };
-
-  const handleAddTrackToQueue = () => {
-    console.log('Add to queue', trackContext.id);
-  };
-
-  const handleAddTrackToPlaylist = () => {
-    console.log('Add track to playlist', trackContext.id);
-  };
-
-  const handleCopyTrackLink = () => {
-    console.log('Copy track link', trackContext.id);
+    setSelectedTrack(null);
   };
 
   useEffect(() => {
@@ -96,12 +65,9 @@ export const useCurrentUserSavedSongs = () => {
     tracks,
     total,
     isFetching,
-    trackContext,
+    selectedTrack,
     contextMenuPosition,
     handleOpenContextMenu,
     handleCloseContextMenu,
-    handleAddTrackToQueue,
-    handleAddTrackToPlaylist,
-    handleCopyTrackLink,
   };
 };

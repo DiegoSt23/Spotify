@@ -11,17 +11,12 @@ import {
   Button,
   Alert,
   Skeleton,
-  type Theme,
 } from '@mui/material';
 import {
   PlayArrow,
   Favorite,
   FavoriteBorder,
   ChevronRight,
-  Add,
-  QueueMusic,
-  PlaylistAdd,
-  ContentCopy,
 } from '@mui/icons-material';
 import {
   ArtistExtended,
@@ -29,13 +24,14 @@ import {
   ArtistTopTracksResponse,
   PartialAlbumsResponse,
   ContextMenuPosition,
-  TrackContext,
+  Track,
 } from '@common/interfaces';
 import { About } from '@assets/customIcons';
 import { useLanguage } from '@hooks/common';
 import { useTracksTable } from '@hooks/tracks';
-import { MediaHeader, Table, ContextMenu } from '@components/common';
+import { MediaHeader, Table } from '@components/common';
 import { AlbumsGrid } from '@components/albums';
+import { TrackContextMenu } from '@components/tracks';
 
 type ArtistData = Partial<
   ArtistExtended &
@@ -46,7 +42,7 @@ type ArtistData = Partial<
 
 interface ArtistProfileProps extends ArtistData {
   contextMenuPosition: ContextMenuPosition | null;
-  trackContext: TrackContext;
+  selectedTrack: Track | null;
   onOpenContextMenu: (
     event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
     id: string
@@ -54,20 +50,10 @@ interface ArtistProfileProps extends ArtistData {
   onCloseContextMenu: () => void;
   onFollowUnfollowArtist: () => void;
   onPlayArtist: () => void;
-  onAddTrack: () => void;
-  onAddTrackToQueue: () => void;
-  onAddTrackToPlaylist: () => void;
-  onCopyTrackLink: () => void;
   isLoadingFollowUnfollow: boolean;
   isFollowed?: boolean;
   isLoading?: boolean;
 }
-
-const contextMenuIconSx = {
-  width: 20,
-  height: 20,
-  fill: (theme: Theme) => theme.palette.accent.main,
-};
 
 export const ArtistProfile = ({
   name,
@@ -81,15 +67,11 @@ export const ArtistProfile = ({
   compilations,
   appearsOn,
   contextMenuPosition,
-  trackContext,
+  selectedTrack,
   onOpenContextMenu,
   onCloseContextMenu,
   onFollowUnfollowArtist,
   onPlayArtist,
-  onAddTrack,
-  onAddTrackToQueue,
-  onAddTrackToPlaylist,
-  onCopyTrackLink,
   isLoadingFollowUnfollow,
   isFollowed,
   isLoading,
@@ -178,33 +160,6 @@ export const ArtistProfile = ({
     },
     ...playButtonData,
     ...aboutButtonData,
-  ];
-
-  const trackOptions = [
-    {
-      label: t('artistProfile.trackOptions.add'),
-      action: onAddTrack,
-      icon: <Add sx={contextMenuIconSx} />,
-    },
-    {
-      label: t('artistProfile.trackOptions.addToQueue'),
-      action: onAddTrackToQueue,
-      icon: <QueueMusic sx={contextMenuIconSx} />,
-    },
-    {
-      label: t('artistProfile.trackOptions.addToPlaylist'),
-      action: onAddTrackToPlaylist,
-      icon: <PlaylistAdd sx={contextMenuIconSx} />,
-    },
-    {
-      label: t('artistProfile.trackOptions.copyLink'),
-      action: onCopyTrackLink,
-      icon: (
-        <ContentCopy
-          sx={{ width: 18, height: 18, fill: contextMenuIconSx.fill }}
-        />
-      ),
-    },
   ];
 
   return (
@@ -356,10 +311,8 @@ export const ArtistProfile = ({
         </DialogContent>
       </Dialog>
       {contextMenuPosition !== null && (
-        <ContextMenu
-          title={trackContext.name}
-          subtitle={trackContext.artists}
-          options={trackOptions}
+        <TrackContextMenu
+          selectedTrack={selectedTrack}
           anchorPosition={contextMenuPosition}
           onClose={onCloseContextMenu}
         />

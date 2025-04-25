@@ -19,18 +19,14 @@
         "edit": "Editar"
       }
     },
-    "trackOptions": {
-      "add": "Agregar",
-      "addToQueue": "Reproducir siguiente",
-      "addToPlaylist": "Agregar a una lista de reproducción",
-      "copyLink": "Copiar enlace"
-    },
     "actionsMessages": {
       "add": {
-        "success": "fue guardada en tu biblioteca"
+        "success": "La playlist se ha guardado en tu biblioteca",
+        "error": "No se pudo guardar la playlist en tu biblioteca, inténtalo de nuevo más tarde"
       },
       "remove": {
-        "success": "fue eliminada de tu biblioteca"
+        "success": "La playlist se ha eliminado de tu biblioteca",
+        "error": "No se pudo eliminar la playlist de tu biblioteca, inténtalo de nuevo más tarde"
       }
     }
   }

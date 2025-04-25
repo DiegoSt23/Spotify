@@ -4,19 +4,19 @@ import { Api } from '@common/utils';
 import { useLanguage } from '@hooks/common';
 
 const mutationFn = async ({ id }: { id: string }): Promise<void> =>
-  await Api.put<void>(`playlists/${id}/followers`);
+  await Api.delete<void>(`me/tracks?ids=${id}`);
 
-export const useFollowPlaylist = () => {
-  const { t } = useLanguage('playlists');
+export const useRemoveTrackFromSavedSongs = () => {
+  const { t } = useLanguage('tracks');
 
   const mutation = useMutation({
     mutationFn,
-    mutationKey: ['followPlaylist'],
+    mutationKey: ['removeTrackFromSavedSongs'],
     onSuccess: () => {
-      toast.success(t('playlistDetails.actionsMessages.add.success'));
+      toast.success(t('actionMessages.delete.success'));
     },
     onError: () => {
-      toast.error(t('playlistDetails.actionsMessages.add.error'));
+      toast.error(t('actionMessages.delete.error'));
     },
   });
 

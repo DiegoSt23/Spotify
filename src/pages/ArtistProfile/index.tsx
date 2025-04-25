@@ -11,15 +11,11 @@ export const ArtistProfile = () => {
     isLoading,
     isLoadingFollowUnfollow,
     contextMenuPosition,
-    trackContext,
+    selectedTrack,
     handleOpenContextMenu,
     handleCloseContextMenu,
     handleFollowUnfollowArtist,
     handlePlayArtist,
-    handleAddTrack,
-    handleAddTrackToQueue,
-    handleAddTrackToPlaylist,
-    handleCopyTrackLink,
   } = useArtistProfile();
 
   return (
@@ -32,15 +28,11 @@ export const ArtistProfile = () => {
       isLoading={isLoading}
       isLoadingFollowUnfollow={isLoadingFollowUnfollow}
       contextMenuPosition={contextMenuPosition}
-      trackContext={trackContext}
+      selectedTrack={selectedTrack}
       onOpenContextMenu={handleOpenContextMenu}
       onCloseContextMenu={handleCloseContextMenu}
       onFollowUnfollowArtist={handleFollowUnfollowArtist}
       onPlayArtist={handlePlayArtist}
-      onAddTrack={handleAddTrack}
-      onAddTrackToQueue={handleAddTrackToQueue}
-      onAddTrackToPlaylist={handleAddTrackToPlaylist}
-      onCopyTrackLink={handleCopyTrackLink}
     />
   );
 };

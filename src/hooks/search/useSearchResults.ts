@@ -5,21 +5,14 @@ import {
   AlbumsResponse,
   PlaylistsResponse,
   ContextMenuPosition,
-  TrackContext,
+  Track,
 } from '@common/interfaces';
 import { useSearch } from '@services/search';
-
-const initialTrackContext: TrackContext = {
-  id: '',
-  name: '',
-  artists: '',
-};
 
 export const useSearchResults = () => {
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [debouncedInputValue, setDebouncedInputValue] = useState<string>('');
-  const [trackContext, setTrackContext] =
-    useState<TrackContext>(initialTrackContext);
+  const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [contextMenuPosition, setContextMenuPosition] =
     useState<ContextMenuPosition | null>(null);
   const { data, isFetching, isFetched } = useSearch(debouncedInputValue);
@@ -33,54 +26,32 @@ export const useSearchResults = () => {
     setCurrentTab(newValue);
   };
 
-   const handleOpenContextMenu = (
-     event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
-     id: string
-   ) => {
-     event.preventDefault();
+  const handleOpenContextMenu = (
+    event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
+    id: string
+  ) => {
+    event.preventDefault();
 
-     const name = tracks?.items?.find((track) => track.id === id)?.name ?? '';
-     const artists =
-       tracks?.items
-         ?.find((track) => track.id === id)
-         ?.artists?.map((artist) => artist.name)
-         ?.join(', ') ?? '';
+    event.preventDefault();
+    const track = tracks?.items?.find((track) => track.id === id);
 
-     setTrackContext({
-       id: id ?? '',
-       name,
-       artists,
-     });
-     setContextMenuPosition(
-       contextMenuPosition === null
-         ? {
-             top: event.clientY - 6,
-             left: event.clientX + 2,
-           }
-         : null
-     );
-   };
+    if (!track) return;
 
-   const handleCloseContextMenu = () => {
-     setContextMenuPosition(null);
-     setTrackContext(initialTrackContext);
-   };
+    setSelectedTrack(track);
+    setContextMenuPosition(
+      contextMenuPosition === null
+        ? {
+            top: event.clientY - 6,
+            left: event.clientX + 2,
+          }
+        : null
+    );
+  };
 
-   const handleAddTrack = () => {
-     console.log('Add track', trackContext.id);
-   };
-
-   const handleAddTrackToQueue = () => {
-     console.log('Add to queue', trackContext.id);
-   };
-
-   const handleAddTrackToPlaylist = () => {
-     console.log('Add track to playlist', trackContext.id);
-   };
-
-   const handleCopyTrackLink = () => {
-     console.log('Copy track link', trackContext.id);
-   };
+  const handleCloseContextMenu = () => {
+    setContextMenuPosition(null);
+    setSelectedTrack(null);
+  };
 
   return {
     tabsHeaderData,
@@ -94,12 +65,8 @@ export const useSearchResults = () => {
     handleSelectTab,
     setDebouncedInputValue,
     contextMenuPosition,
-    trackContext,
+    selectedTrack,
     handleOpenContextMenu,
     handleCloseContextMenu,
-    handleAddTrack,
-    handleAddTrackToQueue,
-    handleAddTrackToPlaylist,
-    handleCopyTrackLink,
   };
 };

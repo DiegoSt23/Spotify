@@ -12,9 +12,13 @@ const handleCheckIsUserFollowed = async (
   return response;
 };
 
-export const useCheckIsUserFollowed = (id?: string) =>
+export const useCheckIsUserFollowed = (
+  id?: string,
+  isFollowSuccess?: boolean,
+  isUnfollowSuccess?: boolean
+) =>
   useQuery({
-    queryKey: ['checkIsUserFollowed', id],
+    queryKey: ['checkIsUserFollowed', id, isFollowSuccess, isUnfollowSuccess],
     enabled: !!id,
     queryFn: () => handleCheckIsUserFollowed(id),
   });
